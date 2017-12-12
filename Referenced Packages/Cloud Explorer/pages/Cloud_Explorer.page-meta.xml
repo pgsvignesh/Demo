@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>36.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>Cloud Explorer for Salesforce provides drag and drop of records from one Salesforce org to another, similar to how files are dragged and dropped in Windows.</description>
+    <label>Cloud Explorer</label>
+</ApexPage>

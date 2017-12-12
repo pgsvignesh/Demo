@@ -1,0 +1,128 @@
+<apex:page controller="efaxapp.eFaxConfigurationController" title="eFax Configuration" sidebar="true" showHeader="true" setup="{!IsSetupMode}">
+	<style>
+		.notes {
+			display:block;
+			padding:5px 5px 5px 0;
+		}
+		.unauthorized {
+			color: red;
+		}
+		.grant-access-btn {
+			display: block;
+			margin: 0 auto !important;
+			font-size: 18px !important;
+			font-weight: normal !important;
+		}
+	</style>
+	
+	<script type="text/javascript" src="{!URLFOR($Resource.Common, '/js/jquery-1.9.1.min.js')}"></script>
+	<script type="text/javascript">
+		var jq = jQuery.noConflict(true);
+		
+		function deleteField(event, field) {
+			event = event || window.event;
+  			if (event.preventDefault) {
+    			event.preventDefault();
+    		}			
+			if (!confirm('Are you sure?'))
+				return false;
+			jq('[id$=hdnEditFieldName]').val(field);
+			jq('[id$=btnEditFieldName]').click();
+			return true;
+		}
+	</script>
+	
+	<apex:sectionHeader title="RS Fax App" subtitle="Configuration"/>	
+	
+	<apex:pageMessages escape="false" />
+	
+	<apex:form >
+	
+		<apex:actionFunction name="updateSecureSettings" action="{!updateSecureSettings}" rerender=""/>		
+		
+		<script>window.setTimeout(updateSecureSettings, 2)</script>
+		<apex:inputHidden id="hdnEditFieldName" value="{!EditFieldName}" />
+		<apex:commandButton id="btnEditFieldName" action="{!DeleteFieldSetting}" style="display:none;"/>
+		
+        <apex:outputPanel styleClass="notes">
+        	Here you can edit general organization and field settings. 
+           	To enable receiving and auto-sending faxes you must grant access for eFax app.
+           	eFax app will use these credentials to save received faxes in the organization.
+           	Setup auto-send fax criteria for each field if you want to auto-send faxes.
+        </apex:outputPanel>	       	
+       	
+		<apex:pageBlock title="General Settings" mode="maindetail">
+			<apex:pageBlockButtons location="top">
+				<c:referenceButton href="{!URLFOR($Page.efaxapp__eFaxConfigurationGeneralEdit)}{!TabNameUrlParam}" text="Edit" />
+				<apex:commandButton action="{!GrantAccess}" value="Grant access" />
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection columns="2" collapsible="false" showHeader="false">
+				<apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Available Fax Numbers"/>
+                    <apex:repeat value="{!NumberList}" var="item">
+                    	<apex:outputText value="{!item.label}" /><br/>
+                    </apex:repeat>
+                </apex:pageBlockSectionItem>  
+               <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Enable Auto-Send Faxes"/>
+                    <c:outputCheckbox value="{!EnableAutoSendFaxes}"/>
+                </apex:pageBlockSectionItem>  
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Alert Email"/>
+                    <apex:outputText value="{!AlertEmail}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Disable Barcode Feature"/>
+                    <c:outputCheckbox value="{!DisableBarcode}"/>
+                </apex:pageBlockSectionItem>  
+                 <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Authorized By"/>
+                    <apex:outputPanel >
+                    	<apex:outputLink value="/{!AuthorizedByUser.Id}" rendered="{!Authorized}">{!AuthorizedByUser.Name}</apex:outputLink>
+	                    <apex:outputText value="None" rendered="{!Authorized == false}" styleClass="unauthorized" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                  
+                <apex:outputText value=" "/>
+            </apex:pageBlockSection>	
+		</apex:pageBlock>
+
+					
+		<apex:pageBlock title="Field Settings" mode="detail">
+			<apex:pageBlockButtons location="top">
+				<c:referenceButton href="{!URLFOR($Page.efaxapp__eFaxConfigurationFieldEdit)}{!TabNameUrlParam}" text="New" />
+			</apex:pageBlockButtons>
+	        <apex:pageBlockTable value="{!eFaxFields}" var="field">
+				<apex:column styleClass="actionColumn" headerValue="Action">
+					<a title="Edit - {!field.Name}" class="actionLink" href="{!URLFOR($Page.eFaxConfigurationFieldEdit)}?field={!URLENCODE(field.Name)}{!SUBSTITUTE(TabNameUrlParam, '?', '&')}">Edit</a>
+					&nbsp;|&nbsp;
+					<a title="Del - {!field.Name}" class="actionLink" href="#" onclick="return deleteField(event, '{!JSINHTMLENCODE(field.Name)}')">Del</a>
+				</apex:column>
+				<apex:column headerValue="Name" value="{!field.Name}" />
+	            <apex:column headerValue="Object" value="{!field.efaxapp__Object_Label__c}" />
+	            <apex:column headerValue="Fax Number">
+	            	<apex:outputPanel rendered="{!NOT(field.efaxapp__Is_Fax_Number_Within_Attachment_Name__c)}">
+	            		<b><apex:outputText value="{!field.efaxapp__Fax_Field_Label__c}" /></b> field
+	            	</apex:outputPanel>
+	            	<apex:outputPanel rendered="{!field.efaxapp__Is_Fax_Number_Within_Attachment_Name__c}">
+		            	<b><apex:outputText value="After" rendered="{!field.efaxapp__Fax_Number_Critera_Code__c == 0}" />
+		            	<apex:outputText value="Before" rendered="{!field.efaxapp__Fax_Number_Critera_Code__c == 2}" /></b>
+		            	<i><apex:outputText value="{!field.efaxapp__Fax_Number_Pattern__c}" /></i>
+		            	in fax name
+	            	</apex:outputPanel>
+	            </apex:column>
+	            <apex:column headerValue="Auto-Send Criteria">
+	            	Fax name
+	            	<b>
+	            		<apex:outputText value="starts with" rendered="{!field.efaxapp__Auto_Send_Fax_Criteria_Code__c == 0}" />
+	            		<apex:outputText value="contains" rendered="{!field.efaxapp__Auto_Send_Fax_Criteria_Code__c == 1}" />
+	            		<apex:outputText value="ends with" rendered="{!field.efaxapp__Auto_Send_Fax_Criteria_Code__c == 2}" />
+	            	</b>
+	            	<i>
+	            		<apex:outputText value="{!field.efaxapp__Auto_Send_Fax_Pattern__c}" />
+	            	</i>
+	            </apex:column>
+	        </apex:pageBlockTable>
+		</apex:pageBlock>
+		 
+	</apex:form>
+</apex:page>

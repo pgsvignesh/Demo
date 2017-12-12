@@ -1,0 +1,885 @@
+<apex:page id="page" controller="ChargentBase.ChargentConfigurationController" title="Chargent Settings" docType="html-5.0" >
+	<apex:includeScript value="{!URLFOR($Resource.ChargentBase__jsLibraries, '/angular-1.5.8/angular.min.js')}"/>
+	<apex:stylesheet value="/sCSS/32.0/sprites/1597816277000/Theme3/default/gc/versioning.css" />
+	<style type="text/css">
+		.bPageBlock .detailList .labelCol {
+			width: 30%;
+		}
+		.colstyle {
+			width: 50%;
+		}
+		.divstyle {
+			margin: 0 auto;
+			width: 60%;
+			text-align: center;
+		}
+		.apexp .bPageBlock.apexDefaultPageBlock .pbBody .pbSubheader {
+			color: #404040 !important;
+		}
+		.tertiaryPalette {
+			background-color: #cfeef8 !important;
+			border-color: #cfeef8 !important;
+		}
+
+		.statusBox-layer {
+			position: fixed;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			z-index: 99999;
+		}
+		.statusBox-msgBox {
+			width: 100%;
+			height: 100%;
+			background-color: #ffffff;
+			opacity:0.4;
+			filter:alpha(opacity=40);
+		}
+		.statusBox-msg {
+			position: fixed;
+			top: 45%;
+			left: 50%;
+			padding: 10px;
+			border: 1px solid #aaaaaa;
+			background-color: white;
+		}
+		.spinner {
+			margin: 50px;
+			height: 28px;
+			width: 28px;
+			animation: rotate 0.8s infinite linear;
+			border: 8px solid #000;
+			border-right-color: transparent;
+			border-radius: 50%;
+		}
+
+		@keyframes rotate {
+		0%    { transform: rotate(0deg); }
+		100%  { transform: rotate(360deg); }
+		}
+
+		#bar {
+			width: 576px;
+			height: 24px;
+			margin: 0 auto;
+				font-size: 9px;
+				line-height: 16px;
+		}
+		#bar .icon { float: left; }
+
+		.icon {
+			position: relative;
+			width:16px;
+			height:16px;
+			margin: 16px;
+		}
+		.icon .name {
+		width: 32px;
+			position: absolute;
+			text-align: center;
+			top: 18px;
+			left: -8px;
+		}
+
+		.icon-minus {
+			background-color: #000;
+			border-radius:8px;
+			-webkit-border-radius:8px;
+			-moz-border-radius:8px;
+			width: 16px;
+			height: 16px;
+			position: relative;
+			top:0;
+			left:0;
+
+		}
+		.icon-minus:after {
+			background-color: #000;
+			width: 8px;
+			height: 2px;
+			border-radius: 1px;
+			-webkit-border-radius: 1px;
+			-moz-border-radius: 1px;
+			position: absolute;
+			top:7px;
+			left: 3.5px;
+			z-index:4;
+			content:"";
+		}
+
+		.icon-plus {
+			background-color: #000;
+			border-radius:8px;
+			-webkit-border-radius:8px;
+			-moz-border-radius:8px;
+			width: 16px;
+			height: 16px;
+			position: relative;
+			top:0;
+			left:0;
+		}
+		.icon-plus:after {
+			background-color: #000;
+			width: 8px;
+			height: 2px;
+			border-radius: 1px;
+			-webkit-border-radius: 1px;
+			-moz-border-radius: 1px;
+			position: absolute;
+			top:7px;
+			left: 4px;
+			content:"";
+		}
+		.icon-plus:before {
+			background-color: #000;
+			width: 2px;
+			height: 8px;
+			border-radius: 1px;
+			-webkit-border-radius: 1px;
+			-moz-border-radius: 1px;
+			position: absolute;
+			top:4px;
+			left: 7px;
+			content:"";
+		}
+	</style>
+
+	<!-- Spinner -->
+	<apex:actionStatus id="spinner" stopText=" ">
+		<apex:facet name="start">
+			<apex:outputPanel layout="block" styleClass="statusBox-layer">
+				<apex:outputPanel layout="block" styleClass="statusBox-msgBox"></apex:outputPanel>
+				<apex:outputPanel layout="block" styleClass="statusBox-msg"><apex:image url="/img/loading.gif"/>&nbsp;&nbsp;Please Wait...</apex:outputPanel>
+			</apex:outputPanel>
+		</apex:facet>
+	</apex:actionStatus>
+
+	<apex:tabPanel switchType="client" selectedTab="helptab" id="theTabPanel" > <!-- rendered="{!chargentInstalled}" -->
+
+		<apex:tab label="Chargent Help" name="help" id="helptab">
+			<apex:outputPanel layout="block" rendered="{!NOT(chargentInstalled)}">
+				<apex:pageMessage summary="You are nearly finished installing Chargent!<br/>Please visit our installation
+					<a href='https://www.appfrontier.com/chargent-installation.html' style='font-size: 100%; margin: 0px;' target='_blank'>instruction page here</a>,
+					to complete Step 2 - Install Chargent Transaction Package."
+					severity="warning"
+					strength="3"
+					escape="false"/>
+			</apex:outputPanel>
+			<!-- <apex:iframe src="/apex/ChargentBase__ChargentHelpPages?noheader=true" scrolling="true" id="theIframe" height="720px"/> -->
+			<apex:iframe src="https://www.appfrontier.com/vf.html" scrolling="true" id="theIframe" height="720px"/>
+		</apex:tab>
+
+		<apex:tab label="Chargent Feature Activation" name="chargentfeaturestab" id="tabOne">
+
+			<apex:outputPanel layout="block" rendered="{!NOT(chargentInstalled)}">
+				<apex:pageMessage summary="You are nearly finished installing Chargent!<br/>Please visit our installation
+					<a href='https://www.appfrontier.com/chargent-installation.html' style='font-size: 100%; margin: 0px;' target='_blank'>instruction page here</a>,
+					to complete Step 2 - Install Chargent Transaction Package."
+					severity="warning"
+					strength="3"
+					escape="false"/>
+			</apex:outputPanel>
+
+			<!-- // CHARD-242 -->
+			<apex:outputPanel layout="block" rendered="{!isSandbox}">
+				<apex:pageMessage summary="Chargent does not require any keys in Sandbox orgs."
+					severity="Confirm"
+					strength="3"
+					escape="false"/>
+			</apex:outputPanel>
+
+			<apex:form id="frm" rendered="{!chargentInstalled}">
+				<apex:pageMessages id="tabOneMessages"/>
+				<apex:pageBlock id="activationBlock" >
+					<apex:pageBlockTable id="table" value="{!desiredFeatures}" var="df" title="Chargent Feature Activation" cellpadding="20px" >
+						<apex:column headerValue="Feature Name">
+							<apex:outputLink value="{!IF(ISBLANK(df.ChargentBase__Description__c), 'javascript:;', df.ChargentBase__Description__c)}" target="_blank">{!df.ChargentBase__Feature_Name__c}</apex:outPutlink>
+							<apex:outputPanel layout="block" > <!-- rendered="{!IF(ISBLANK(df.Description__c), false, true)}" -->
+
+								<!-- Payment Request -->
+								<apex:outputLabel escape="false" rendered="{!IF(df.ChargentBase__Feature_Name__c = 'Payment Request', true, false)}">
+									<br/>
+									This premium feature helps Chargent customers get paid faster and easier.
+
+									<ul>
+										<li>Email payment links at the click of a button</li>
+										<li>Secure, hosted credit card page on your Force.com site</li>
+										<li>Transactions update into Salesforce immediately</li>
+									</ul>
+
+									Please follow&nbsp;<apex:outputLink value="https://www.appfrontier.com/chargent-demo-videos.html#paymentrequest" target="_blank">this link</apex:outPutlink> to get more information about this feature.
+								</apex:outputLabel>
+
+								<!-- Payment Console -->
+								<apex:outputLabel escape="false" rendered="{!IF(df.ChargentBase__Feature_Name__c = 'Payment Console', true, false)}">
+									<br/>
+									This premium feature helps Chargent customers lower PCI scope.  You will be able to submit payments directly from a Salesforce popup window to your payment gateway, without saving or storing account numbers in Salesforce.
+
+									<ul>
+										<li>Supports credit card / ACH transactions and tokenization</li>
+										<li>Complete transactions from Salesforce without storing account numbers</li>
+										<li>Great for call center or customer service applications</li>
+									</ul>
+
+									Please follow&nbsp;<apex:outputLink value="https://www.appfrontier.com/payment-console.html" target="_blank">this link</apex:outPutlink> to get more information about this feature.
+								</apex:outputLabel>
+							</apex:outputPanel>
+						</apex:column>
+						<apex:column headerValue="Active" width="10%">
+							<apex:outputField value="{!df.ChargentBase__isActive__c}" />
+						</apex:column>
+					</apex:pageBlockTable>
+
+					<br/>
+					<apex:pageBlockSection id="keySection" columns="1">
+						<apex:pageBlockSectionItem id="keySectionItem" helpText="The key provided by AppFrontier to activate your premium feature set.  Once you receive this from AppFrontier, please enter the key here.">
+							<apex:outputLabel >Chargent Activation Key</apex:outputLabel>
+							<apex:inputText id="key" style="width:80%" value="{!chargentSetting.ChargentActivationKey}" onchange="inputKey(this.value)" onkeyup="inputKey(this.value)"/>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<apex:pageBlockButtons id="btns">
+						<!-- <apex:commandButton id="saveButton" value="Save" action="{!saveDesiredFeatures}" disabled="false"/> -->
+						<apex:commandButton id="checkKeyButton" value="Check & Save Key" action="{!checkAndSaveKey}" status="spinner" rerender="frm"/>
+						<apex:commandButton id="requestKeyButton" value="Request Key" onclick="showDialog(); return false;"/>
+						<!-- <apex:commandButton id="requestKeyButton" value="Request Key" action="{!requestKey}" status="spinner" rerender="frm"/> -->
+						<!-- <apex:commandButton id="cancelButton" value="Cancel" action="{!cancel}"/> -->
+					</apex:pageBlockButtons>
+
+				</apex:pageBlock>
+			</apex:form>
+		</apex:tab>
+
+		<apex:tab label="Advanced Settings" name="chargentsettinsgtab" id="tabTwo" >
+
+			<apex:outputPanel layout="block" rendered="{!NOT(chargentInstalled)}">
+				<apex:pageMessage summary="You are nearly finished installing Chargent!<br/>Please visit our installation
+					<a href='https://www.appfrontier.com/chargent-installation.html' style='font-size: 100%; margin: 0px;' target='_blank'>instruction page here</a>,
+					to complete Step 2 - Install Chargent Transaction Package."
+					severity="warning"
+					strength="3"
+					escape="false"/>
+			</apex:outputPanel>
+
+			<apex:form id="frm2" rendered="{!chargentInstalled}">
+				<apex:pageMessages id="tabTwoMessages"/>
+				<apex:pageBlock >
+
+					<apex:panelGrid columns="2" width="100%">
+						<apex:pageBlock >
+							<apex:pageBlockSection title="General" collapsible="false" columns="1">
+								<apex:pageBlockSectionItem helpText="Chargent will send unresolved errors to this email address.  Please enter the email address of the system administrator responsible for maintaining Chargent.">
+									<apex:outputLabel >Chargent Admin Email Address</apex:outputLabel>
+									<apex:inputText style="width:90%" value="{!chargentSetting.ChargentAdminEmailAddress}"/>
+								</apex:pageBlockSectionItem>
+								<apex:pageBlockSectionItem helpText="{!IF(masterObjectLabel = 'Case',
+									'If set to TRUE, Chargent will copy address information from the associated Contact or Account, when the Contact is not set, to the Chargent Billing Address fields.',
+									'If set to TRUE, Chargent will copy address information from the associated Account to the Chargent Billing Address fields.')}">
+									<apex:outputLabel >Copy Billing Address from Account</apex:outputLabel>
+									<apex:inputCheckbox value="{!chargentSetting.CopyBillingAddressFromAccount}"/>
+								</apex:pageBlockSectionItem>
+								<apex:pageBlockSectionItem helpText="WARNING: Update only when advised by support.
+								This setting changes the number of records per set sent to the gateway during batches. Lowering this will slow the speed of your batch increasing this may cause errors. Please email support for assistance.">
+									<apex:outputLabel >Transaction Status Batch Chunk Limit</apex:outputLabel>
+									<apex:inputText style="width:90%" value="{!chargentSetting.TransactionStatusBatchChunkLimit}" />
+								</apex:pageBlockSectionItem>
+								<apex:pageBlockSectionItem helpText="WARNING: Update only when advised by support.
+								This setting changes the number of records per set sent to the gateway during batches. Lowering this will slow the speed of your batch increasing this may cause errors. Please email support for assistance.">
+									<apex:outputLabel >Payment Batch Chunk Size Limit</apex:outputLabel>
+									<apex:inputText style="width:90%" value="{!chargentSetting.PaymentBatchChunkSizeLimit}" />
+								</apex:pageBlockSectionItem>
+							</apex:pageBlockSection>
+						</apex:pageBlock>
+
+						<apex:pageBlock >
+							<apex:pageBlockSection title="Gateway Settings" collapsible="false" columns="1">
+								<apex:pageBlockSectionItem helpText="Set the default currency for transactions. The default is United States dollar.">
+									<apex:outputLabel >Default currency</apex:outputLabel>
+									<apex:selectList value="{!chargentSetting.DefaultCurrency}" size="1">
+										<apex:selectOptions value="{!CurrencyItems}"/>
+									</apex:selectList>
+								</apex:pageBlockSectionItem>
+								<apex:pageBlockSectionItem helpText="Select the Authorization type for MasterCard credit cards. The default is 'Undefined'.">
+									<apex:outputLabel >MasterCard Authorization Type</apex:outputLabel>
+									<apex:selectList value="{!chargentSetting.MCAuthType}" size="1">
+										<apex:selectOptions value="{!MCAuthTypeItems}"/>
+									</apex:selectList>
+								</apex:pageBlockSectionItem>
+								<apex:pageBlockSectionItem helpText="For RealEx gateway users only.  Enables the RealEx Rebate feature.  Please refer to RealEx documentation for detailed explanation of this feature.">
+									<apex:outputLabel >Use RealEx Rebate Method</apex:outputLabel>
+									<apex:inputCheckbox value="{!chargentSetting.UseRealExRebateMethod}"/>
+								</apex:pageBlockSectionItem>
+							</apex:pageBlockSection>
+						</apex:pageBlock>
+
+						<apex:pageBlock >
+							<apex:pageBlockSection title="Payment Request" collapsible="false" columns="1">
+								<apex:pageBlockSectionItem helpText="Checking this box will have Chargent create a new Payment Request record for each new Opportunity, Chargent Order, or Case record that is created. This is used when you want to use the Pay Link in certain automated emails or invoices.">
+									<apex:outputLabel >Automatically Create PR Record</apex:outputLabel>
+									<apex:inputCheckbox value="{!chargentSetting.AutomaticallyCreatePR}"/>
+								</apex:pageBlockSectionItem>
+
+								<apex:pageBlockSectionItem helpText="For testing purposes only, NEVER ENABLE DEBUG MODE when customers are using your payment forms.  When this option is checked the result message will include debug information including the entire response from the gateway.">
+									<apex:outputLabel >Show Debug</apex:outputLabel>
+									<apex:inputCheckbox value="{!chargentSetting.ShowDebug}"/>
+								</apex:pageBlockSectionItem>
+
+								<apex:pageBlockSectionItem helpText="If this field is set to TRUE users of your Payment Request page will be able to choose to use an eCheck to pay the amount due.">
+									<apex:outputLabel >Accept eCheck</apex:outputLabel>
+									<apex:inputCheckbox value="{!chargentSetting.acceptEcheck}"/>
+								</apex:pageBlockSectionItem>
+
+								<apex:pageBlockSectionItem helpText="Displays a confirmation message to the customer after successful payment.">
+									<apex:outputLabel >Payment Confirmation Text</apex:outputLabel>
+									<apex:inputTextarea style="width:90%" value="{!chargentSetting.PaymentConfirmationText}"/>
+								</apex:pageBlockSectionItem>
+
+								<apex:pageBlockSectionItem helpText="Displays an error message to customer after failed payment.">
+									<apex:outputLabel >Payment Error Text</apex:outputLabel>
+									<apex:inputTextarea style="width:90%" value="{!chargentSetting.PaymentErrorText}"/>
+								</apex:pageBlockSectionItem>
+
+								<apex:pageBlockSectionItem helpText="Displays a message to the Salesforce user when a Payment Request is successfully sent.">
+									<apex:outputLabel >Payment Request Confirmation Text</apex:outputLabel>
+									<apex:inputTextarea style="width:90%" value="{!chargentSetting.PaymentRequestConfirmationText}"/>
+								</apex:pageBlockSectionItem>
+
+								<apex:pageBlockSectionItem helpText="Set the number of hours you would like an individual payment request link to be active. You can choose any number from 0 (no expiration) to 17520 hours (2 years).">
+									<apex:outputLabel >Payment Link Expiration Hours (Number)</apex:outputLabel>
+									<apex:inputText style="width:90%" value="{!chargentSetting.PaymentLinkExpirationHours}"/>
+								</apex:pageBlockSectionItem>
+
+								<apex:pageBlockSectionItem helpText="This is the URL to the SitePayment page on your configured Salesforce site.">
+									<apex:outputLabel >Salesforce Sites Page (URL)</apex:outputLabel>
+									<apex:inputText style="width:90%" value="{!chargentSetting.SFDCSitesPage}"/>
+								</apex:pageBlockSectionItem>
+
+								<apex:pageBlockSectionItem helpText="This URL is where your customer is sent if their card fails.">
+									<apex:outputLabel >Error Page (URL)</apex:outputLabel>
+									<apex:inputText style="width:90%" value="{!chargentSetting.ErrorPage}"/>
+								</apex:pageBlockSectionItem>
+
+								<apex:pageBlockSectionItem helpText="This is the URL that your customer is sent to when they get a successful charge.">
+									<apex:outputLabel >Thank You Page (URL)</apex:outputLabel>
+									<apex:inputText style="width:90%" value="{!chargentSetting.ThankYouPage}"/>
+								</apex:pageBlockSectionItem>
+							</apex:pageBlockSection>
+						</apex:pageBlock>
+
+						<apex:pageBlock >
+							<apex:pageBlockSection title="Account Updater" collapsible="false" columns="1">
+								<apex:pageBlockSectionItem helpText="Allows account information to be directly updated without validating the credit card information with sending an authorization to your gateway.">
+									<apex:outputLabel >Use Simple Account Updater Feature</apex:outputLabel>
+									<apex:inputCheckbox value="{!chargentSetting.UseSimpleAccountUpdaterFeature}"/>
+								</apex:pageBlockSectionItem>
+
+								<apex:pageBlockSectionItem helpText="Displays a confirmation message to customer after successful Account update.">
+									<apex:outputLabel >Account Updater Confirmation Text</apex:outputLabel>
+									<apex:inputTextarea style="width:90%" value="{!chargentSetting.AccountUpdaterConfirmationText}"/>
+								</apex:pageBlockSectionItem>
+
+								<apex:pageBlockSectionItem helpText="Displays an error message to customer after failed Account update.">
+									<apex:outputLabel >Account Updater Error Text</apex:outputLabel>
+									<apex:inputTextarea style="width:90%" value="{!chargentSetting.AccountUpdaterErrorText}"/>
+								</apex:pageBlockSectionItem>
+
+								<apex:pageBlockSectionItem helpText="Set the number of hours you would like an individual payment request link to be active. You can choose any number from 0 (no expiration) to 17520 hours (2 years).">
+									<apex:outputLabel >Account Updater Expiration Hours (Number)</apex:outputLabel>
+									<apex:inputText style="width:90%" value="{!chargentSetting.AccountUpdaterExpirationHours}"/>
+								</apex:pageBlockSectionItem>
+
+								<apex:pageBlockSectionItem helpText="In this field you may define criteria for Opportunity Records that should be processed during the BatchCheckCards job. Format is the same as used in SOQL query, e.g. Amount__c = 50 AND RecordType.DeveloperName = 'Chargent Recurring Opportunity'.">
+									<apex:outputLabel >Account Updater Search Criteria</apex:outputLabel>
+									<apex:inputTextarea style="width:90%" value="{!chargentSetting.OpportunitySearchCriteria}"/>
+								</apex:pageBlockSectionItem>
+							</apex:pageBlockSection>
+						</apex:pageBlock>
+					</apex:panelGrid>
+
+					<apex:pageBlockButtons >
+						<apex:commandButton value="Save" action="{!save}" status="spinner" rerender="frm2"/>
+						<apex:commandButton value="Cancel" action="{!cancel}" status="spinner" rerender="frm2"/>
+					</apex:pageBlockButtons>
+
+				</apex:pageBlock>
+			</apex:form>
+		</apex:tab>
+
+		<apex:tab label="Troubleshooting Tools" name="chargentinserttransactiontab" id="tabThird">
+
+			<apex:outputPanel layout="block" rendered="{!NOT(chargentInstalled)}">
+				<apex:pageMessage summary="You are nearly finished installing Chargent!<br/>Please visit our installation
+					<a href='https://www.appfrontier.com/chargent-installation.html' style='font-size: 100%; margin: 0px;' target='_blank'>instruction page here</a>,
+					to complete Step 2 - Install Chargent Transaction Package."
+					severity="warning"
+					strength="3"
+					escape="false"/>
+			</apex:outputPanel>
+
+			<apex:form id="frm3" rendered="{!chargentInstalled}">
+				<apex:pageMessages id="tabThirdMessages"/>
+				<apex:pageBlock >
+					<apex:panelGrid columns="2" width="100%" columnClasses="colstyle">
+						<apex:pageBlock >
+							<apex:pageBlockSection title="Test Master Record Creation" collapsible="false" columns="1">
+								<apex:outputPanel layout="block" styleClass="divstyle">
+									<apex:outputText >
+										When you click this Chargent will attempt to insert {!IF(BEGINS(masterObjectLabel, 'O'), 'an', 'a')} {!masterObjectLabel} and show the results here on the page.<br/><br/>
+										This is helpful if you are seeing odd behavior in Chargent, this tool can help you understand what fields or validation rules might be causing this.
+									</apex:outputText>
+									<br/><br/>
+									<apex:commandButton value="Insert Master Object" action="{!checkMasterObject}" status="spinner" rerender="frm3"/>
+								</apex:outputPanel>
+							</apex:pageBlockSection>
+						</apex:pageBlock>
+						<apex:pageBlock >
+							<apex:pageBlockSection title="Test Transaction Record Creation" collapsible="false" columns="1">
+								<apex:outputPanel layout="block" styleClass="divstyle">
+									<apex:outputText >
+										Clicking here has Chargent attempt to write a test Transaction record to the system.  This is useful in diagnosing data management issues related to Chargent's Transaction object.
+									</apex:outputText>
+									<br/><br/>
+									<apex:commandButton value="Insert Transaction" action="{!checkTransactionObject}" status="spinner" rerender="frm3"/>
+								</apex:outputPanel>
+							</apex:pageBlockSection>
+						</apex:pageBlock>
+					</apex:panelGrid>
+
+
+				</apex:pageBlock>
+			</apex:form>
+
+		</apex:tab>
+		<apex:tab label="CyberSource Custom Mapping" name="chargentcustomfields" id="tabFour" >
+		<script type="text/javascript">
+			var app = angular.module("ChargentConfiguration",[]);
+			app.controller("ChargentConfigurationCtrl", ["$scope", function ($scope) {
+			$scope.objects = [];
+			$scope.objectField =[];
+			$scope.fields = [];
+			$scope.eventSave;
+			$scope.savedCustomSettings =[];
+			$scope.NumberofSelect= [1];
+			$scope.counter = 1;
+			$scope.status;
+			$scope.isSavedMapping;
+			$scope.isDeletMapping;
+			$scope.eventDelet;
+			$scope.oocObject;
+			$scope.default = '--None--';
+			$scope.customFields = [{name:'Custom field 1',value:'CSMapping.CustomField1'},{name:'Custom field 2',value:'CSMapping.CustomField2'},{name:'Custom field 3',value:'CSMapping.CustomField3'},{name:'Custom field 4',value:'CSMapping.CustomField4'},{name:'Custom field 5',value:'CSMapping.CustomField5'},{name:'Custom field 6',value:'CSMapping.CustomField6'},{name:'Custom field 7',value:'CSMapping.CustomField7'},{name:'Custom field 8',value:'CSMapping.CustomField8'},{name:'Custom field 9',value:'CSMapping.CustomField9'},{name:'Custom field 10',value:'CSMapping.CustomField10'},{name:'Custom field 11',value:'CSMapping.CustomField11'},{name:'Custom field 12',value:'CSMapping.CustomField12'},{name:'Custom field 13',value:'CSMapping.CustomField13'},{name:'Custom field 14',value:'CSMapping.CustomField14'},{name:'Custom field 15',value:'CSMapping.CustomField15'},{name:'Custom field 16',value:'CSMapping.CustomField16'},{name:'Custom field 17',value:'CSMapping.CustomField17'},{name:'Custom field 18',value:'CSMapping.CustomField18'},{name:'Custom field 19',value:'CSMapping.CustomField19'},{name:'Custom field 20',value:'CSMapping.CustomField20'}];
+			$scope.selectedField = [];
+			$scope.selectedcustomField = [];
+			$scope.saved = [];
+			$scope.filterCustomList = function(customFields, selectedcustomField, currentField) {
+				var result =[];
+				result = customFields;
+				if (selectedcustomField.length != 0) {
+					result = [];
+					customFields.forEach(function (item,index){
+						var isSelected =  selectedcustomField.some(function (i) {
+							return item.value === i.value;
+						});
+						if(!isSelected){
+							result.push(item);
+						}
+					})
+					if (currentField) {
+					result.push(currentField);
+					}
+				}
+
+				return result;
+			}
+			$scope.deletSelect = function(index){
+				var temp1 = [];
+				var temp2 = [];
+				if($scope.counter >1){
+					$scope.counter -=1;
+					delete $scope.selectedField[index];
+					delete $scope.selectedcustomField[index];
+					$scope.NumberofSelect.pop();
+					$scope.selectedField.forEach(function (item,i) {
+							temp1.push(item);
+					});
+					$scope.selectedcustomField.forEach(function (item,i) {
+						temp2.push(item);
+					});
+					$scope.selectedField = temp1;
+					$scope.selectedcustomField =temp2;
+				}
+			}
+			$scope.addSelect = function() {
+				if($scope.counter <= 19){
+					$scope.counter +=1;
+					$scope.NumberofSelect.push($scope.counter);
+				}
+			}
+			function naturalCompare(a, b) {
+				var ax = [], bx = [];
+
+				a.replace(/(\d+)|(\D+)/g, function(_, $1, $2) { ax.push([$1 || Infinity, $2 || ""]) });
+				b.replace(/(\d+)|(\D+)/g, function(_, $1, $2) { bx.push([$1 || Infinity, $2 || ""]) });
+
+				while(ax.length && bx.length) {
+					var an = ax.shift();
+					var bn = bx.shift();
+					var nn = (an[0] - bn[0]) || an[1].localeCompare(bn[1]);
+					if(nn) return nn;
+				}
+
+				return ax.length - bx.length;
+			}
+			$scope.getSavedMap = function (selectedObject) {
+				$scope.resPackage();
+				$scope.oocFieldName(selectedObject);
+				Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ChargentConfigurationController.getSavedChargentSettings}', selectedObject, function (result, event) {
+					var temp = [];
+					var temp2 = [];
+					if (!angular.isUndefined(result)) {
+						$scope.savedCustomSettings = JSON.parse(result);
+						var len = Object.keys($scope.savedCustomSettings).length;
+						for (var i = 1; i<len; i++) {
+							i;
+							$scope.addSelect();
+						}
+						for (key in $scope.savedCustomSettings) {
+							temp.unshift(key);
+						}
+						temp2 = temp.sort(naturalCompare).reverse();
+						for (var k=0; k < temp2.length; k++) {
+							$scope.selectedField.unshift($scope.savedCustomSettings[temp2[k]]);
+							var isEuals =  $scope.customFields.some(function (i) {
+								if(temp2[k] === i.value) {
+								$scope.selectedcustomField.unshift(i);
+								}
+								return temp2[k] === i.value;
+							});
+						};
+						}
+						$scope.status = event.statusCode;
+					$scope.$apply();
+				}, { escape: false});
+			}
+			$scope.reset = function(selectedObject) {
+				$scope.oocFieldName(selectedObject);
+				$scope.NumberofSelect= [1];
+				$scope.isDeletMapping = undefined;
+				$scope.isSavedMapping = undefined;
+				$scope.selectedField.length = 0;
+				$scope.selectedcustomField.length = 0;
+				$scope.NumberofSelect= [1];
+				$scope.counter = 1;
+				$scope.saved.length = 0;
+				$scope.getSavedMap(selectedObject);
+			}
+			$scope.resPackage = function () {
+				$scope.NumberofSelect= [1];
+				$scope.selectedField.length = 0;
+				$scope.selectedcustomField.length = 0;
+				$scope.counter = 1;
+				$scope.saved.length = 0;
+				$scope.savedCustomSettings = [];
+				$scope.selectedField = [];
+			}
+			$scope.activate = function(){
+				Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ChargentConfigurationController.getCustomObjects}', function (result, event) {
+				$scope.objects = JSON.parse(result);
+				$scope.$apply();
+				},{ escape: false});
+			};
+			$scope.activate();
+			$scope.getAllFieldApiName = function (selectedObject) {
+				$scope.oocFieldName(selectedObject);
+				Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ChargentConfigurationController.getAllFieldsList}', selectedObject, function (result, event) {
+				$scope.objectField = JSON.parse(result);
+				$scope.$apply();
+				$scope.getSavedMap(selectedObject);
+				}, { escape: false});
+			}
+			$scope.saveToJson = function(selectedObject) {
+				$scope.oocFieldName(selectedObject);
+				$scope.updateSettingsMap(selectedObject);
+				$scope.saved= [];
+				$scope.selectedField.forEach(function (itemOne,index) {
+					var obj ={};
+					var a = itemOne;
+						var b = $scope.selectedcustomField[index];
+						if (!angular.isUndefined(a) && !angular.isUndefined(b)) {
+							obj[b.value] = a;
+							$scope.saved.push(obj);
+						}
+				});
+				var preJson = angular.toJson($scope.saved);
+				var temp = preJson.slice(1, -1);
+				var map = temp.replace(/\0/g, '0').replace(/\\(.)/g, "$1");
+					Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ChargentConfigurationController.saveChargentSettingMap}',selectedObject, map,function (result, event) {
+					$scope.eventSave = JSON.parse(result);
+					if ($scope.eventSave === 'success') {
+							$scope.isDeletMapping = undefined;
+							$scope.isSavedMapping = true;
+						}
+					$scope.$apply();
+					$scope.selectedField.length = 0;
+					$scope.selectedcustomField.length = 0;
+					$scope.NumberofSelect= [1];
+					$scope.counter = 1;
+					$scope.saved.length = 0;
+					$scope.getSavedMap(selectedObject);
+				},{ escape: false});
+			}
+			$scope.updateSettingsMap = function (selectedObject) {
+				$scope.oocFieldName(selectedObject);
+				Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ChargentConfigurationController.delChargentCustomSetting}', selectedObject, function (result, event) {
+					$scope.$apply();
+					},{ escape: false});
+			}
+			$scope.delCustomSettingMap = function (selectedObject) {
+				$scope.oocFieldName(selectedObject);
+				$scope.selectedField.length = 0;
+				$scope.selectedcustomField.length = 0;
+				$scope.NumberofSelect= [1];
+				$scope.counter = 1;
+				$scope.saved.length = 0;
+				$scope.isSavedMapping= undefined;
+				$scope.isDeletMapping = true;
+				Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ChargentConfigurationController.delChargentCustomSetting}', selectedObject, function (result, event) {
+					$scope.eventDelet = JSON.parse(result);
+					$scope.$apply();
+				},{ escape: false});
+			}
+			$scope.oocFieldName = function(selectedObject){
+				if (selectedObject.toString() === 'Opportunities') {
+					$scope.oocObject = 'Opportunity';
+				}
+				if (selectedObject.toString() === 'Chargent Orders') {
+					$scope.oocObject = 'Chargent Order';
+				}
+				if (selectedObject.toString() === 'Cases') {
+					$scope.oocObject = 'Case';
+				}
+			}
+		}]);
+		app.directive('select', function($interpolate) {
+		return {
+			restrict: 'E',
+			require: 'ngModel',
+			link: function(scope, elem, attrs, ctrl) {
+			var defaultOptionTemplate;
+			scope.defaultOptionText = attrs.defaultOption || 'Select...';
+			defaultOptionTemplate = '<option value="" disabled selected style="display: none;">{{defaultOptionText}}</option>';
+			elem.prepend($interpolate(defaultOptionTemplate)(scope));
+			}
+		};
+		})
+	</script>
+	<apex:outputPanel layout="block" rendered="{!NOT(chargentInstalled)}">
+			<apex:pageMessage summary="You are nearly finished installing Chargent!<br/>Please visit our installation
+					<a href='http://www.appfrontier.com/chargent-installation.html' style='font-size: 100%; margin: 0px;' target='_blank'>instruction page here</a>,
+					to complete Step 2 - Install Chargent Transaction Package."
+					severity="warning"
+					strength="3"
+					escape="false"/>
+		</apex:outputPanel>
+		<div>
+			<apex:form >
+				<apex:pageBlock >
+							<apex:outputPanel layout="block" >
+								<apex:outputLabel escape="false" >
+									<br/>
+									As of Chargent 4.40, the mapping feature only works with the Cybersource gateway. If you are interested in using this feature with other gateways, please contact Sales@AppFrontier.com to discuss options.
+								</apex:outputLabel>
+							</apex:outputPanel>
+				</apex:pageBlock>
+			</apex:form>
+		</div>
+		<div ng-app="ChargentConfiguration" ng-controller="ChargentConfigurationCtrl" >
+		<div ng-show ="isSavedMapping" style="margin-bottom: 10px;">
+			<apex:outputPanel layout="block">
+				<apex:pageMessage summary="<strong>Success:</strong><br/> Changes saved successfully!"
+						strength="3"
+						severity="Confirm"
+						escape="false">
+				</apex:pageMessage>
+			</apex:outputPanel>
+		</div>
+		<div ng-show ="isDeletMapping" style="margin-bottom: 10px;" >
+			<apex:outputPanel layout="block">
+				<apex:pageMessage summary="<strong>Success:</strong><br/>Mappings are successfully deleted from Custom Settings!"
+						strength="3"
+						severity="Confirm"
+						escape="false">
+				</apex:pageMessage>
+			</apex:outputPanel>
+		</div>
+			<div>
+				<div>
+					<div>
+						<div style="margin-left: 40%;">
+							<span>Select Object: </span>
+							<select  ng-model="selectedObject" ng-options="obj for obj in objects" ng-change="getAllFieldApiName(selectedObject)">
+								<!-- <option ng-repeat="obj in objects">{{obj}}</option> -->
+							</select>
+						</div>
+					</div>
+				</div>
+				<div style="margin-left: 45%;" ng-hide="!selectedObject">
+					<div class="spinner" ng-show="!status"></div>
+				</div>
+				<table class="fixwidth" style="margin: auto; border-spacing: 8px;">
+				<tr  ng-repeat="numb in NumberofSelect track by $index" ng-show="status">
+					<td class="labelCol" >
+					<div   ng-if="$first">
+						<a href="#" ng-click="addSelect()"><span class="icon icon-plus"></span></a>
+					</div>
+					<div  ng-if="!$first">
+
+						<a href="#"  ng-click="deletSelect($index)"><span class="icon icon-minus"></span></a>
+					</div>
+					</td>
+					<td class="labelCol" >
+						{{oocObject}} Field  {{numb}}:
+					</td>
+					<td class="dataCol" >
+						<select  ng-model="selectedField[$index]" ng-options="field for field in objectField" default-option="{{default}}" ng-change="">
+						</select>
+					</td>
+					<td>
+						Custom Field:
+					</td>
+					<td class="dataCol" >
+						<select name="selectbasic" ng-model="selectedcustomField[$index]" ng-options="castomField as castomField.name for castomField in filterCustomList(customFields, selectedcustomField, selectedcustomField[$index])" default-option="{{default}}" >
+						</select>
+					</td>
+				</tr>
+				</table>
+				<div ng-show="status">
+					<div style="margin-left: 35%;">
+						<div style="margin: 10px 0px 10px 100px;">
+							<button class="btn" style="margin: 10px;" type="button" ng-click="saveToJson(selectedObject)">Save</button>
+							<button class="btn" style="margin: 10px;" type="button" ng-click="reset(selectedObject)">Reset</button>
+							<button class="btn" style="margin: 10px;" type="button" ng-click="delCustomSettingMap(selectedObject)">Delete Custom Settings</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div>
+			<apex:form >
+				<apex:pageBlock >
+							<apex:outputPanel layout="block" >
+								<apex:outputLabel escape="false" value="Warning!">
+									<br/>
+									Custom fields must not be used to transmit personally identifying information which includes name, address, credit card number, social security number, driver's license number, state-issued identification number, passport number, and card verification numbers (CVV, CVC2, CVV2, CID, CVN).<br/>
+									Please follow&nbsp;<apex:outputLink value="https://support.cybersource.com/cybskb/index?page=content&id=C173&actp=LIST" target="_blank">this link</apex:outputLink> to get more details.
+								</apex:outputLabel>
+							</apex:outputPanel>
+				</apex:pageBlock>
+			</apex:form>
+		</div>
+		</apex:tab>
+	</apex:tabPanel>
+
+	<apex:outputPanel layout="block" id="tablediv" style="display: none;">
+		<apex:form id="reqfrm">
+			<apex:pageBlock id="popupBlock" >
+				<apex:pageBlockTable id="requesttable" value="{!desiredFeatures}" var="df" title="Chargent Feature Activation" cellpadding="20px" >
+					<apex:column headerValue="Feature Name">
+						<apex:outputText id="name" value="{!df.ChargentBase__Feature_Name__c}" />
+					</apex:column>
+					<apex:column headerValue="Requested" >
+						<apex:inputCheckbox id="box" styleClass="requestCheckbox" value="{!df.ChargentBase__Requested__c}" onclick="checkboxClick(this);" />
+					</apex:column>
+				</apex:pageBlockTable>
+				<apex:pageBlockButtons id="popupbtns" location="bottom">
+					<apex:outputPanel layout="block" id="btnsdiv" style="text-align: center;">
+						<apex:commandButton id="sendRequestKeyButton" value="Send Request" action="{!requestKey}" status="spinner" rerender="tabOneMessages" onclick="var res = buttonClick(this); if (!res) return false;"/>
+					</apex:outputPanel>
+				</apex:pageBlockButtons>
+			</apex:pageBlock>
+		</apex:form>
+	</apex:outputPanel>
+
+
+	<script type="text/javascript">
+		// Check button at the start
+		window.addEventListener("load", inputKey(document.getElementById('page:frm:activationBlock:keySection:keySectionItem:key').value), false);
+
+		// Action on inputfield
+		function inputKey(value) {
+			if (value == '') { // Disable buttons
+				disableButton(document.getElementById('page:frm:activationBlock:btns:bottom:checkKeyButton'));
+				disableButton(document.getElementById('page:frm:activationBlock:btns:checkKeyButton'));
+			} else {
+				enableButton(document.getElementById('page:frm:activationBlock:btns:bottom:checkKeyButton'));
+				enableButton(document.getElementById('page:frm:activationBlock:btns:checkKeyButton'));
+			}
+		}
+
+		function disableButton(b) {
+			b.disabled = true;
+			b.setAttribute('class', 'btn btnDisabled');
+		}
+
+		function enableButton(b) {
+			b.disabled = false;
+			b.setAttribute('class', 'btn');
+		}
+
+		function createDialog() {
+			sd = new SimpleDialog("RequestKey", true);
+			sd.setWidth(600);
+			sd.setTitle('<a title="Close" tabindex="0" onclick="window.parent.sd.cancel(); parent.location.reload();" href="javascript:void(0)" class="dialogClose">Close</a><h2 id="title">Request Key</h2>');
+			sd.createDialog();
+			window.parent.sd = sd;
+
+			sd.setContentInnerHTML(document.getElementById('page:tablediv').innerHTML);
+		}
+
+		function showDialog(){
+			if (window.parent.sd == undefined) {
+				createDialog();
+				sd.show();
+			} else {
+				window.parent.sd.show();
+			}
+			showSendRequestButton();
+		}
+
+		function checkboxClick(obj) {
+			box = document.getElementById(obj.id);
+			box.checked = obj.checked;
+			showSendRequestButton();
+		}
+
+		var doRequest = false;
+
+		function buttonClick(obj) {
+			if (doRequest) {
+				window.parent.sd.cancel();
+				return true;
+			} else {
+				doRequest = true;
+				button = document.getElementById(obj.id);
+				button.click();
+			}
+		}
+
+		function showSendRequestButton() {
+			if (document.getElementById('page:reqfrm:popupBlock:popupbtns:sendRequestKeyButton:hidden') == null) {
+				document.getElementById('page:reqfrm:popupBlock:popupbtns:sendRequestKeyButton').id = 'page:reqfrm:popupBlock:popupbtns:sendRequestKeyButton:hidden';
+			}
+			boxes = document.getElementsByClassName('requestCheckbox');
+			for (var i = 0; i < boxes.length; i++) {
+				if (boxes[i].checked) {
+					enableButton(document.getElementById('page:reqfrm:popupBlock:popupbtns:sendRequestKeyButton'));
+					return;
+				}
+			}
+			disableButton(document.getElementById('page:reqfrm:popupBlock:popupbtns:sendRequestKeyButton'));
+		}
+
+	</script>
+
+</apex:page>

@@ -1,0 +1,882 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>ACH_Direct_Debit_Bank_Numbers_encrypted__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the Bank Account details depending on the currency of the iATS Merchant Account being used, digits only with no spaces/dashes/commas. 
+
+USD ACH: Routing (9 #) + account 
+CAD ACH: Bank (3 #) + transit (5 #) + account 
+UK DD: Sort (6 #) + account</inlineHelpText>
+        <label>ACH/Direct Debit Bank Numbers</label>
+        <length>175</length>
+        <maskChar>asterisk</maskChar>
+        <maskType>lastFour</maskType>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>EncryptedText</type>
+    </fields>
+    <fields>
+        <fullName>Amount__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>The value that will be charged to the donor one-time for a single transaction (when recurring schedule fields are left empty), or charged to the donor on a regular basis for a new Recurring setup (when recurring schedule fields are populated)</inlineHelpText>
+        <label>Amount</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Batch_Processing_Date_Time__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>Leave empty when creating a new IBE record. Used to display the Date/Time the last time this record was included in a Batch Entry Process.</inlineHelpText>
+        <label>Batch Process Last Date/Time</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Batch_Processing_Failure_Details__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>Leave empty when creating a new IBE record. Used to display the failure message the last time this record was included in a Batch Entry Process.</inlineHelpText>
+        <label>Batch Processing Last Failure Details</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>City__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>City</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Record_Type_ID__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is used to define the Record type that will be used for this particular donor&apos;s Contact record if one is create via batch. This field will overwrite the type selected for the entire batch on the iATS Batch Process settings (in iATS Settings).</inlineHelpText>
+        <label>Contact Record Type ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>This field can be used to select an existing contact record. If one doesn&apos;t exist, you have the option to leave this field blank and enter their details into the contact fields on this IBE record. A new contact will be created during the Batch Process.</inlineHelpText>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>iATS Batch Entries</relationshipLabel>
+        <relationshipName>Batch_Processing_Entries</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Country</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Credit_Card_Expiry_Date__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>Please enter the date in the following format MM/YY. Only future dates are accepted.</inlineHelpText>
+        <label>Credit Card Expiry Date (MM/YY)</label>
+        <length>5</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Credit_Card_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Visa/MC/DSC cards must be 16 digits. AMX cards must be 15 digits. Use numbers only. Do not add any characters such as dash or space.
+Discover is only available for USD merchant accounts.</inlineHelpText>
+        <label>Credit Card Number</label>
+        <length>16</length>
+        <maskChar>asterisk</maskChar>
+        <maskType>lastFour</maskType>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>EncryptedText</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Card_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to define the CC brand. Enter either Visa, MasterCard or MC, American Express or AMX, Discover or DSC.</inlineHelpText>
+        <label>Credit Card Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Visa</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Mastercard</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Discover</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>American Express</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Direct_Debit_Account_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to define Checking or Savings for North American ACH/EFT bank accounts. Enter Savings for Direct Debit.</inlineHelpText>
+        <label>ACH/Direct Debit Account Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Checking</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Savings</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Email__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>First_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>First Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Home_Phone__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Home Phone</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Include_in_Next_Batch_Entry_Process__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box when you want this record to be included in the next Batch Entry Process (via the iATS Settings Batch feature). 
+This field will automatically be unchecked once the Batch Status changes from Not Processed to either Success or Failure.</inlineHelpText>
+        <label>Include in Next Batch Entry Process</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Last_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Last Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Method_of_Payment__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Method of payment must be Credit Card or ACH/Direct Debit.</inlineHelpText>
+        <label>Method of Payment</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Credit Card</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Direct Debit</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Mobile_Phone__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Mobile Phone</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Opportunity_Record_Type_ID__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is used to define the Record type that will be used for this particular donor&apos;s Donation record create via batch. This field will overwrite the type selected for the entire batch on the iATS Batch Process settings (in iATS Settings).</inlineHelpText>
+        <label>Opportunity Record Type ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Opportunity</label>
+        <referenceTo>Opportunity</referenceTo>
+        <relationshipName>Batch_Processing_Entries</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Primary_Campaign_Source__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is used to define a specific Primary Campaign that will be used for this particular donor&apos;s Donation record. This field will overwrite the campaign selected for the entire batch on the iATS Batch Process settings (in iATS Settings).</inlineHelpText>
+        <label>Primary Campaign Source</label>
+        <referenceTo>Campaign</referenceTo>
+        <relationshipLabel>iATS Batch Entries</relationshipLabel>
+        <relationshipName>iATS_Batch_Entries</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Recurring_Donation_Record_type_ID__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is used to define the Record type that will be used for this particular donor&apos;s Recurring Donation record create via batch. This field will overwrite the type selected for the entire batch on the iATS Batch Process settings (in iATS Settings).</inlineHelpText>
+        <label>Recurring Donation Record Type ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recurring_Payment_Begin_Date__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>Use this field to set the first date iATS should process a transaction for the donor. For UK Direct Debit this date must be at least 12 days in the future. This date is used to determine which schedule date the donor will be charged on a regular basis.</inlineHelpText>
+        <label>Recurring Payment First Charge Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Recurring_Payment_End_Date__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is required by iATS and must be defined. If there is no true end date for this recurring schedule, enter any future date, such as 50 years in the future. This field is used to calculate the NPSP Non-Open ended donations.</inlineHelpText>
+        <label>Recurring Payment End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Recurring_Payment_Schedule_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>This field defines the schedule on which the donor will be charged. Weekly is not available for Rapidata UK Direct Debit merchant accounts.</inlineHelpText>
+        <label>Recurring Payment Schedule Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Weekly</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Monthly</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Quarterly</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Annually</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Related_iATS_Transaction_Status__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <formula>iATS_Transaction__r.Status__c</formula>
+        <inlineHelpText>This field indicates the status of a related single iATS Transaction that was processed by this iATS Batch Entry record.</inlineHelpText>
+        <label>Related iATS Transaction Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>State__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>State/Province</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Leave empty when creating a new IBE record as the default is Not Processed. Will change to Success or Failure once the record is included in a Batch Process.</inlineHelpText>
+        <label>Batch Process Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Processed</fullName>
+                    <default>true</default>
+                </value>
+                <value>
+                    <fullName>Success</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Failure</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Street_Address__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Street Address</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zip_Postal_Code__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Zip/Postal Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>iATS_Customer_Code__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>iATS Customer Code</label>
+        <referenceTo>IATS_Customer_Code__c</referenceTo>
+        <relationshipName>Batch_Processing_Entries</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>iATS_Merchant_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Leave blank to use the default Batch Entry record value within iATS Settings. If populated, this iATS Merchant Account will be used instead for single transactions, but assigned to the new iATS Customer Code if a recurring schedule is being setup.</inlineHelpText>
+        <label>iATS Merchant Account</label>
+        <referenceTo>IATS_Account__c</referenceTo>
+        <relationshipLabel>iATS Batch Entries</relationshipLabel>
+        <relationshipName>iATS_Batch_Entries</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>iATS_Transaction__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>iATS Transaction</label>
+        <referenceTo>Transaction__c</referenceTo>
+        <relationshipName>Batch_Processing_Entries</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>iATS Batch Entry</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>First_Name__c</columns>
+        <columns>Last_Name__c</columns>
+        <columns>iATS_Transaction__c</columns>
+        <columns>iATS_Customer_Code__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All_Not_Yet_Processed</fullName>
+        <columns>NAME</columns>
+        <columns>Amount__c</columns>
+        <columns>Contact__c</columns>
+        <columns>First_Name__c</columns>
+        <columns>Last_Name__c</columns>
+        <columns>Status__c</columns>
+        <columns>Include_in_Next_Batch_Entry_Process__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Include_in_Next_Batch_Entry_Process__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>All Not Yet Processed</label>
+    </listViews>
+    <listViews>
+        <fullName>Failed_Batch_Entries</fullName>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Batch_Processing_Date_Time__c</columns>
+        <columns>Batch_Processing_Failure_Details__c</columns>
+        <columns>Contact__c</columns>
+        <columns>First_Name__c</columns>
+        <columns>Last_Name__c</columns>
+        <columns>Include_in_Next_Batch_Entry_Process__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Failure</value>
+        </filters>
+        <label>Failed Batch Entries</label>
+    </listViews>
+    <nameField>
+        <displayFormat>IBE-{0000}</displayFormat>
+        <label>iATS Batch Entry Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>iATS Batch Entries</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>First_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Last_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>iATS_Transaction__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>iATS_Customer_Code__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATEDBY_USER</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>First_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Last_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Method_of_Payment__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Batch_Processing_Date_Time__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Batch_Processing_Failure_Details__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>ACH_Direct_Debit_Account_Numbers</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(Method_of_Payment__c, &apos;Direct Debit&apos;),
+ISBLANK( ACH_Direct_Debit_Bank_Numbers_encrypted__c )
+)</errorConditionFormula>
+        <errorMessage>ACH/Direct Debit Bank Numbers must be provided if the method of payment is set to &apos;ACH/Direct Debit&apos;.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ACH_Direct_Debit_Account_Type</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(Method_of_Payment__c, &apos;Direct Debit&apos;),
+ISBLANK(TEXT(Direct_Debit_Account_Type__c))
+)</errorConditionFormula>
+        <errorDisplayField>Direct_Debit_Account_Type__c</errorDisplayField>
+        <errorMessage>ACH/Direct Debit Account Type must be provided if the method of payment is set to &apos;ACH/Direct Debit&apos;.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ACH_Direct_Debit_Method_of_Payment</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(Method_of_Payment__c, &apos;Direct Debit&apos;),
+OR(
+!ISBLANK(Credit_Card_Expiry_Date__c),
+Credit_Card_Number__c != &apos;&apos;,
+!ISBLANK(TEXT( Credit_Card_Type__c))
+)
+)</errorConditionFormula>
+        <errorMessage>Credit Card Expiry Date, Credit Card Number and Credit Card Type fields must be blank if the Method of Payment is set to ACH/Direct Debit.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Amount_Must_Be_Greater_Than_0</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(
+Amount__c &lt;= 0,
+ISNULL(Amount__c))</errorConditionFormula>
+        <errorMessage>Amount must be greater than 0.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Credit_Card_Expiry_Date</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(Method_of_Payment__c, &apos;Credit Card&apos;),
+ISBLANK(Credit_Card_Expiry_Date__c)
+)</errorConditionFormula>
+        <errorDisplayField>Credit_Card_Expiry_Date__c</errorDisplayField>
+        <errorMessage>Credit Card Expiry Date must be provided if the method of payment is set to &apos;Credit Card&apos;.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Credit_Card_Expiry_Date_Format</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+ISPICKVAL(Method_of_Payment__c, &apos;Credit Card&apos;), 
+!ISBLANK(Credit_Card_Expiry_Date__c),
+NOT(REGEX(Credit_Card_Expiry_Date__c,&quot;[0-9]{2}[/]{1}[0-9]{2}&quot;))
+)</errorConditionFormula>
+        <errorDisplayField>Credit_Card_Expiry_Date__c</errorDisplayField>
+        <errorMessage>Credit Card Expiry Date must be in the following format &apos;MM/YY&apos;.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Credit_Card_Method_of_Payment</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(Method_of_Payment__c, &apos;Credit Card&apos;),
+OR(
+!ISPICKVAL(Direct_Debit_Account_Type__c, &apos;&apos;),
+ACH_Direct_Debit_Bank_Numbers_encrypted__c != &apos;&apos;
+)
+)</errorConditionFormula>
+        <errorMessage>ACH/Direct Debit Account Type and Direct Debit Bank Numbers fields must be blank if the Method of Payment is set to Credit Card.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Credit_Card_Number</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(Method_of_Payment__c, &apos;Credit Card&apos;),
+Credit_Card_Number__c == &apos;&apos;
+)</errorConditionFormula>
+        <errorDisplayField>Credit_Card_Number__c</errorDisplayField>
+        <errorMessage>Credit Card Number must be provided if the method of payment is set to &apos;Credit Card&apos;.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Credit_Card_Number_Format</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(
+
+AND(
+ISPICKVAL(Credit_Card_Type__c, &apos;Mastercard&apos;),
+Credit_Card_Number__c != &apos;&apos;,
+NOT(REGEX(Credit_Card_Number__c, &apos;^5[1-5][0-9]{14}$&apos;))),
+
+AND(
+ISPICKVAL(Credit_Card_Type__c, &apos;Visa&apos;),
+Credit_Card_Number__c != &apos;&apos;,
+NOT(REGEX(Credit_Card_Number__c, &apos;^4[0-9]{12}(?:[0-9]{3})?$&apos;))),
+
+AND(
+ISPICKVAL(Credit_Card_Type__c, &apos;Discover&apos;),
+Credit_Card_Number__c != &apos;&apos;,
+NOT(REGEX(Credit_Card_Number__c, &apos;^6(?:011|5[0-9]{2})[0-9]{12}$&apos;))),
+
+AND(
+ISPICKVAL(Credit_Card_Type__c, &apos;American Express&apos;),
+Credit_Card_Number__c != &apos;&apos;,
+NOT(REGEX(Credit_Card_Number__c, &apos;^3[47][0-9]{13}$&apos;)))
+)</errorConditionFormula>
+        <errorDisplayField>Credit_Card_Number__c</errorDisplayField>
+        <errorMessage>Credit card number is incorrect.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Credit_Card_Type</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(Method_of_Payment__c, &apos;Credit Card&apos;),
+ISBLANK(TEXT(Credit_Card_Type__c))
+)</errorConditionFormula>
+        <errorDisplayField>Credit_Card_Type__c</errorDisplayField>
+        <errorMessage>Credit Card Type must be provided if the method of payment is set to &apos;Credit Card&apos;.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>First_Name</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISBLANK(First_Name__c),
+ISBLANK(Contact__c)
+)</errorConditionFormula>
+        <errorDisplayField>First_Name__c</errorDisplayField>
+        <errorMessage>First name is required if the contact field is not populated.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Last_Name</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISBLANK(Last_Name__c),
+ISBLANK(Contact__c)
+)</errorConditionFormula>
+        <errorDisplayField>Last_Name__c</errorDisplayField>
+        <errorMessage>Last name is required if the contact field is not populated.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Recurring_Payment_End_Date</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+!ISBLANK(Recurring_Payment_Begin_Date__c),
+!ISBLANK(Recurring_Payment_End_Date__c),
+Recurring_Payment_End_Date__c &lt;= Recurring_Payment_Begin_Date__c
+)</errorConditionFormula>
+        <errorDisplayField>Recurring_Payment_End_Date__c</errorDisplayField>
+        <errorMessage>Recurring Payment End Date must be greater than the Recurring Payment First Charge Date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Recurring_Payment_End_Date_Annually</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(Recurring_Payment_Schedule_Type__c, &apos;Annually&apos;),
+!ISBLANK(Recurring_Payment_End_Date__c),
+Recurring_Payment_Begin_Date__c + 365 &gt;  Recurring_Payment_End_Date__c)</errorConditionFormula>
+        <errorDisplayField>Recurring_Payment_End_Date__c</errorDisplayField>
+        <errorMessage>Recurring Payment End Date must be at least one year greater than the Recurring Payment First Charge Date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Recurring_Payment_End_Date_Monthly</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(Recurring_Payment_Schedule_Type__c, &apos;Monthly&apos;),
+!ISBLANK(Recurring_Payment_End_Date__c),
+Recurring_Payment_Begin_Date__c + 30 &gt;  Recurring_Payment_End_Date__c)</errorConditionFormula>
+        <errorDisplayField>Recurring_Payment_End_Date__c</errorDisplayField>
+        <errorMessage>Recurring Payment End Date must be at least one month greater than the Recurring Payment First Charge Date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Recurring_Payment_End_Date_Quarterly</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(Recurring_Payment_Schedule_Type__c, &apos;Quarterly&apos;),
+!ISBLANK(Recurring_Payment_End_Date__c),
+Recurring_Payment_Begin_Date__c + 93 &gt;  Recurring_Payment_End_Date__c)</errorConditionFormula>
+        <errorDisplayField>Recurring_Payment_End_Date__c</errorDisplayField>
+        <errorMessage>Recurring Payment End Date must be at least three months greater than the Recurring Payment First Charge Date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Recurring_Payment_End_Date_Weekly</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(Recurring_Payment_Schedule_Type__c, &apos;Weekly&apos;),
+!ISBLANK(Recurring_Payment_End_Date__c),
+Recurring_Payment_Begin_Date__c + 7 &gt;  Recurring_Payment_End_Date__c)</errorConditionFormula>
+        <errorDisplayField>Recurring_Payment_End_Date__c</errorDisplayField>
+        <errorMessage>Recurring Payment End Date must be at least one week greater than the Recurring Payment First Charge Date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Recurring_Payment_First_Charge_Date</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+!ISBLANK(TEXT(Recurring_Payment_Schedule_Type__c)),
+ISBLANK(Recurring_Payment_Begin_Date__c)
+)</errorConditionFormula>
+        <errorDisplayField>Recurring_Payment_Begin_Date__c</errorDisplayField>
+        <errorMessage>Recurring Payment First Charge Date must have a value if Recurring Payment Schedule Type is selected.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Recurring_Payment_First_Charge_Date_End</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+!ISBLANK(Recurring_Payment_End_Date__c ),
+ISBLANK(Recurring_Payment_Begin_Date__c)
+)</errorConditionFormula>
+        <errorDisplayField>Recurring_Payment_Begin_Date__c</errorDisplayField>
+        <errorMessage>Recurring Payment First Charge Date must have a value if Recurring Payment End Date is provided.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Recurring_Payment_First_Charge_Date_Toda</fullName>
+        <active>true</active>
+        <errorConditionFormula>Recurring_Payment_Begin_Date__c &lt; Today()</errorConditionFormula>
+        <errorDisplayField>Recurring_Payment_Begin_Date__c</errorDisplayField>
+        <errorMessage>Recurring Payment First Charge Date must be greater than or equal to today.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Recurring_Payment_Schedule_Type</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISBLANK(TEXT(Recurring_Payment_Schedule_Type__c)),
+!ISBLANK(Recurring_Payment_Begin_Date__c)
+)</errorConditionFormula>
+        <errorDisplayField>Recurring_Payment_Schedule_Type__c</errorDisplayField>
+        <errorMessage>Recurring Payment Schedule Type must have a value if Recurring Payment First Charge Date is provided.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Recurring_Payment_Schedule_Type_End_Date</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISBLANK(TEXT(Recurring_Payment_Schedule_Type__c)),
+!ISBLANK(Recurring_Payment_End_Date__c)
+)</errorConditionFormula>
+        <errorDisplayField>Recurring_Payment_Schedule_Type__c</errorDisplayField>
+        <errorMessage>Recurring Payment Schedule Type must have a value if Recurring Payment End Date is provided.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Zip_Postal_Code</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(
+AND(
+ISBLANK( Zip_Postal_Code__c),
+ISBLANK(Contact__c)
+),
+AND(
+ISBLANK(Contact__r.MailingPostalCode),
+!ISBLANK(Contact__c),
+ISBLANK(Zip_Postal_Code__c)
+)
+)</errorConditionFormula>
+        <errorDisplayField>Zip_Postal_Code__c</errorDisplayField>
+        <errorMessage>Zip/Postal Code is required if the contact field is not populated or the related contact does not have Mailing Zip/Postal Code.</errorMessage>
+    </validationRules>
+</CustomObject>

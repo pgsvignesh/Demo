@@ -1,0 +1,40 @@
+<aura:component >
+    <aura:attribute name="SDGField" type="object" />
+    <aura:attribute name="SortOrder" type="String" default="A" />
+    <aura:attribute name="isSorted" type="Boolean" default="False" />
+    <aura:attribute name="isSortedA" type="Boolean" default="False" />
+    <aura:attribute name="isSortedD" type="Boolean" default="False" />
+    <aura:attribute name="CurrentSortedColumn" type="String" />
+    <aura:attribute name="CurrentSortedOrder" type="String"/>
+    <aura:handler name="change" value="{!v.CurrentSortedColumn}" action="{!c.sortchanged}"/>  
+    <aura:handler name="change" value="{!v.CurrentSortedOrder}" action="{!c.sortchanged}"/>  
+    
+    <aura:registerEvent name="SDGSortableColumnSort" type="sortablegrid:sdgSortableColumnSort"/>
+   
+  
+         
+    <aura:renderIf isTrue="{!!v.SDGField.isEncrypted}">
+        
+        <th class="slds-is-sortable sdgcol" scope="col" onclick="{!c.sort}">
+            <div class=" zzslds-p-around--x-small ">
+            <div class="sortcol hidden">{!v.SDGField.ID}</div>
+            <span class="slds-truncate ">{!v.SDGField.Label}
+                <aura:renderIf isTrue="{!v.isSortedA}">
+                    <sortablegrid:sdgSVG class=" slds-button__icon slds-button__icon--small" xlinkHref="/utility-sprite/svg/symbols.svg#arrowup">
+                    </sortablegrid:sdgSVG>
+                </aura:renderIf>
+                <aura:renderIf isTrue="{!v.isSortedD}">
+                    <sortablegrid:sdgSVG class=" slds-button__icon slds-button__icon--small" xlinkHref="/utility-sprite/svg/symbols.svg#arrowdown">
+                    </sortablegrid:sdgSVG>
+                </aura:renderIf>
+                
+            </span>
+            </div>
+        </th>
+        <aura:set attribute="else">
+            <th  scope="col" class="sdgcol slds-p-around--x-small ">
+                <span class="slds-truncate">{!v.SDGField.Label}
+                </span></th>
+        </aura:set>
+    </aura:renderIf>
+</aura:component>

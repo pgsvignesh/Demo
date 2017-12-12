@@ -1,0 +1,36 @@
+<aura:component implements="forceCommunity:themeLayout" access="global" description="MST Custom Theme Layout">
+    <aura:attribute name="search" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="profileMenu" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="navBar" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="brandingLogo" type="Aura.Component[]" required="false"/>
+    
+    <div class="mstThemeLayout">
+        <header class="topheader">
+            <div class="slds-grid top">	
+                <div class="slds-col">
+	                <div class="logoContainer"></div>
+                </div>
+                <div class="slds-col">
+                </div>
+                <div class="slds-grid slds-size--1-of-4 searchRegion">
+                    {!v.search}
+                </div>
+                <div class="Notifications">
+                	<forceCommunity:notifications />
+                </div>
+                <div class="slds-grid_align-end profileMenuRegion">
+                    {!v.profileMenu}
+                </div>
+            </div>
+            <div class="slds-grid slds-grid_align-center mainnav">
+                {!v.navBar}
+            </div>
+        </header>
+        
+        <div class="slds-grid">
+            <div class="slds-col mainContentArea">
+                {!v.body}
+            </div>
+        </div>
+    </div>
+</aura:component>

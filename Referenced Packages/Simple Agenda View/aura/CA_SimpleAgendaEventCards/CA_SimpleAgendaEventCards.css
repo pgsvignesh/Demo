@@ -1,0 +1,36 @@
+.THIS.container {	width: 100%;
+	padding: 10px 0px;
+	margin: 0px;
+}
+
+.THIS .center {
+	margin: 0px auto;
+}
+
+.THIS .content {
+	max-width: 768px;
+	font-size: 12px;
+	color: #3c3d3e;
+}
+
+.THIS h3{
+	color: rgb(0, 112, 210);
+    font-size: 1rem;
+}
+
+.THIS ._date_detail{
+	text-align: right;
+}
+
+.THIS .slds-media__body{
+    font-size: 0.7rem;
+}
+
+.THIS h3._evt{
+	font-size: 1rem;
+}
+
+.THIS  .forceIcon.downIcon, 
+.THIS  .forceIcon.downIcon:before {
+	cursor: pointer !important;
+}

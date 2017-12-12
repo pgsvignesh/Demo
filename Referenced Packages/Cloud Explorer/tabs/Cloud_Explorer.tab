@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Cloud Explorer for Salesforce provides drag and drop of records from one Salesforce org to another, similar to how files are dragged and dropped in Windows.</description>
+    <icon>Products/Cloud_Explorer_Icon.png</icon>
+    <label>Cloud Explorer</label>
+    <mobileReady>false</mobileReady>
+    <motif>Custom283: TV Widescreen</motif>
+    <page>Cloud_Explorer</page>
+</CustomTab>

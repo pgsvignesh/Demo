@@ -1,0 +1,12 @@
+<aura:component implements="force:appHostable,force:lightningQuickAction" access="global" >
+	
+
+    <!-- Very simple addition -->
+
+    <ui:inputNumber aura:id="num1"/> +
+    <ui:inputNumber aura:id="num2"/>
+
+    <br/>
+    <ui:button label="Add" press="{!c.clickAdd}"/>
+
+</aura:component>

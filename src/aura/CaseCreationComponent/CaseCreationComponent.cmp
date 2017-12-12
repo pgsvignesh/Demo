@@ -1,0 +1,59 @@
+<aura:component controller="CaseController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="newCase" type="Case"  default="{ 'sobjectType': 'Case','Status': 'new','Origin': 'Web'}"/>
+    <aura:attribute name="myRecordId" type="String" description="Record to which the files should be attached" />  
+    <div class="slds-m-around--xx-large">
+        <div class="slds-grid">
+            <div class="slds-col">
+                <button class="slds-button slds-button--brand submit-case" onclick="{!c.openModel}">Submit Case</button>          
+            </div>
+            <div class="slds-grid_align-end slds-size--1-of-4">
+                <c:SearchBarCmp />
+            </div>
+        </div>
+        <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+        <aura:if isTrue="{!v.isOpen}">            
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.clickCancel}">
+                            X
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="header99" class="slds-text-heading--medium">Create Case</h2>
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <form class="slds-form--stacked">          
+                            <lightning:input aura:id="caseform" label="Case Subject"
+                                             name="caseSubject"
+                                             value="{!v.newCase.subject}"
+                                             required="true"/> 
+                            <lightning:input aura:id="caseform" label="Description"
+                                             name="caseDescription"                        
+                                             value="{!v.newCase.description}"/>   
+                            
+                            <lightning:fileUpload label="Attach receipt" 
+                                                  multiple="true" 
+                                                  accept=".pdf, .png"
+                                                  recordId="{!v.myRecordId}" 
+                                                  onuploadfinished="{!c.handleUploadFinished}" />
+                           
+                        </form>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--brand" onclick="{!c.clickCreate}" >Submit Case</button>
+                        <button class="slds-button slds-button--neutral" onclick="{!c.clickCancel}">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+            
+        </aura:if>
+    </div>
+</aura:component>

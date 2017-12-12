@@ -1,0 +1,60 @@
+<aura:component >
+	<aura:registerEvent name="evtOpenDetails" type="SL_LIGHT_CAAV:CA_SimpleAgendaOpenDetails"/>
+
+	<aura:attribute name="cardEvents" type="Object" description=""/>
+	<aura:attribute name="cardDate" type="Date" description=""/>
+	<aura:iteration var="evt" items="{!v.cardEvents}">
+		<div class="slds-card card--compact">
+		<header class="slds-card__header slds-grid">
+			<div class="slds-media media--center slds-has-flexi-truncate">
+				<div class="slds-media__body">
+					<h3 class="slds-text-heading--small slds-truncate _evt" onclick="{!c.detailEvent}" data-evt="{!evt.id}">{!evt.title}</h3>
+					Start {!evt.start}<br/>
+					End {!evt.end}
+				</div>
+				<div class="_date_detail">
+					<ui:outputDateTime value="{!v.cardDate}" format="MMM d"/>
+					<br/>
+					{!evt.startTime}
+					<br/>
+					<div  class="forceIcon downIcon" data-key="up" data-icon="" onclick="{!c.openClose}"></div>
+					<!--<aura:renderif isTrue="{!evt.isalldayevent != 'true'}">
+						<ui:outputDateTime value="{!evt.startDate}" format="h:mm a Z" timezone="{!$Locale.timezone}"/>
+						<aura:set attribute="else">
+		          			AllDay
+	          			</aura:set>
+	          		</aura:renderif>-->
+				</div>
+			</div>
+		</header>
+		  <section class="slds-card__body">
+		    <table class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal slds-no-row-hover _2_cols">
+		      <thead>
+		        <tr >
+					<aura:iteration var="fld" items="{!evt.fields}">
+						<th class="slds-text-heading--label slds-size--1-of-4" scope="col">{!fld.label}</th>
+					</aura:iteration>				          
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr class="slds-hint-parent">
+		          <aura:iteration var="fld" items="{!evt.fields}">
+		          	<td class="slds-size--1-of-4" data-label="{!fld.label}">
+		          		<aura:renderif isTrue="{!fld.link != undefined}">
+		          			<a onclick="{!c.detailEvent}" data-evt="{!fld.link}">{!fld.value}</a>
+		          			<aura:set attribute="else">
+		          			{!fld.value}
+		          			</aura:set>
+		          		</aura:renderif>
+		          		
+		          		
+		          	</td>
+		          </aura:iteration>	
+		        </tr>
+		      </tbody>
+		    </table>
+		  </section>
+		</div>
+		
+	</aura:iteration>
+</aura:component>

@@ -1,0 +1,65 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" controller="LeadController">
+    <aura:attribute name="newLead" type="Lead" 
+                    default="{'sobjectType': 'Lead',
+                             'FirstName': '',                     
+                             'LastName': '',
+                             'Company': ''					
+                             }"/>
+    <aura:attribute name="newInsertedLead" type="Lead" 
+                    default="{'sobjectType': 'Lead',
+                             'FirstName': '',                     
+                             'LastName': '',
+                             'Company': ''					
+                             }"/>
+    <div class="container">
+        <form class="slds-form--stacked">            
+            <div class="slds-form-element__control">
+                <ui:inputText aura:id="leadFirstName" label="First Name"
+                              class="slds-input"
+                              labelClass="slds-form-element__label"
+                              value="{!v.newLead.FirstName}"
+                              required="False"/>
+            </div> 
+            <div class="slds-form-element__control">
+                <ui:inputText aura:id="leadLastName" label="Last Name"
+                              class="slds-input"
+                              labelClass="slds-form-element__label"
+                              value="{!v.newLead.LastName}"
+                              required="False"/>
+            </div>    
+            <div class="slds-form-element__control">
+                <ui:inputText aura:id="leadCompany" label="Company"
+                              class="slds-input"
+                              labelClass="slds-form-element__label"
+                              value="{!v.newLead.Company}"
+                              required="False"/>
+            </div>   
+            <ui:button label="Submit"
+                       class="slds-button slds-button--neutral"
+                       labelClass="label"
+                       press="{!c.createLead}"/>
+            <div class="slds-form-element__control">
+                <ui:inputText aura:id="outleadFirstName" label="First Name"
+                              class="slds-input"
+                              labelClass="slds-form-element__label"
+                              value="{!v.newInsertedLead.FirstName}"
+                              required="False"/>
+            </div> 
+            <div class="slds-form-element__control">
+                <ui:inputText aura:id="outleadLastName" label="Last Name"
+                              class="slds-input"
+                              labelClass="slds-form-element__label"
+                              value="{!v.newInsertedLead.LastName}"
+                              required="False"/>
+            </div>    
+            <div class="slds-form-element__control">
+                <ui:inputText aura:id="outleadCompany" label="Company"
+                              class="slds-input"
+                              labelClass="slds-form-element__label"
+                              value="{!v.newInsertedLead.Company}"
+                              required="False"/>
+            </div>  
+           
+        </form>
+    </div>            
+</aura:component>

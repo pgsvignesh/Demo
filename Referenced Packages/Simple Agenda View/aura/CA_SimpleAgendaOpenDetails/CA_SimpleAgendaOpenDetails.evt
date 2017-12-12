@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="Open Details">
+<aura:attribute name="element" type="Object"/>
+</aura:event>

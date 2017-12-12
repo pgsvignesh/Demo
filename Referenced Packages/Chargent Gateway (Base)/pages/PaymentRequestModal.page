@@ -1,0 +1,253 @@
+<apex:page controller="ChargentBase.PaymentRequestModalController" showHeader="false" id="page">
+
+		<style type="text/css">
+			html, body {
+				height: 100%;
+				background-color:  rgb(170, 170, 170);/*#f8f8f8;*/
+				vertical-align: middle;
+			}
+
+			.text {
+				font-size: 16px;
+				display:block;
+				padding:10px 0 0 0;
+			}
+
+			.link {
+				font-size: 16px;
+			}
+
+			.info {
+				margin: 4px 20px;
+				font-size: 16px;
+				width: 80%;
+				margin-left: 10%;
+				margin-top: 20px;
+			}
+
+			.message .messageText {
+				word-wrap: break-word;
+			}
+		</style>
+
+		<apex:pageBlock rendered="{!IF(status = 'invalid_key', true, false)}" >
+			<apex:pageMessages escape="false"/>
+		</apex:pageBlock>
+
+	<apex:outputPanel rendered="{!IF(status != 'invalid_key', true, false)}">
+		<apex:outputPanel id="PaymentRequest" rendered="{!IF(obj.Id != NULL, true, false)}">
+			<apex:includeScript value="{!URLFOR($Resource.ChargentBase__jQuery, '/jquery-ui/js/jquery-1.9.1.js')}"/>
+
+			<apex:pageBlock rendered="{!IF (status = 'confirm', true, false)}">
+				<apex:pageMessage summary="{!IF(ISBLANK($Setup.Chargent_Settings__c.Payment_Request_Confirmation_Text__c), 'Payment Request was sent successfully.<br/>Thank you for using Chargent!', $Setup.Chargent_Settings__c.Payment_Request_Confirmation_Text__c + '<br/>Thank you for using Chargent!')}"
+									severity="confirm"
+									strength="3"
+									escape="false"/>
+			</apex:pageBlock>
+
+			<apex:pageBlock rendered="{!IF (status = 'warning', true, false)}">
+				<apex:pageMessage summary="Payment Request wasn't sent. Please check Email on Billing Contact."
+									severity="warning"
+									strength="3"
+									escape="false"/>
+			</apex:pageBlock>
+
+			<apex:pageBlock rendered="{!IF (status = 'error', true, false)}">
+				<apex:pageMessage summary="An error has occurred while sending Payment Request. Please contact your administrator. {!errorMessage}"
+									severity="error"
+									strength="3"
+									escape="false"/>
+			</apex:pageBlock>
+
+			<apex:form id="frm" rendered="{!IF (status = 'edit', true, false)}">
+				<apex:pageBlock id="block">
+					<apex:pageBlockSection id="section">
+
+						<apex:panelGrid columns="2" width="300px;">
+							<apex:outputText value="Send To:"/>
+							<apex:panelGroup >
+								<apex:inputText id="email" value="{!email}"/><br/>
+								<span id="emailerror" style="color: #d74c3b;"></span>
+							</apex:panelGroup>
+
+							<apex:outputText value="Billing contact:"/>
+							<apex:inputField id="contact" value="{!billingContactField.ReportsToId}"/>
+							<!--<apex:inputField id="contact" value="{!paymentRequest[prefix + 'Billing_Contact__c']}"/>-->
+
+							<apex:outputText value="Amount:"/>
+							<!-- <apex:outputField id="amount" value="{!obj['Charge_Amount__c']}"/> -->
+							<apex:outputText id="amount" value="{!chargeAmount}"/>
+
+							<apex:outputText value="Notes:"/>
+							<apex:panelGroup >
+								<apex:inputTextarea id="notes" value="{!notes}"/><br/>
+								<span id="noteserror" style="color: #d74c3b;"></span>
+							</apex:panelGroup>
+							<apex:outputText value="Payment Request Options:" rendered="{!IF(AND(NOT(ISBLANK(lengthAmountOptions)),lengthAmountOptions > 0), true,false)}"/>
+							<apex:panelGroup rendered="{!IF(AND(NOT(ISBLANK(lengthAmountOptions)),lengthAmountOptions > 1), true,false)}" >
+								<apex:selectList id="paymentRequest1" value="{!selectedOpt}"
+									size="1" required="true" >
+									<apex:selectOptions value="{!amountOptions}"/>
+								</apex:selectList>
+							</apex:panelGroup>
+
+							<apex:panelGroup rendered="{!IF(AND(NOT(ISBLANK(lengthAmountOptions)),lengthAmountOptions == 1),true,false)}" >
+								<apex:outputText value="{!oneOption}"/>
+							</apex:panelGroup>
+						</apex:panelGrid>
+
+					</apex:pageBlockSection>
+
+					<apex:pageBlockButtons location="bottom">
+						<apex:commandButton value="Send Request" action="{!sendRequest}" onclick="if (checkForErrors() == false) return false;"></apex:commandButton>
+					</apex:pageBlockButtons>
+				</apex:pageBlock>
+
+				<!-- <apex:outputPanel layout="block" rendered="{!IF (status = 'confirm', true, false)}">
+						<apex:outputPanel layout="block" styleClass="info">
+							<apex:outputText styleClass="text" value="{!IF(ISBLANK($Setup.Chargent_Settings__c.Payment_Request_Confirmation_Text__c), 'Payment Request was sent successfully.', $Setup.Chargent_Settings__c.Payment_Request_Confirmation_Text__c)}"></apex:outputText>
+							<apex:outputText styleClass="text" value="Thank you for using Chargent!"></apex:outputText> <br/><br/>
+						</apex:outputPanel>
+				</apex:outputPanel>
+				-->
+
+				<!-- <apex:outputPanel layout="block" rendered="{!IF (status = 'error', true, false)}">
+						<apex:outputPanel layout="block" styleClass="info">
+							<apex:outputLabel title="Error" value="An error has been occurred while sending Payment Request. Please contact your administrator." />
+						</apex:outputPanel>
+				</apex:outputPanel>
+				-->
+			</apex:form>
+
+
+			<script type="text/javascript">
+				var amount = jQuery('[id$=amount]')[0];
+				if (amount != null) {
+					amount.disabled = true;
+				}
+
+				var j$ = jQuery.noConflict();
+
+						var parent_domain = '{!JSENCODE($CurrentPage.parameters.parent_domain)}';
+
+						j$(document).ready(function() {
+								j$('input[id$=close]').click(function(event) {
+										event.preventDefault();
+										closeModalDialog();
+								});
+						});
+
+						function closeModalDialog() {
+								var cross_result = new Object();
+								cross_result.action = 'close_modal_dialog';
+
+								j$.postMessage(
+										cross_result,
+										parent_domain,
+										parent
+								);
+						}
+
+				function checkEmailAddress() {
+					var emailinput = jQuery('[id$="email"]')[0];
+					var contactinput = jQuery('[id$="contact"]')[0];
+
+					//var regexp = /^([0-9a-zA-Z]([-.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+[a-zA-Z]{2,9})$/g;
+					var regexp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+					//console.log(regexp.test(emailinput.value));
+
+					if (emailinput.value == '' && contactinput.value != '') {
+						var emailerror = jQuery('#emailerror')[0];
+						emailinput.style.border = '';
+						emailerror.innerHTML = '';
+						return true;
+					}
+					if ((emailinput.value != '' && regexp.test(emailinput.value) == false) || (emailinput.value == '' && contactinput.value == '') ) {
+						var emailerror = jQuery('#emailerror')[0];
+						emailinput.style.border = '2px solid #c00';
+						emailerror.innerHTML = '<strong>Error: </strong>Invalid email address.';
+						return false;
+					} else {
+						var emailerror = jQuery('#emailerror')[0];
+						emailinput.style.border = '';
+						emailerror.innerHTML = '';
+						return true;
+					}
+				}
+
+				function checkNotes() {
+					var notes = jQuery('[id$=notes]')[0];
+
+					if (notes.value.length > 512) {
+						var noteserror = jQuery('#noteserror')[0];
+						notes.style.border = '2px solid #c00';
+						noteserror.innerHTML = '<strong>Error: </strong>String is longer than 512 characters.';
+						return false;
+					} else {
+						var noteserror = jQuery('#noteserror')[0];
+						notes.style.border = '';
+						noteserror.innerHTML = '';
+						return true;
+					}
+				}
+
+				function checkForErrors() {
+					if (!checkEmailAddress() | !checkNotes())
+						return false;
+
+					return true;
+				}
+			</script>
+		</apex:outputPanel>
+
+		<apex:outputPanel id="PartialRefund" layout="block" rendered="{!IF(trans['Id'] != NULL, true, false)}">
+			<style type="text/css">
+				body {
+					background-color: rgb(170, 170, 170);
+				}
+				.button {
+					float: right;
+				}
+				.inputField {
+					width: 100%;
+				}
+				.grid {
+					margin: 0 auto;
+				}
+			</style>
+			<apex:form id="prfrm">
+				<apex:pageBlock id="content" rendered="{!IF (status != 'message', true, false)}">
+					<apex:pageMessage id="errormsg" summary="{!messageSummary}"
+									severity="{!messageSeverity}"
+									strength="3"
+									escape="false"
+									rendered="{!IF (status = 'error', true, false)}"/>
+					<apex:panelGrid columns="1" styleClass="grid">
+						<apex:outputText value="Please enter partial amount value."/>
+						<apex:outputText value="Current transaction amount is ${!unRefundAmount}" /> <!-- {!trans['Amount__c']} -->
+						<apex:inputText value="{!amount}" styleClass="inputField"/>
+						<br/>
+						<apex:commandButton id="refundButton" value="Refund" action="{!doPartialRefund}" onclick="disableButton();" styleClass="button" rerender="PartialRefund"/>
+					</apex:panelGrid>
+				</apex:pageBlock>
+			</apex:form>
+
+
+			<apex:pageBlock rendered="{!IF (status = 'message', true, false)}">
+				<apex:pageMessage summary="{!messageSummary}"
+									severity="{!messageSeverity}"
+									strength="3"
+									escape="false"/>
+			</apex:pageBlock>
+			<script type="text/javascript">
+				function disableButton() {
+					btn = document.getElementById("page:prfrm:content:refundButton");
+					if (btn != null) {
+						btn.disabled = true;
+						//btn.setAttribute('class', 'btn btnDisabled');
+					}
+				}
+			</script>
+		</apex:outputPanel>
+	</apex:outputPanel>
+</apex:page>

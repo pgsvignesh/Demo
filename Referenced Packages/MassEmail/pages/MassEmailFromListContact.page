@@ -1,0 +1,4 @@
+<apex:page standardController="Contact"  recordSetVar="contacts" extensions="MSTMassEmail.MassEmailController">
+	<apex:pageMessages />
+	<c:MassEmailComponent Setting="unused"/>
+</apex:page>

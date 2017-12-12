@@ -1,0 +1,15 @@
+<apex:page standardController="Event">
+    <apex:form >
+    OUTPUT
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <apex:inputField value="{!Event.StartDateTime}" showDatePicker="true" required="true"/>
+                <apex:outputPanel >
+                    <apex:outputLabel value="Start" for="eventstartdate"/>
+                    <input type ="date" id="eventstartdate" value="{!Event.StartDateTime}"/>
+                    <input type ="time" value="{!Event.StartDateTime}"/>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+  </apex:page>

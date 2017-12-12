@@ -1,0 +1,8 @@
+<design:component label="Sortable Data Grid">
+    <design:attribute name="Title" label="Title" description="Title for the panel" default="" />
+    <design:attribute name="RelationshipName" label="RelationshipName" description="Relationship name to the child object (eg to show Opportunities on Account, set value to 'Opportunities')" />
+    <design:attribute name="FieldSetName" label="FieldSetName" description="Name of field set of child objects" />
+    <design:attribute name="SDGTag" label="Advanced config: SDG Tag" description="Advanced use only: Tag for SDG.  Will override any selections made in RelationshipName and FieldSetName.  To be used when you need an advanced configuration only." />
+    <design:attribute name="NewSVGName" label="SVG Name" description="Name of the SLDS icon to use: visit https://www.lightningdesignsystem.com/resources/icons for more options" default="standard:account" />
+    <design:attribute name="ForceCardView" label="Always show as cards?" description="Always show in card view" default="false" />
+</design:component>

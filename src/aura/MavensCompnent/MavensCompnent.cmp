@@ -1,0 +1,5 @@
+<aura:component >
+  <aura:attribute name="lead" type="Lead" default="{'sobjectType': 'Lead'}"/>
+  <ui:inputText class="form-control" value="{!v.lead.lastName}"/>
+
+</aura:component>

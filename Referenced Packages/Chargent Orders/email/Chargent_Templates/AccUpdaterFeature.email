@@ -1,0 +1,7 @@
+Hello
+{!Email_Notification__c.First_Name__c} 
+Your card will expire soon. 
+Please use our online form to update your billing information here:
+{!Email_Notification__c.Account_Updater_Link_Formatted__c}
+Thanks,
+{!Organization.Name}

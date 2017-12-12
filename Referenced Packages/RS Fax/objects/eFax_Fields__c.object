@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Auto_Send_Fax_Criteria_Code__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Auto Send Fax Criteria Code</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Auto_Send_Fax_Pattern__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Auto Send Fax Pattern</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Barcode_Posistion_Left__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the number of pixels barcode should appear from the left of the page</inlineHelpText>
+        <label>Barcode Posistion from Left</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Barcode_Posistion_Top__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter number of pixels barcode should appear from the top of the page</inlineHelpText>
+        <label>Barcode Posistion from Top</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Barcode_Size_Width__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the size in pixels for the barcode. This will be applied to the width.</inlineHelpText>
+        <label>Barcode Size Width</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Document_ID__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Document ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Document_Path__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Document Path</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fax_Field_Label__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Fax Field Label</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fax_Field__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Fax Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fax_Number_Critera_Code__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Fax Number Critera Code</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fax_Number_Pattern__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Fax Number Pattern</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Fax_Number_Within_Attachment_Name__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Is Fax Number Within Attachment Name</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Object_Label__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Object Label</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Prefix__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Object Prefix</label>
+        <length>3</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Object</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Org_Fax_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Organization Fax Number</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Received_Fax_Relationship_Field__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Received Fax Relationship Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sent_Fax_Relationship_Field__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Sent Fax Relationship Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>eFax Fields</label>
+    <visibility>Public</visibility>
+</CustomObject>

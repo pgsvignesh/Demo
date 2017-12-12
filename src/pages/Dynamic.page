@@ -1,0 +1,68 @@
+<apex:page standardController="Dynamic__c" sidebar="false" showHeader="false"  extensions="DynamicController">
+<head>
+<style type="text/css">
+.myFormStyle {
+    background-color: #ffffff;
+        }
+
+h1
+    { 
+        font-family: "FuturaStd-Book", "Century Gothic", Arial, sans-serif; font-size:24px; font-weight: bold;font: normal bold 30px/30px Georgia, serif; line-height:50px;
+    }
+    
+.h4
+    {
+       color:#0059b3; font: normal bold 20px/28px Georgia, sans-serif; line-height:20px;
+    }
+.content
+    {
+           font-family: sans-serif; font-size: 11pt; font-weight:500; margin-top: 0; margin-bottom: 1rem; line-height: 1.5; color: #373a3c; 
+    }
+.subcontent{
+font-family: sans-serif; font-size: 11pt; font-weight:500; margin-top: 0; margin-bottom: 1rem; line-height: 1.5; color: #373a3c; position: relative; width: 100%;
+min-height: 1px;
+    padding-right: .9375rem;
+    padding-left: .9375rem;
+}
+#rich1{
+               width: 1100px; height: 488px;"
+             }
+</style>
+</head>
+<apex:form styleClass="myFormStyle" >
+
+        <apex:pageBlock mode="mainDetail">
+           <div id="rich1">
+                    <apex:outputField value="{!Dynamic.Image__c}"/>
+                 </div>
+            <h1> WELCOME {!$User.FirstName} {!$User.LastName}</h1><br/>
+            <apex:outputpanel styleClass="content"> 
+            <apex:outputField value="{!Dynamic.content__c}"/> 
+             <p class="content" style="line-height: 2;">Website         :       www.gmail.com</p>
+             <p class="content" style="line-height: 2;">Phone           :       {!$User.Phone}</p>
+             <p class="content" style="line-height: 2;">Email           :       {!$User.Email}</p>
+             </apex:outputpanel>
+             <apex:outputPanel styleClass="content">
+             <br><p class="h4">TEST TITLE1</p> </br>
+            <apex:outputField value="{!Dynamic.content1__c}"/>
+            </apex:outputPanel>
+            <apex:pageBlockSection columns="3">
+            <apex:outputPanel styleClass="subcontent">
+            <p class="h4">HEADING HIGHLIGHT TITLE 1</p>
+            <apex:outputField value="{!Dynamic.Image2__c}"/>
+            <apex:outputField value="{!Dynamic.content2__c}"/>
+            </apex:outputPanel>
+            <apex:outputPanel styleClass="subcontent">
+            <p class="h4">HEADING HIGHLIGHT TITLE 2</p>
+            <apex:outputField value="{!Dynamic.Image2__c}"/>
+            <apex:outputField value="{!Dynamic.content2__c}"/> 
+            </apex:outputPanel>
+            <apex:outputPanel styleClass="subcontent">
+            <p class="h4">HEADING HIGHLIGHT TITLE 3</p>
+            <apex:outputField value="{!Dynamic.Image2__c}"/>
+            <apex:outputField value="{!Dynamic.content2__c}"/>
+            </apex:outputPanel> 
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+</apex:form>
+</apex:page>

@@ -1,0 +1,8 @@
+<apex:page standardController="Opportunity" extensions="ChargentBase.CurrencyPicklistController">
+	<apex:form id="frm1" rendered="true">
+		<apex:selectList value="{!selectedCurrency}" size="1" id="theTextInput">
+			<apex:actionSupport event="onchange" action="{!setCurrencyString}" reRender="frm1"/>
+			<apex:selectOptions value="{!currencyString}"/>
+		</apex:selectList>
+	</apex:form>
+</apex:page>

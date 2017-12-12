@@ -1,0 +1,6 @@
+<apex:page controller="MyTimeController" docType="html-5.0"> 
+   <apex:form >
+      Enter Time: <apex:input type="time" value="{!myTime}"/>
+      <apex:commandButton action="{!actionSave}"/>
+    </apex:form>
+</apex:page>

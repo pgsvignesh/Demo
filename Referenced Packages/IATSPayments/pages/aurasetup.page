@@ -1,0 +1,84 @@
+<apex:page controller="IATSPayment.AURASetup" >
+
+<script type="text/javascript">
+function GoToAURASetup(to,p)
+{
+      var myForm = document.createElement("form");
+      myForm.method="post" ;
+      myForm.action = to ;
+      for (var k in p) {
+    var myInput = document.createElement("input") ;
+    myInput.setAttribute("name", k) ;
+    myInput.setAttribute("value", p[k]);
+    myForm.appendChild(myInput) ;
+
+  }
+  document.body.appendChild(myForm) ;
+  myForm.target="AURAiFrame";
+  myForm.submit() ;
+
+  document.body.removeChild(myForm) ;
+}
+
+</script>
+
+<style>
+#container header-section {
+display:none;
+}
+</style>
+
+<apex:form >
+
+<apex:sectionHeader title="iATS AURA Setup" subtitle="Configure Settings">
+            <description>
+                Settings that control the behavior of the iATS AURA application. 
+            </description>
+        </apex:sectionHeader>
+
+<apex:pageBlock >
+
+
+
+<apex:pageBlockSection columns="1" id="selectAccountBlock">
+
+<apex:pageBlockSectionItem >
+   <apex:outputPanel >
+   <table>
+   <tr><td><apex:outputLabel value="Please Select An iATS Account:" style="font-weight:bold"/></td></tr>
+   <tr>
+   <td>
+   <apex:selectList value="{!IATSAccountId}" size="1" id="accountName">
+   <apex:selectOptions value="{!ClientCodeOptions}"/>
+   <apex:actionSupport event="onchange" action="{!LoginSetupPage}" status="updateAccountStatus" reRender="selectAccountBlock"/> 
+   </apex:selectList>
+     <input type='button' value="Submit" onclick="GoToAURASetup('{!JSENCODE(AURAPageUrl)}',{Username:'{!JSENCODE(username)}',Password:'{!JSENCODE(password)}',HideMainMenue:'true',lang:'EN'})"></input>
+
+   </td>
+   <td>
+   <!--
+  <input type='button' value="AURA Setup" onclick="GoToAURASetup('{!JSENCODE(AURAPageUrl)}',{Username:'{!JSENCODE(username)}',Password:'{!JSENCODE(password)}',HideMainMenue:'true'})"></input>
+   --> 
+
+
+   </td>
+   <td>
+   <apex:actionStatus startText=" Please wait..." startStyle="color: blue" id="updateAccountStatus">
+   </apex:actionStatus>
+   </td>
+   </tr>
+   <tr>
+   <td><apex:messages style="color:red"/></td>
+   </tr>
+   </table>
+   </apex:outputPanel>
+  
+</apex:pageBlockSectionItem>
+   </apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+<apex:pageBlock >
+<apex:iframe src="" scrolling="true" id="AURAiFrame"/>
+</apex:pageBlock>
+
+</apex:page>

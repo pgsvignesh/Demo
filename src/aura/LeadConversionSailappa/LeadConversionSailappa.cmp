@@ -1,0 +1,12 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+<aura:attribute name="recordId" type="String" default="{!recordId}" />
+ <aura:attribute name="objType" type="String" default="{!objType}" />
+ <section class="slds-clearfix">
+ <div class="slds-float--right">
+ <lightning:buttonGroup >
+ <lightning:button label="Refresh" onclick="{!c.refreshRecord}" />
+ <lightning:button label="Edit" onclick="{!c.editRecord}" />
+ </lightning:buttonGroup>
+ </div>
+ </section>
+</aura:component>

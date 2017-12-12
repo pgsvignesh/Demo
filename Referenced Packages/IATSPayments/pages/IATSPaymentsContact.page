@@ -1,0 +1,1796 @@
+<apex:page standardcontroller="Contact" extensions="IATSPayment.IATSPayments_Controller_Lightning" docType="html-5.0" showHeader="false" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false" sidebar="false" cache="false" 
+           id="paymentsPageAccount" action="{!setupSettings}">
+
+    <apex:stylesheet value="{!URLFOR($Resource.IATSPayment__lightiningCSS, '/assets/styles/salesforce-lightning-design-system.min.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.IATSPayment__jqueryLight,'/Jquery.1.10.2.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.IATSPayment__aljs, '/jquery.aljs-init.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.IATSPayment__aljs, '/jquery.aljs-datepicker.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.IATSPayment__aljs, '/jquery.aljs-all-with-moment.min.js')}" />
+
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <script>
+
+            function ParseCreditCardString(txtObject){
+                var fullString = txtObject.value;
+                if(fullString.length > 0){
+                    if(checkCreditcard(fullString)!=null){
+                        return;
+                    }
+                    var string1 = fullString.substring(fullString.indexOf(';')+1,fullString.length);
+                    var strCreditcardNumber = string1.substring(0,string1.indexOf('='));
+                    var string2 = string1.substring(string1.indexOf('=')+1,string1.length);
+                    var string3 = string2.substring(0,4);
+                    var String4 = string3.substring(0,2);
+                    var String5 = string3.substring(2,4);
+                    var strExpiryDate = String5 + '/' + String4 ;
+                    
+                    var selectOption;
+                    selectOption = checkCreditcard(strCreditcardNumber);
+                    if(txtObject.id == "paymentsPageAccount:myFrm:txtCreditcardNumber"){
+                        if(selectOption != null){
+                            //document.getElementById('{!$Component.myFrm.payMB.oneTimePaymentSection.swipecard.txtswipecard}').setAttribute('style','display:none;');
+                            //document.getElementById('{!$Component.myFrm.payMB.oneTimePaymentSection.swipecard.txtswipecard}').parentNode.previousSibling.childNodes[0].setAttribute('style','display:none;');
+                            
+                            document.getElementById('{!$Component.myFrm.txtExpiryDate}').value = strExpiryDate;
+                            //document.getElementById('{!$Component.myFrm.payMB.oneTimePaymentSection.creditCardNumber.txtCreditcardNumber}').type = "text";
+                            document.getElementById('{!$Component.myFrm.txtCreditcardNumber}').value = strCreditcardNumber;
+                            document.getElementById('{!$Component.myFrm.creditCardType1}')[selectOption].selected = "1";
+                            document.getElementById('{!$Component.myFrm.creditCardType1}').focus();
+                        }
+                        else{
+                            //document.getElementById('{!$Component.myFrm.payMB.oneTimePaymentSection.swipecard.txtswipecard}').value = '';
+                            document.getElementById('{!$Component.myFrm.txtExpiryDate}').value = '';
+                            document.getElementById('{!$Component.myFrm.txtCreditcardNumber}').value = '';
+                            document.getElementById('{!$Component.myFrm.creditCardType1}')[0].selected = "1";
+                        }
+                    }
+                    else if(txtObject.id == "paymentsPageAccount:myFrm:txtCreditcardNumberRP"){
+                        if(selectOption != null){
+                            //document.getElementById('{!$Component.myFrm.payMB.oneTimePaymentSection.swipecard.txtswipecard}').setAttribute('style','display:none;');
+                            //document.getElementById('{!$Component.myFrm.payMB.oneTimePaymentSection.swipecard.txtswipecard}').parentNode.previousSibling.childNodes[0].setAttribute('style','display:none;');
+                            
+                            document.getElementById('{!$Component.myFrm.txtExpiryDateRP}').value = strExpiryDate;
+                            //document.getElementById('{!$Component.myFrm.payMB.recurringPageBlockSection.ccSectionItemRP.txtCreditcardNumberRP}').type = "text";
+                            document.getElementById('{!$Component.myFrm.txtCreditcardNumberRP}').value = strCreditcardNumber;
+                            document.getElementById('{!$Component.myFrm.creditCardType2}')[selectOption].selected = "1";
+                            document.getElementById('{!$Component.myFrm.creditCardType2}').focus();
+                        }
+                        else{
+                            //document.getElementById('{!$Component.myFrm.payMB.oneTimePaymentSection.swipecard.txtswipecard}').value = '';
+                            document.getElementById('{!$Component.myFrm.txtExpiryDateRP}').value = '';
+                            document.getElementById('{!$Component.myFrm.txtCreditcardNumberRP}').value = '';
+                            document.getElementById('{!$Component.myFrm.creditCardType2}')[0].selected = "1";
+                        }
+                    }
+                }
+            }
+            
+            function parseCreditNumberExpDate(txtObject,e){
+                var keynum = 0;
+                if (window.event){
+                    keynum = window.event.keyCode;
+                }
+                else if (e.which){
+                    keynum = e.which;
+                }
+                if (keynum == 13){
+                    ParseCreditCardString(txtObject);
+                }
+            }
+            
+            function checkCreditcard(ccNumber){
+                var reVisa = /^4[0-9]{12}(?:[0-9]{3})?$/; 
+                var reMasterCard = /^5[1-5][0-9]{14}$/;
+                var reDiscover = /^6(?:011|5[0-9]{2})[0-9]{12}$/;
+                var reAmericanExpress = /^3[47][0-9]{13}$/;
+                
+                if(reVisa.test(ccNumber) == true) return 0; 
+                if(reMasterCard.test(ccNumber) == true) return 1;
+                if(reDiscover.test(ccNumber) == true) return 2;
+                if(reAmericanExpress.test(ccNumber) == true) return 3;
+            }
+            
+            function disableEnterKey(e){
+                var key;     
+                if(window.event)
+                    key = window.event.keyCode; //IE
+                else
+                    key = e.which; //firefox     
+                return (key != 13);
+            }
+            
+            function changeEntryMode(entryMode){
+                var txtCreditCard = document.getElementById('{!$Component.txtCreditcardNumber}');
+                if(txtCreditCard != null){
+                    if(entryMode.value == "CardReader"){
+                        txtCreditCard.focus();
+                        //txtCreditCard.type = "password";
+                    }
+                    else{
+                        entryMode.focus();
+                        //txtCreditCard.type = "text";
+                    }
+                }
+            }
+            
+            /* Commented on 31012017*/
+            /*if(document.getElementById('{!$Component.paymentsPageOpportunity:myFrm:enrymodelist}').value == "CardReader") {
+                    var txtCreditCard = document.getElementById('{!$Component.paymentsPageOpportunity:myFrm:txtCreditcardNumber}');
+                    if(entryMode.value == "CardReader"){
+                        txtCreditCard.focus();
+                        //txtCreditCard.type = "password";
+                    }
+                } */       
+            
+            
+            function changeEntryModeRC(entryMode){
+                var txtCreditCard = document.getElementById('{!$Component.myFrm.txtCreditcardNumberRP}');
+                if(txtCreditCard != null){
+                    if(entryMode.value == "CardReader"){
+                        txtCreditCard.focus();
+                        //txtCreditCard.type = "password";
+                    }
+                    else{
+                        entryMode.focus();
+                        //txtCreditCard.type = "text";
+                    }
+                }
+            }
+            
+            
+            function focusOnCC(objElement){
+                //objElement.type = "password";
+            }
+            
+            function clearCCData() {
+                if(document.getElementById('{!$Component.myFrm.txtCreditcardNumber}') != null){
+                    document.getElementById('{!$Component.myFrm.txtExpiryDate}').value = '';
+                    document.getElementById('{!$Component.myFrm.txtCreditcardNumber}').value = '';
+                    document.getElementById('{!$Component.myFrm.creditCardType1}')[0].selected = "1";
+                }
+                else if(document.getElementById('{!$Component.myFrm.txtCreditcardNumberRP}') != null){
+                    document.getElementById('{!$Component.myFrm.txtExpiryDateRP}').value = '';
+                    document.getElementById('{!$Component.myFrm.txtCreditcardNumberRP}').value = '';
+                    document.getElementById('{!$Component.myFrm.creditCardType2}')[0].selected = "1";
+                }
+            }
+
+            if('{!IATSAccountId}' == '' || '{!IATSConnectionError}' == 'true') {
+                window.resizeTo(635,220); 
+            }
+            
+            function copyValueToMandateSigningDate(t) {
+                if(document.getElementById('{!$Component.euro1}') != null) {
+                    document.getElementById('{!$Component.euro1}').value = t.value;
+                }
+            }
+            function addselected() {
+                recuringsection();
+            }
+            //Assigning SLDS Static Resource Path To A Variable To Use It With ALJS Initialization
+            var assetsLoc = '{!URLFOR($Resource.lightiningCSS)}';
+            
+            //ALJS Initialization   
+            $.aljsInit({
+                assetsLocation: assetsLoc, //SLDS Static Resource Path
+                scoped: true
+            });
+            
+            $(document).on('click','img.dateimg',function(){
+                var dtid = $(this).closest('div').siblings('input.clsDatePicker').attr('id');
+                var dtval = $('#'+dtid).val();
+                $('#'+dtid).val('');
+                $('#'+dtid).trigger('focus');
+                $('#'+dtid).val(dtval);
+                $('.slds-datepicker.slds-dropdown.slds-dropdown--left').css('top','-314px');
+            });
+            
+            function fnDatePicker() {
+                $.map($('.clsDatePicker'),function(o,idx){
+                    var id = $(o).attr('id');
+                    var idval = $(o).val();
+                    var dtfmt = '{!if(dateFormat = 'monthFirst', 'M/D/YYYY', 'D/M/YYYY')}';
+                    var arrdt = idval.length > 0 ? idval.split('/') : [];
+                    if(arrdt.length>0 && arrdt.length == 3 && dtfmt == 'D/M/YYYY'){
+                        //new Date(year, month, day, hours, minutes, seconds, milliseconds)
+                        idval = new Date(parseInt(arrdt[2]),parseInt(arrdt[1])-1,parseInt(arrdt[0]));
+                    } else if(arrdt.length>0 && arrdt.length == 3 && dtfmt == 'M/D/YYYY'){
+                        idval = new Date(parseInt(arrdt[2]),parseInt(arrdt[0])-1,parseInt(arrdt[1]));
+                    }
+                    var tdt = '<input class="slds-input clsDatePicker" data-orgid="' + id + '" id="datepick' + idx + '" name="datepick' + idx + '" size="12" type="text" />';
+                    $(document.getElementById(id)).closest('span').hide();
+                    $(document.getElementById(id)).closest('span').before(tdt);
+                    //{!if(dateFormat = 'monthFirst', "format: 'M/D/YYYY'", "format: 'D/M/YYYY'")}
+                    $(document.getElementById('datepick' + idx)).datepicker({
+                        initDate: idval,
+                        format: dtfmt,
+                        //format: 'M/D/YYYY', //Date Format Of Datepicker Input Field
+                        onChange: function(datepicker) {
+                            var actDtid = $(datepicker.$el[0]).attr('data-orgid');
+                            var dtval = datepicker.$el[0].value;
+                            $(document.getElementById(actDtid)).val(dtval);
+                        }
+                    });
+                    
+                    /*$(document.getElementById(id)).datepicker({
+                            dateFormat: 'm/d/yy',
+                        });*/
+                    });
+                    //$('input.clsDatePicker').datepicker({ dateFormat: 'mm/dd/yyyy' });
+                }
+            $(document).ready(function() {
+                fnDatePicker();           
+            });
+            function showSpinner(){
+                $('.slds-spinner_container').removeClass('slds-hide');
+                $('.slds-spinner_container').addClass('slds-show');
+            
+                var winWidth = $(document).width();
+                var winHeight = $(document).height();
+                $('.slds-spinner_container').css({ 'width': winWidth,'height': winHeight });
+            }
+            
+            function hideSpinner(){
+                $('.slds-spinner_container').removeClass('slds-show');
+                $('.slds-spinner_container').addClass('slds-hide');    
+            }    
+            </script>
+            <apex:outputPanel id="updateRecurringWindow">
+                <script>
+                function updateRecurringFunction()
+                {            
+                    /*alert('{!JSENCODE(recurringResponse)}');  
+                        if({!saveSuccess})
+                        { 
+                            parent.window.close();      
+                        }*/
+                    } 
+                function addErrorClass() {
+                    var t = "{!saveSuccess}";
+                    var r = "{!resultOK}";
+                    var ru = "{!recurrUpdate}";
+                    var va = "{!authStatus}"
+                    $('html,body').scroll(function() {
+                        $(this).stop(true, false);
+                    });
+                    if((t == 'true' && r == 'true') || (t == 'true' && ru == 'true')) {
+                        $('html, body').animate({ scrollTop: 0 }, 'fast');
+                        $('ul').addClass('slds-notify slds-notify--toast slds-theme--success customMessage messagesZindex');
+                        $('ul').css('color','white');
+                    } else if (t == 'false' && r == 'false' && va != 'OK') {
+                        //$('ul').addClass('slds-notify slds-notify--toast slds-theme--error customMessage messagesZindex');
+                        $('html, body').animate({ scrollTop: 0 }, 'fast');
+                        $('#topErrMsg').addClass('slds-notify slds-notify--toast slds-theme--error customMessage messagesZindex');
+                    } else if (t == 'true' && r == 'false' && ru == 'false' && va != 'OK') {
+                        $('html, body').animate({ scrollTop: 0 }, 'fast');
+                        $('ul').addClass('slds-notify slds-notify--toast slds-theme--error customMessage messagesZindex');
+                        $('ul').css('color','white');
+                    } else {
+                        $('html,body').scroll(function() {
+                            $(this).stop(true, false);
+                        });
+                    }
+                }
+                function blankFunction()
+                {
+                }
+                
+                function updateRecurringUKFunction()
+                {            
+                    alert('This update will not change the payer’s Bank Account information. Please advise the Payer to contact their bank directly.');                 
+                }
+                
+                function recurringResize()
+                {       
+                    window.resizeTo(635,725);         
+                } 
+                
+                function oneTimeResize()
+                {       
+                    window.resizeTo(635,669);         
+                }
+                function information()
+                {       
+                    alert("NA Date Format:mm/dd/yyyy \nUK Date Format:dd/mm/yyyy");         
+                } 
+                
+                function achUSPopup() 
+                {
+                    newwindow = window.open('https://www.iatspayments.com/paymentbox/img/US.jpg','ACH Check Numbers','height=151,width=292');  
+                }
+                function achCDNPopup() 
+                {
+                    newwindow = window.open('https://www.iatspayments.com/paymentbox/img/CAN.jpg','ACH Check Numbers','height=151,width=292');
+                }
+                function achUKPopup() 
+                {
+                    newwindow = window.open('https://www.uk.iatspayments.com/paymentbox/img/UK.jpg','ACH Check Numbers','height=175,width=334');
+                }
+                </script> 
+                <script>
+                function entrymodePaymentchange(lstentrymode ){
+                    var entrymode = document.getElementById(lstentrymode)
+                    var selectvalue = entrymode.options[entrymode.selectedIndex].value;
+                }
+                
+                /* function fnradiocheck() {
+                        var a = $('#pay-CC').val();
+                        alert(a);
+                        //document.getElementById(this.htmlFor).checked=true;
+                        paymentsection();
+                    }*/
+                </script>
+                
+            </apex:outputPanel>  
+            <style>
+                .contactBtn {background-color: #8370c2;}
+                span.dateInput.dateOnlyInput span.dateFormat { display:none;}
+                .slds-section__title-action:hover {
+                background: #8370c2 !important;
+                cursor: default;
+                }
+                #msgtitle:hover {
+                background: #555152 !important;
+                }
+                #msgtitle2:hover {
+                background: #DAD9DA !important;
+                }
+                .errorSmallMsg {
+                padding-left:0.8%;
+                font-size:18px;
+                width:99%;
+                }
+                .myspinner {
+                    z-index: 1000;
+                }
+            </style>
+        </head>
+        
+        
+        <div class="slds">
+            <div class="slds-spinner_container slds-hide myspinner">
+                <div class="slds-spinner--brand slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+            <div class="slds-align--absolute-center">
+                <img src="{!$Resource.IATS_Header_Image_29}" width="480" height="65" />
+            </div>
+            <apex:outputPanel id="errorMessageTop" rendered="{!IATSAccountId == null || IATSConnectionError == true}">
+                <apex:messages style="color:red"/>
+            </apex:outputPanel>
+            
+            <apex:form rendered="{!IATSAccountId != null && IATSConnectionError != true}" id="myFrm" >
+                <apex:actionFunction name="recuringsection" action="{!setPaymentTypeRecurring}"
+                 reRender="optRecurring,optOneTime,optOTSection,optRecSection,btnPayerInfo,errorMessage,topErrHead,codeInfo,pgBlkButtons,payMB" oncomplete="fnDatePicker();hideSpinner();return false;" />
+                
+                <apex:actionFunction name="paymentsection" status="PaymentStatus" reRender="payMB" oncomplete="fnDatePicker();" />   
+                <body>
+                    <apex:outputPanel id="mainSection">
+                        <apex:outputPanel rendered="{!Processed}">
+                            <div id="Content">
+                                <!--<apex:outputPanel rendered="{!gwa != 's'}">
+                                    <fieldset class="slds-form--compound">
+                                        <div class="slds-form-element__group">
+                                            <div class="slds-form-element__row">
+                                                <div class="slds-form-element slds-size--1-of-1 slds-table slds-max-medium-table--stacked-horizontal">
+                                                    <table class="slds-table slds-max-medium-table--stacked-horizontal" border="0">
+                                                        <tr class="slds-hint-parent">
+                                                            <td class="slds-cell-wrap">
+                                                                <table class="slds-table slds-max-medium-table--stacked-horizontal" border="0" cellpadding="0" cellspacing="0">
+                                                                    <tr class="slds-hint-parent">
+                                                                        <td class="slds-cell-wrap" width="600" bgcolor="#555152" id="msgtitle">
+                                                                            <p align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                <font color="#FFFFFF" size="5" face="verdana,arial,swiss">
+                                                                                    <strong>
+                                                                                        <apex:outputText value="{!oneTimePaymentResultMsg_title}"/>
+                                                                                    </strong>
+                                                                                </font>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <table class="slds-table slds-max-medium-table--stacked-horizontal" border="0" cellpadding="0" cellspacing="0">
+                                                                    <tr class="slds-hint-parent">
+                                                                        <td class="slds-cell-wrap" valign="top" width="600" bgcolor="#DAD9DA" id="msgtitle2">
+                                                                            <div align="center">
+                                                                                <center>
+                                                                                    <pre>
+<font face="Arial"></font>
+</pre>
+                                                                                </center>
+                                                                            </div>
+                                                                            <p align="center">
+                                                                                <font size="3" face="Arial">
+                                                                                    <strong>
+                                                                                        <apex:outputText value="{!oneTimePaymentResultMsg_truncated}"/>
+                                                                                    </strong>
+                                                                                </font>
+                                                                            </p>
+                                                                            <p align="center"></p>
+                                                                            <center>
+                                                                                <a href="javascript:window.open('/{!callingRecordId}','_parent');">Back to Record</a>
+                                                                            </center>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </apex:outputPanel>-->
+                                <apex:outputPanel rendered="{!gwa == 's'}">
+                                    <fieldset class="slds-form--compound">
+                                        <div class="slds-form-element__group">
+                                            <div class="slds-form-element__row">
+                                                <div class="slds-form-element slds-size--1-of-1 slds-table slds-max-medium-table--stacked-horizontal">
+                                                    <table class="slds-table slds-max-medium-table--stacked-horizontal" border="0">
+                                                        <tr class="slds-hint-parent">
+                                                            <td class="slds-cell-wrap">
+                                                                <table class="slds-table slds-max-medium-table--stacked-horizontal" border="0" cellpadding="0" cellspacing="0">
+                                                                    <tr class="slds-hint-parent">
+                                                                        <td class="slds-cell-wrap" width="600" bgcolor="#555152">
+                                                                            <p align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                <font color="#FFFFFF" size="5" face="verdana,arial,swiss">
+                                                                                    <strong>{!$Label.SavePaymentinfoResult}</strong>
+                                                                                </font>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <table class="slds-table slds-max-medium-table--stacked-horizontal" border="0" cellpadding="0" cellspacing="0">
+                                                                    <tr class="slds-cell-wrap">
+                                                                        <td class="slds-cell-wrap" valign="top" width="600" bgcolor="#DAD9DA">
+                                                                            <div align="center">
+                                                                                <center>
+                                                                                    <pre>
+                                                                                        <font face="Arial"></font>
+                                                                                    </pre>
+                                                                                </center>
+                                                                            </div>
+                                                                            <p align="center">
+                                                                                <font size="3" face="Arial">
+                                                                                    <strong>
+                                                                                        <apex:outputText value="{!savePaymentInfoResponse}" rendered="{!gwa != null}"/>
+                                                                                    </strong>
+                                                                                </font>
+                                                                            </p>
+                                                                            <p align="center"></p>
+                                                                            <center>
+                                                                                <a href="javascript:window.open('/{!callingRecordId}','_parent');">Back to Record</a>
+                                                                            </center>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!CCResult == 'invalid' && gwa != 's'}">
+                                    <fieldset class="slds-form--compound">
+                                        <div class="slds-form-element__group">
+                                            <div class="slds-form-element__row">
+                                                <div class="slds-form-element slds-size--1-of-1">
+                                                    <p>
+                                                        <b>{!$Label.iatspayment__transactioncouldnotbecompletedpleasecheck}</b>
+                                                    </p>
+                                                    <center>
+                                                        <a href="javascript:window.open('/{!callingRecordId}','_parent');">Back to Record</a>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!contains(CCResult,'Reject') && CCResult != 'invalid' && gwa != 's'}">
+                                    <fieldset class="slds-form--compound">
+                                        <div class="slds-form-element__group">
+                                            <div class="slds-form-element__row">
+                                                <div class="slds-form-element slds-size--1-of-1" style="padding-left:0.7%;">
+                                                    <br/>
+                                                    <br/>
+                                                    <b>{!$Label.iatspayment__rejectcodesinformationavailableat}</b>
+                                                    <br/>
+                                                    <a href="https://www.iatspayments.com/english/help/rejects.html" target="_blank">https://www.iatspayments.com/english/help/rejects.html</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </apex:outputPanel>
+                            </div>
+                        </apex:outputPanel>
+
+                        <!--******************Payments block to be rendered when processed is false **************-->
+
+                        <apex:outputPanel id="payMB" rendered="{!IATSAccountId != null && Processed == false}">
+                            <apex:outputPanel id="paymentsMainBlock" rendered="{!IATSAccountId != null && Processed == false}">
+                                <apex:outputPanel rendered="{!if(saveSuccess == false,true,false)}">
+                                    <!--<apex:pageMessage id="topErrMsg" severity="warning"/>-->
+                                    <div id="topErrMsg" style="color:white; width:97%;font-size: 18px;">{!$Label.iatspayment__reviewerrors}</div>
+                                </apex:outputPanel>
+
+                                <apex:outputPanel id="errorMessage">
+                                    <apex:messages style="color:red; width:97%;padding-left:2.5%;"/>                                
+                                </apex:outputPanel>
+                                
+                                <apex:outputPanel id="codeInfo" rendered="{!(!resultOK && saveSuccess && !recurrUpdate && authStatus != 'OK')}">
+                                   
+                                    <div style="width:97%;padding-left: 2%;">
+                                        {!$Label.iatspayment__rejectcodesinformationavailableat}<br/>
+                                        <a href="https://www.iatspayments.com/english/help/rejects.html" target="_blank">https://www.iatspayments.com/english/help/rejects.html</a>
+                                    </div>
+                                </apex:outputPanel>
+                                
+                                <fieldset class="slds-box slds-theme--default slds-container">
+                                    <legend class="slds-text-heading--medium slds-p-vertical--medium"></legend>
+                                    
+                                    <!-- Account Information -->
+                                    <div>
+                                        <div class="slds-section">
+                                            <h3 class="slds-section__title">
+                                                <a class="slds-button slds-section__title-action contactBtn">
+                                                    {!$Label.iATSAccountInformation}
+                                                </a>
+                                            </h3>
+                                            <apex:outputPanel id="iATSAccountInformation">
+                                                <div class=""  >
+                                                    <fieldset class="slds-form--compound">
+                                                        <div class="slds-form-element__group">
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-form-element slds-size--1-of-2">
+                                                                    <apex:outputPanel id="selectAccountBlock">
+                                                                        <apex:outputLabel styleClass="slds-form-element__label"  value="{!$Label.iatspayment__accountname}" for="accountName"/>
+                                                                        <div class="slds-select_container">
+                                                                            <apex:selectList styleClass="slds-select" value="{!IATSAccountId}" size="1" id="accountName" disabled="{!oneAccount || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)}">
+                                                                                <apex:selectOptions value="{!ClientCodeOptions}"/>
+                                                                                <apex:actionSupport event="onchange" onsubmit="showSpinner();" action="{!updateAccountSelected}" status="updateAccountStatus" 
+                                                                                                    reRender="topErrHead,codeInfo,payMB" oncomplete="fnDatePicker();hideSpinner();"/>
+                                                                                <!-- selectAccountBlock,payMBIATS,selectCustomerCodeBlock-->
+                                                                            </apex:selectList>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                </div>
+                                                                <div class="slds-form-element slds-size--1-of-2">
+                                                                    <apex:outputPanel id="selectCustomerCodeBlock" >
+                                                                        <apex:outputPanel rendered="{!customerCodesExist}">
+                                                                            <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__iatscustomercode}" for="customerCode"/>
+                                                                            <div class="slds-select_container">
+                                                                                <apex:selectList styleClass="slds-select" value="{!customerCodeRecordid}" size="1" id="customerCode" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)}">
+                                                                                    <apex:selectOptions value="{!CustomerCodeOptions}"/>
+                                                                                    <apex:actionSupport event="onchange"  action="{!updateCustomerCodeSelected}" status="updateAccountStatus" 
+                                                                                                        reRender="topErrHead,codeInfo,payMB" oncomplete="fnDatePicker();hideSpinner();" onsubmit="showSpinner();"/>
+                                                                                    <!-- selectAccountBlock,paymentsMainBlockIATS,selectCustomerCodeBlock-->
+                                                                                </apex:selectList>
+                                                                            </div>
+                                                                        </apex:outputPanel>
+                                                                    </apex:outputPanel>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset class="slds-form--compound">
+                                                        <div class="slds-form-element__group">
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-form-element slds-size--1-of-2">
+                                                                    <apex:outputText ></apex:outputText>
+                                                                    <apex:actionStatus startText="{!$Label.iatspayment__updatingfields}" startStyle="color: blue" id="updateAccountStatus"></apex:actionStatus>
+                                                                </div>
+                                                                <div class="slds-form-element slds-size--1-of-2">
+                                                                    <apex:outputPanel rendered="{!RelatedRecordsExist}">
+                                                                        <apex:outputLabel styleClass="slds-form-element__label"  value="{!IF(RelatedRecordsMultiple, '{!$Label.RelatedRecords}', 'Related Record')}"  style="color:blue"/>
+                                                                        <apex:dataTable value="{!relatedRecords}" var="relatedRecordz" id="theList">
+                                                                            <apex:column >
+                                                                                <apex:outputLink value="{!baseURL}/{!relatedRecordz.recordId}" target="blank" id="theLink">{!relatedRecordz.recordName}</apex:outputLink>
+                                                                            </apex:column>
+                                                                        </apex:dataTable>
+                                                                    </apex:outputPanel>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+                                    <!-- End of iATS Account Information -->
+                                    
+                                    <!-- Payer Information -->
+                                    <div>
+                                        <div class="slds-section">
+                                            <h3 class="slds-section__title">
+                                                <a class="slds-button slds-section__title-action contactBtn">
+                                                    {!$Label.PayerInformation}
+                                                </a>
+                                            </h3>
+                                            <apex:outputPanel id="optPayerInformationsection">
+                                                <div class="">
+                                                    <fieldset class="slds-form--compound">
+                                                        <div class="slds-form-element__group">
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-form-element slds-size--1-of-2">
+                                                                    <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__firstname}" for="firstName"/>
+                                                                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                        <apex:outputPanel layout="block" styleClass="requiredBlock" rendered="{!mPayment == 'ACH' && IATSAccountSystem == 'UK'}"/>
+                                                                        <apex:inputText styleClass="slds-input" value="{!firstName}" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)}"/>
+                                                                    </apex:outputPanel>
+                                                                </div>
+                                                                <div class="slds-form-element slds-size--1-of-2">
+                                                                    <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__lastname}" for="lastName"/>
+                                                                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                        <apex:outputPanel layout="block" styleClass="requiredBlock" rendered="{!mPayment == 'ACH' && IATSAccountSystem == 'UK'}"/>
+                                                                        <apex:inputText styleClass="slds-input" value="{!lastName}" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)}"/>
+                                                                    </apex:outputPanel>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset class="slds-form--compound">
+                                                        <div class="slds-form-element__group">
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-form-element slds-size--1-of-2">
+                                                                    <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__email}" for="emailAddress"/>
+                                                                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                        <apex:inputText styleClass="slds-input" value="{!emailAddress}" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)}"/>
+                                                                    </apex:outputPanel>
+                                                                </div>
+                                                                <div class="slds-form-element slds-size--1-of-2">
+                                                                    <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__companyname}" for="company"/>
+                                                                    <apex:inputText styleClass="slds-input" value="{!company}" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)}"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset class="slds-form--compound">
+                                                        <div class="slds-form-element__group">
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-form-element slds-size--1-of-2">
+                                                                    <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__streetaddress}" for="streetAddress"/>
+                                                                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                        <apex:outputPanel layout="block" styleClass="requiredBlock" rendered="{!mPayment == 'ACH' && IATSAccountSystem == 'UK'}"/>
+                                                                        <apex:inputText styleClass="slds-input"  value="{!StreetAddress}" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)}"/>
+                                                                    </apex:outputPanel>
+                                                                </div>
+                                                                <div class="slds-form-element slds-size--1-of-2">
+                                                                    <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__city}" for="city"/>
+                                                                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                        <apex:outputPanel layout="block" styleClass="requiredBlock" rendered="{!mPayment == 'ACH' && IATSAccountSystem == 'UK'}"/>
+                                                                        <apex:inputText styleClass="slds-input"  value="{!City}" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)}"/>
+                                                                    </apex:outputPanel>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset class="slds-form--compound">
+                                                        <div class="slds-form-element__group">
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-form-element slds-size--1-of-2">
+                                                                    <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__stateprovince}" for="stateProvince"/>
+                                                                    <apex:inputText styleClass="slds-input"  value="{!StateProvince}" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)}"/>
+                                                                </div>
+                                                                <div class="slds-form-element slds-size--1-of-2">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__zippostalcode}" for="zipCode"/>
+                                                                                <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                    <apex:inputText styleClass="slds-input" value="{!zipCode}" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)}"/>
+                                                                                </apex:outputPanel>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset class="slds-form--compound">
+                                                        <div class="slds-form-element__group">
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-form-element slds-size--1-of-1">
+                                                                    <apex:outputText value="{!$Label.iatspayment__pleaseselectapaymentdonationtype}" style="color:blue" 
+                                                                        rendered="{!gwa = null && processor != 'rapidata'}"></apex:outputText>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset class="slds-form--compound">
+                                                        <div class="slds-form-element__group">
+                                                            <div class="slds-form-element__row">
+                                                                <div class="slds-form-element slds-size--1-of-1">
+                                                                    <apex:outputPanel id="btnPayerInfo" style="padding-left: 23%;">
+                                                                        <apex:commandButton value="{!$Label.iatspayment__onetimepayment}" action="{!setPaymentTypeOneTime}"
+                                                                                    styleClass="slds-button slds-button--brand slds-button--small"     
+                                                                                    reRender="optRecurring,optOneTime,optOTSection,optRecSection,btnPayerInfo,errorMessage,topErrHead,codeInfo,pgBlkButtons"
+                                                                                    disabled="{!IF((paymentType == 'onetime' || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)), true, false)}" rendered="{!gwa = null && processor != 'rapidata'}" oncomplete="fnDatePicker();hideSpinner();"
+                                                                                    onclick="showSpinner();"/>
+                                                                            &nbsp; &nbsp;
+                                                                        <!--<apex:commandButton value="Recurring Payments" action="{!setPaymentTypeRecurring}" 
+                                                                                reRender="optRecurringPaymentInformationsection,errorMessage" status="PaymentStatus" 
+                                                                                disabled="{!paymentType = 'recurring'}" rendered="{!gwa = null}"/>-->
+                                                                         <!--<apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" value="{!$Label.iatspayment__recurringpayments}" onclick="showSpinner();addselected();"
+                                                                                disabled="{!IF((paymentType == 'recurring' || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)), true, false)}" rendered="{!gwa = null}" oncomplete="fnDatePicker();hideSpinner();return false;" rerender="topErrHead,codeInfo,payMB"/>-->
+                                                                            <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" value="{!$Label.iatspayment__recurringpayments}" onclick="showSpinner();addselected();return false;"
+                                                                                disabled="{!IF((paymentType == 'recurring' || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)), true, false)}" rendered="{!gwa = null && processor != 'rapidata'}" />                                                                    
+                                                                            &nbsp;&nbsp;
+                                                                        <!--<apex:actionStatus id="PaymentStatus">
+                                                                            <apex:facet name="start">
+                                                                                <apex:image url="{!$Resource.IATSPayment__loadingImageSmall}"/>
+                                                                            </apex:facet>
+                                                                        </apex:actionStatus>-->
+                                                                    </apex:outputPanel>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+                                    <!-- End of Payer Information -->
+                                    
+                                    <!-- One Time Payment Information -->
+                                    <div>
+                                        <div class="slds-section">
+                                            <h3 class="slds-section__title">
+                                                <a class="slds-button slds-section__title-action contactBtn">
+                                                    <!--<svg aria-hidden="true" class="slds-section__title-action-icon slds-button__icon slds-button__icon--left">
+<use xlink:href="{!$Resource.lightiningCSS}/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+</svg>-->
+                                                    <apex:outputPanel id="optOTSection">
+                                                        <apex:outputPanel rendered="{!paymentType = 'onetime'}" id="oneTimePaymentSection">
+                                                            {!IF(gwa = null, $Label.iatspayment__onetimepayment, 'Payment Information')}
+                                                        </apex:outputPanel>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel id="optRecSection">
+                                                        <apex:outputPanel rendered="{!paymentType = 'recurring'}" id="recurringPageBlockSection">
+                                                            {!$Label.iatspayment__recurringpayments}
+                                                        </apex:outputPanel>
+                                                    </apex:outputPanel>
+                                                </a>
+                                            </h3>
+                                            
+                                            <apex:outputPanel id="optOneTime">
+                                                
+                                                
+                                                <apex:outputPanel id="optOneTimePaymentInformationsection" rendered="{!paymentType = 'onetime'}">
+                                                    <div class="">
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        
+                                                                        <apex:outputPanel id="entrymodeInfo" rendered="{!editPaymentInfo == true  && mPayment = 'CC'}" >
+                                                                            <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__creditcardentrymode}" for="entrymodeInfo" />
+                                                                            <div class="slds-select_container">
+                                                                                <apex:selectList styleClass="slds-select" id="enrymodelist" size="1" value="{!strEntryMode}" onchange="changeEntryMode(this);"
+                                                                                    disabled="{!resultOK}">
+                                                                                    <apex:selectOption itemLabel="{!$Label.iatspayment__manual}" itemValue="Manual" ></apex:selectOption>
+                                                                                    <apex:selectOption itemLabel="{!$Label.iatspayment__cardreader}" itemValue="CardReader" ></apex:selectOption>
+                                                                                    <apex:actionSupport event="onchange" rerender="payMB" status="PaymentStatus" />
+                                                                                </apex:selectList>
+                                                                            </div>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel id="spaceHolder" rendered="{!editPaymentInfo == true  && mPayment = 'CC'}"></apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__paymentmethod}" rendered="{!((IATSAccountSystem == 'NA' && (IATSAccountCurrency = 'US Dollar' || IATSAccountCurrency = 'Canadian Dollar')) || (IATSAccountSystem == '' && IATSAccountCurrency =  ''))}"/>
+                                                                        <apex:selectRadio value="{!mPayment}" disabled="{!(editPaymentInfo == false || resultOK || processor = 'faps')}" rendered="{!((IATSAccountSystem == 'NA' && (IATSAccountCurrency = 'US Dollar' || IATSAccountCurrency = 'Canadian Dollar')) || (IATSAccountSystem == '' && IATSAccountCurrency =  ''))}">
+                                                                            <apex:selectOptions value="{!mPaymentOptions}"/>
+                                                                            <apex:actionSupport event="onchange" rerender="payMB" oncomplete="fnDatePicker();" status="PaymentStatus" />
+                                                                        </apex:selectRadio>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!editPaymentInfo == false && !resultOK}" >
+                                                                            <apex:commandLink value="{!$Label.iatspayment__editallsavedpaymentinformation}" action="{!editPaymentInfoTrue}" 
+                                                                                              reRender="payMB" style="color:blue" status="PaymentStatus"/>
+                                                                        </apex:outputPanel>
+                                                                        
+                                                                        <apex:outputPanel id="savePaymentInfo" rendered="{!editPaymentInfo == true && customerCodeRecord.name == null && gwa = null}" >
+                                                                            <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__savepaymentinformation}" for="savePaymentInfo"/><br/>
+                                                                            <label class="slds-checkbox" style="vertical-align:middle;">
+                                                                                <apex:inputCheckbox value="{!savePaymentInfo}" disabled="{!resultOK}"/>
+                                                                                <span class="slds-checkbox--faux"></span>
+                                                                            </label>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!gwa != 's'}" >
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__totalamount}" for="totalAmount"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" value="{!totalAmount}" id="totalAmount" disabled="{!IF((gwa = 'c' || resultOK), true, false)}"/>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'ACH'}">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__accounttype}" for="mPayment"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <table>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                                        <div class="slds-select_container">
+                                                                                                            <apex:selectList styleClass="slds-select" value="{!ACHAccountType}" size="1" id="mPayment" disabled="{!IF((editPaymentInfo == false || resultOK), true, false)}" >
+                                                                                                                <apex:selectOptions value="{!ACHAccountTypeOptions}" />
+                                                                                                            </apex:selectList>
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </table>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                        
+                                                                        <apex:outputPanel rendered="{!mPayment == 'CC'}" id="creditCardTypeSection">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__creditcardtype}" for="creditCardType1"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <div class="slds-select_container">
+                                                                                                <apex:selectList styleClass="slds-select" value="{!creditCardType}" size="1" disabled="{!IF((editPaymentInfo == false || resultOK), true, false)}" id="creditCardType1">
+                                                                                                    <apex:selectOptions value="{!CreditCardTypeOptions}" />
+                                                                                                </apex:selectList>
+                                                                                            </div>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'ACH' && IATSAccountCurrency == 'Canadian Dollar'}">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__banknumber}" for="bankId"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" value="{!ACHbankId}" id="bankId" disabled="{!IF((editPaymentInfo == false || resultOK), true, false)}" />
+                                                                                            &nbsp;
+                                                                                            <apex:outputLink value="#">
+                                                                                                <apex:image url="{!$Resource.IATSPayment__IATS_ACH_Help_Logo}" onclick="achCDNPopup()"/>
+                                                                                            </apex:outputLink>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'ACH' && IATSAccountCurrency == 'Canadian Dollar'}">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__transitnumber}" for="transitId"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" value="{!ACHtransitId}" id="transitId" disabled="{!IF((editPaymentInfo == false || resultOK), true, false)}" />
+                                                                                            &nbsp;
+                                                                                            <apex:outputLink value="#">
+                                                                                                <apex:image url="{!$Resource.IATSPayment__IATS_ACH_Help_Logo}" onclick="achCDNPopup()"/>
+                                                                                            </apex:outputLink>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'ACH' && IATSAccountCurrency == 'UK Pound' && IATSAccountSystem == 'UK'}">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__sortcode}" for="sortCode"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" value="{!ACH_SortCode}" id="sortCode" disabled="{!IF((editPaymentInfo == false || resultOK), true, false)}" />
+                                                                                            &nbsp;
+                                                                                            <apex:outputLink value="#">
+                                                                                                <apex:image url="{!$Resource.IATSPayment__IATS_ACH_Help_Logo}" onclick="achUKPopup()"/>
+                                                                                            </apex:outputLink>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                        
+                                                                        <apex:outputPanel rendered="{!mPayment == 'ACH' && IATSAccountSystem == 'NA' && IATSAccountCurrency = 'US Dollar' || (mPayment == 'ACH' && IATSAccountSystem == '' && IATSAccountCurrency == '')}">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__routingnumber}" for="routingNumber"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" value="{!ACHroutingNumber}" id="routingNumber" disabled="{!IF((editPaymentInfo == false || resultOK), true, false)}" style="width:95%"/>
+                                                                                            &nbsp;
+                                                                                            <apex:outputLink value="#">
+                                                                                                <apex:image url="{!$Resource.IATSPayment__IATS_ACH_Help_Logo}" onclick="achUSPopup()"/>
+                                                                                            </apex:outputLink>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                        
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'ACH'}">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__accountnumber}" for="accountNumberOT"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" value="{!ACHaccountNumber}" id="accountNumberOT" disabled="{!IF((editPaymentInfo == false || resultOK), true, false)}" style="width:95%"/>
+                                                                                            &nbsp;
+                                                                                            <apex:outputLink value="#">
+                                                                                                <apex:image url="{!$Resource.IATSPayment__IATS_ACH_Help_Logo}" onclick="{!IF(IATSAccountCurrency == 'Canadian Dollar', "achCDNPopup()", IF(IATSAccountCurrency == 'UK Pound', "achUKPopup()", "achUSPopup()"))}"/>
+                                                                                            </apex:outputLink>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'CC'}" id="creditCardNumber" >
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__creditcardnumber}" for="creditCardNumber"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" id="txtCreditcardNumber" value="{!creditCardNumber}" onkeypress="return disableEnterKey(event);" onkeyup="parseCreditNumberExpDate(this,event)" onblur="ParseCreditCardString(this);" disabled="{!IF((editPaymentInfo == false || resultOK), true, false)}"/>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <!-- helpText="Please enter the expiration date in the following format 'MM/YY'" -->
+                                                                        <apex:outputPanel id="expirtyDate" rendered="{!mPayment == 'CC'}">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__creditcardexpirydatemmyy}" for="CreditCardExpDate" />
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" id="txtExpiryDate" value="{!creditCardExpDate}" disabled="{!IF(((editPaymentInfo == false && editCCExpiryDateInfo == false) || resultOK), true, false)}"/>
+                                                                                            <apex:commandLink rendered="{!IF((editPaymentInfo == false && editCCExpiryDateInfo == false && !resultOK), true, false)}"  value="{!$Label.iatspayment__edit}" action="{!editCCExpiryDate}" reRender="payMB" style="color:blue" status="PaymentStatus" />
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel >
+                                                                            <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__invoicenumber}" for="invoiceNumber"/>
+                                                                            <apex:inputText styleClass="slds-input" value="{!invoiceNumber}" disabled="{!resultOK}"/>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!customerCodeRelatedToOpp == false && gwa = null}" >
+                                                                            <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__createnewdonation}" for="CreateOpportunity"/><br/>
+                                                                            <label class="slds-checkbox" style="vertical-align:middle;">
+                                                                                <apex:inputCheckbox value="{!createOpportunity}" disabled="{!resultOK}"/>
+                                                                                <span class="slds-checkbox--faux"></span>
+                                                                            </label>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                </apex:outputPanel>
+                                            </apex:outputPanel>
+                                            
+                                            <!-- Recurring Payment Information section -->
+                                            <apex:outputPanel id="optRecurring">
+                                                <apex:outputPanel id="optRecurringPaymentInformationsection" rendered="{!paymentType = 'recurring'}">
+                                                    <div class="">
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel id="recurringStatus">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__status}" for="recurringStatus"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <div class="slds-select_container">
+                                                                                                <apex:selectList styleClass="slds-select" value="{!recurringStatus}" size="1" disabled="{!((customerCodeRecurringAmount == '' || customerCodeRecurringAmount == '0.00') && recurringPaymentsCreated == false) || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess)}">
+                                                                                                    <apex:selectOptions value="{!recurringStatusOptions}"/>
+                                                                                                    <apex:actionSupport event="onchange" rerender="cancellationSection"/>
+                                                                                                </apex:selectList>
+                                                                                            </div>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel id="recurringAmount">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__recurringamount}" for="recurringAmount"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" value="{!RecurringAmount}" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess)}"/>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+
+                                                        <apex:outputPanel id="cancellationSection">
+                                                        <apex:outputPanel id="cancellationSectionInner" rendered="{!recurringStatus = 'Inactive'
+                                                        && mPayment == 'ACH' && previouslyActive && DirectDebitProcessor = 'Rapidata'}">
+
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel >
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="Cancellation Reason" for="cancellationCode"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <div class="slds-form-element">
+                                                                                                <div class="slds-form-element__control" >
+                                                                                                    <div class="slds-input-has-icon slds-input-has-icon--right">                                     
+                                                                                                        <apex:selectList styleClass="slds-select" value="{!cancellationCode}" size="1" id="cancellationCode" disabled="{(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess)}">
+                                                                                                        <apex:selectOptions value="{!CancellationCodeOptions}" rendered="{!!((resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess))}"/>
+                                                                                                        </apex:selectList>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel >
+                                                                           
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        </apex:outputPanel>
+                                                        </apex:outputPanel>
+
+
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel >
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__begindate}" for="recurringBeginDate"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <div class="slds-form-element">
+                                                                                                <div class="slds-form-element__control" >
+                                                                                                    <div class="slds-input-has-icon slds-input-has-icon--right">
+                                                                                                        <div aria-hidden="true" class="slds-input__icon slds-icon-text-default">
+                                                                                                            <img class="dateimg" src="{!URLFOR($Resource.lightiningCSS, '/assets/icons/utility/event_60.png')}" width="20" />
+                                                                                                        </div> 
+                                                                                                        <apex:inputField styleClass="slds-input clsDatePicker" value="{!recurringBeginDateOppHolder.closeDate}" id="recurringBeginDate" 
+                                                                                                            required="false" onChange="copyValueToMandateSigningDate(this);" rendered="{!!((resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess))}"/>
+                                                                                                        <apex:outputField value="{!recurringBeginDateOppHolder.closeDate}" rendered="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess)}"/>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel >
+                                                                            <abbr style="color:red;">*</abbr>&nbsp;
+                                                                            <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__enddate}" for="recurringEndDate"/>
+                                                                            <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <!--<div class="slds-form-element__control" style="width:200px;">
+                                                                                                    <div class="slds-input-has-icon slds-input-has-icon--right">
+                                                                                                    
+                                                                                                    <svg aria-hidden="true" class="slds-input__icon slds-icon-text-default">
+                                                                                                    <use xlink:href="{!URLFOR($Resource.lightiningCSS, '/assets/icons/utility-sprite/svg/symbols.svg#event')}"></use>
+                                                                                                    </svg>-->
+                                                                                                        <!--</div>
+                                                                                                </div>-->
+                                                                                            <div class="slds-form-element">
+                                                                                                <div class="slds-form-element__control">
+                                                                                                    <div class="slds-input-has-icon slds-input-has-icon--right">
+                                                                                                        <div aria-hidden="true" class="slds-input__icon slds-icon-text-default">
+                                                                                                            <img class="dateimg" src="{!URLFOR($Resource.lightiningCSS, '/assets/icons/utility/event_60.png')}" width="20" />
+                                                                                                        </div>
+                                                                                                        <apex:inputField styleClass="slds-input clsDatePicker" value="{!recurringEndDateOppHolder.closeDate}" id="recurringEndDate" required="false"
+                                                                                                            rendered="{!!((resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess))}"/>
+                                                                                                        <apex:outputField value="{!recurringEndDateOppHolder.closeDate}" rendered="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess)}"/>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </apex:outputPanel>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+
+
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel >
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__scheduletype}" for="recurringScheduleType"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <div class="slds-select_container">
+                                                                                                <apex:selectList styleClass="slds-select" value="{!recurringScheduleType}" size="1" id="recurringScheduleType" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess)}">
+                                                                                                    <apex:selectOptions value="{!recurringScheduleTypeOptions}"/>
+                                                                                                    <apex:actionSupport event="onchange" rerender="scheduleDateLabel,scheduleDateRequired"/>
+                                                                                                </apex:selectList>
+                                                                                            </div>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel id="scheduleDateSection">
+                                                                            <apex:outputPanel id="scheduleDateLabel" >
+                                                                                <apex:outputPanel rendered="{!recurringScheduleType != 'ANNUALLY' && recurringScheduleType != 'QUARTERLY' && recurringScheduleType != null && processor = 'legacy' && (DirectDebitProcessor = 'Smart Debit' || mPayment = 'CC')}">
+                                                                                    <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                </apex:outputPanel>
+                                                                                <apex:outputLabel value="{!$Label.iatspayment__scheduledate}" for="recurringScheduleDate" styleClass="slds-form-element__label" rendered="{!recurringScheduleType != 'ANNUALLY' && recurringScheduleType != 'QUARTERLY' && recurringScheduleType != null && processor = 'legacy' && (DirectDebitProcessor = 'Smart Debit' || mPayment = 'CC')}"/>
+                                                                            </apex:outputPanel>
+                                                                            
+                                                                            <apex:outputPanel id="scheduleDateRequired">
+                                                                                <apex:outputPanel rendered="{!recurringScheduleType != 'ANNUALLY' && recurringScheduleType != 'QUARTERLY' && recurringScheduleType != null  && processor = 'legacy' && (DirectDebitProcessor = 'Smart Debit' || mPayment = 'CC')}" styleClass="requiredInput" >
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                                <div class="slds-select_container">
+                                                                                                    <apex:selectList styleClass="slds-select" value="{!recurringScheduleDate}" size="1" id="scheduleOptions" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess)}">
+                                                                                                        <apex:selectOptions value="{!recurringScheduleDateOptions}"/>
+                                                                                                    </apex:selectList>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </apex:outputPanel>
+                                                                            </apex:outputPanel>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+
+
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel >
+                                                                            <apex:outputLabel value="{!$Label.iatspayment__paymentmethod}" for="paymentType" rendered="{!IATSAccountSystem == 'UK'&& processor = 'legacy' &&(IATSAccountCurrency == 'UK Pound' || IATSAccountCurrency == 'EURO') || ((IATSAccountSystem == 'NA' && (IATSAccountCurrency = 'US Dollar' || IATSAccountCurrency = 'Canadian Dollar')) || (IATSAccountSystem == '' && IATSAccountCurrency =  ''))}" styleClass="slds-form-element__label"/>
+                                                                            <apex:selectRadio value="{!mPayment}" id="paymentType" disabled="{!editPaymentInfo == false || processor = 'faps' || (customerCodeRecord.name != '' && IATSAccountSystem == 'UK') || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess)}" rendered="{!IATSAccountSystem == 'UK' && processor = 'legacy' && (IATSAccountCurrency == 'UK Pound' || IATSAccountCurrency == 'EURO') || ((IATSAccountSystem == 'NA' && (IATSAccountCurrency = 'US Dollar' || IATSAccountCurrency = 'Canadian Dollar')) || (IATSAccountSystem == '' && IATSAccountCurrency =  ''))}">
+                                                                                <apex:selectOptions value="{!mPaymentOptions}" />
+                                                                                <apex:actionSupport event="onchange" rerender="payMB" oncomplete="fnDatePicker();" status="PaymentStatus" action="{!setterForRecurringDates}" />
+                                                                            </apex:selectRadio>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!(!((resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess))) && customerCodeRecord.name != '' && editPaymentInfo == false ||(mPayment == 'ACH' && IATSAccountSystem == 'UK' && validateACH_Class.AUTHSTATUS == 'OK')}">
+                                                                            <apex:commandLink value="Edit All Saved Payment Information" action="{!editPaymentInfoTrue}" reRender="payMB" style="color:blue" status="PaymentStatus" oncomplete="{!IF(mPayment == 'ACH' && IATSAccountCurrency == 'UK Pound' && IATSAccountSystem == 'UK' && ((customerCodeRecurringAmount != '' && customerCodeRecurringAmount != '0.00') || customerCodeRecord != null), 'updateRecurringUKFunction()','blankFunction()')};fnDatePicker();"/>
+                                                                        </apex:outputPanel>
+                                                                        
+                                                                        <apex:outputPanel id="creditentrymodeInfo" rendered="{!editPaymentInfo == true && mPayment = 'CC'}" >
+                                                                            <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__creditcardentrymode}" for="creditentrymodeInfo" />
+                                                                            <div class="slds-select_container">
+                                                                                <apex:selectList styleClass="slds-select" id="creditentrymodelist" size="1" value="{!strEntryMode}" onchange="changeEntryModeRC(this);" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess)}">
+                                                                                    <apex:selectOption itemLabel="{!$Label.iatspayment__manual}" itemValue="Manual" ></apex:selectOption>
+                                                                                    <apex:selectOption itemLabel="{!$Label.iatspayment__cardreader}" itemValue="CardReader" ></apex:selectOption>
+                                                                                </apex:selectList>
+                                                                            </div>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment != 'CC' && (editPaymentInfo == true || customerCodeRecord.name == '')}"></apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'ACH'  && IATSAccountSystem != 'UK'}">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="Account Type" for="ACHAccountType"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <div class="slds-select_container">
+                                                                                                <apex:selectList styleClass="slds-select" value="{!ACHAccountType}" size="1" id="ACHAccountType" disabled="{!(editPaymentInfo == false || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess))}">
+                                                                                                    <apex:selectOptions value="{!ACHAccountTypeOptions}"/>
+                                                                                                </apex:selectList>
+                                                                                            </div>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'ACH' && IATSAccountCurrency == 'Canadian Dollar'}">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__banknumber}" for="bankId2"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" value="{!ACHbankId}" id="bankId2" disabled="{!(editPaymentInfo == false || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess))}" />
+                                                                                            &nbsp;
+                                                                                            <apex:outputLink value="#">
+                                                                                                <apex:image url="{!$Resource.IATSPayment__IATS_ACH_Help_Logo}" onclick="achCDNPopup()"/>
+                                                                                            </apex:outputLink>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                        
+                                                                        <apex:outputPanel rendered="{!mPayment == 'ACH' && IATSAccountSystem == 'NA' && IATSAccountCurrency = 'US Dollar' || (mPayment == 'ACH' && IATSAccountSystem == '' && IATSAccountCurrency == '')}">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__routingnumber}" for="routingNumber2"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" value="{!ACHroutingNumber}" id="routingNumber2" disabled="{!(editPaymentInfo == false || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess))}" style="width: 95%;"/>
+                                                                                            &nbsp;
+                                                                                            <apex:outputLink value="#">
+                                                                                                <apex:image url="{!$Resource.IATSPayment__IATS_ACH_Help_Logo}" onclick="achUSPopup()"/>
+                                                                                            </apex:outputLink>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'ACH' && IATSAccountCurrency == 'UK Pound' && IATSAccountSystem == 'UK'}">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__sortcode}" for="sortCode2"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" value="{!ACH_SortCode}" id="sortCode2" disabled="{!(editPaymentInfo == false || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess))}" style="width: 95%;"/>
+                                                                                            &nbsp;
+                                                                                            <apex:outputLink value="#">
+                                                                                                <apex:image url="{!$Resource.IATSPayment__IATS_ACH_Help_Logo}" onclick="achUKPopup()"/>
+                                                                                            </apex:outputLink>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'ACH' && IATSAccountCurrency != 'EURO'}">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__accountnumber}" for="accountNumberREC"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" value="{!ACHaccountNumber}" id="accountNumberREC" disabled="{!(editPaymentInfo == false || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess))}" style="width: 96%;"/>
+                                                                                            &nbsp;
+                                                                                            <apex:outputLink value="#">
+                                                                                                <apex:image url="{!$Resource.IATSPayment__IATS_ACH_Help_Logo}" onclick="{!IF(IATSAccountCurrency == 'Canadian Dollar', "achCDNPopup()", IF(IATSAccountCurrency == 'UK Pound', "achUKPopup()", "achUSPopup()"))}"/>
+                                                                                            </apex:outputLink>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'ACH' && IATSAccountCurrency == 'Canadian Dollar'}">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__transitnumber}" for="transitId2"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" value="{!ACHtransitId}" id="transitId2" disabled="{!editPaymentInfo == false || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess)}" />
+                                                                                            &nbsp;
+                                                                                            <apex:outputLink value="#">
+                                                                                                <apex:image url="{!$Resource.IATSPayment__IATS_ACH_Help_Logo}" onclick="achCDNPopup()"/>
+                                                                                            </apex:outputLink>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'ACH' && IATSAccountCurrency == 'EURO'}">
+                                                                            <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__accountiban}" for="accountNumberREC"/>
+                                                                            <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                <apex:inputText styleClass="slds-input" value="{!ACHaccountNumber}" id="bankId3" disabled="{!editPaymentInfo == false || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess)}" />
+                                                                            </apex:outputPanel>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'ACH' && IATSAccountCurrency == 'EURO'}" id="eurosd">
+                                                                            <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__mandatesigningdate}" for="accountNumberREC" id="datelabel"/>
+                                                                            <apex:outputPanel layout="block" styleClass="requiredInput" id="euro1">
+                                                                                <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                <apex:outputPanel layout="none" rendered="{!editPaymentInfo == true}">
+                                                                                    <div class="slds-form-element">
+                                                                                        <div class="slds-form-element__control" >
+                                                                                            <div class="slds-input-has-icon slds-input-has-icon--right">
+                                                                                                <div aria-hidden="true" class="slds-input__icon slds-icon-text-default">
+                                                                                                    <img class="dateimg" src="{!URLFOR($Resource.lightiningCSS, '/assets/icons/utility/event_60.png')}" width="20" />
+                                                                                                </div> 
+                                                                                                <apex:inputField required="false" value="{!recurringMandateOppHolder.CloseDate}" styleClass="slds-input clsDatePicker" id="mandateSigningDate" rendered="{!!((resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess))}"/>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    
+                                                                                    
+                                                                                </apex:outputPanel>
+                                                                                <apex:outputPanel layout="none" rendered="{!editPaymentInfo == false}">
+                                                                                    <apex:outputField value="{!recurringMandateOppHolder.CloseDate}" id="mandateSigningDateDisplay" />
+                                                                                </apex:outputPanel>
+                                                                            </apex:outputPanel>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'ACH' && IATSAccountCurrency == 'EURO'}">
+                                                                            <apex:outputLabel styleClass="slds-form-element__label" value="Mandate ID" for="accountNumberREC"/>
+                                                                            <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                <apex:inputText styleClass="slds-input" value="{!mandateID}" id="mandateId" disabled="true" />
+                                                                            </apex:outputPanel>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel id="bankInfo" rendered="{!validateACH_Class.AUTHSTATUS == 'OK'}">
+                                                                            <apex:outputLabel value="Bank Information" styleClass="slds-form-element__label"/>
+                                                                            {!validateACH_Class.BANK_NAME} <br/>
+                                                                            {!validateACH_Class.BANKADDRESS1}
+                                                                            {!validateACH_Class.BANKADDRESS2}
+                                                                            {!validateACH_Class.BANKADDRESS3}
+                                                                            {!validateACH_Class.BANKADDRESS4} <br/>
+                                                                            {!validateACH_Class.BANK_CITY},&nbsp;
+                                                                            {!validateACH_Class.BANK_STATE}&nbsp;
+                                                                            {!validateACH_Class.BANK_POSTCODE}
+                                                                            <i>Reference Number: {!validateACH_Class.ACHREFNUM}</i>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel id="IATSInfo" rendered="{!validateACH_Class.STATUS == 'Failure'}">
+                                                                            <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__iatsmessage}"/>
+                                                                            <i>Connection to IATS server failed!</i>
+                                                                            <br/>
+                                                                            {!validateACH_Class.ERRORS}
+                                                                            
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel id="bankInfoRej" rendered="{!validateACH_Class.AuthStatus == 'REJ'}">
+                                                                            <apex:outputLabel styleClass="slds-form-element__label" value="Bank Message"/>
+                                                                            <i>Validation Rejected</i>
+                                                                            <br/>
+                                                                            {!validateACH_Class.BANKERROR}
+                                                                            <br/>
+                                                                            {!validateACH_Class.AUTHCODE}
+                                                                            <br/>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'CC'}" id="ccTypeSectionItemRP">    
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__creditcardtype}" for="creditCardType2"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <div class="slds-select_container">
+                                                                                                <apex:selectList styleClass="slds-select" value="{!creditCardType}" size="1" disabled="{!(editPaymentInfo == false || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess))}" id="creditCardType2">
+                                                                                                    <apex:selectOptions value="{!CreditCardTypeOptions}"/>
+                                                                                                </apex:selectList>
+                                                                                            </div>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'CC'}" id="ccSectionItemRP">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__creditcardnumber}" for="creditCardNumber"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" value="{!creditCardNumber}" id="txtCreditcardNumberRP" onfocus="focusOnCC(this);" onkeypress="return disableEnterKey(event);" onkeyup="parseCreditNumberExpDate(this,event)" onblur="ParseCreditCardString(this);" disabled="{!(editPaymentInfo == false || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess))}"/>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <fieldset class="slds-form--compound">
+                                                            <div class="slds-form-element__group">
+                                                                <div class="slds-form-element__row">
+                                                                    <div class="slds-form-element slds-size--1-of-2">
+                                                                        <apex:outputPanel rendered="{!mPayment == 'CC'}" id="expDateSectionItemRP">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <abbr style="color:red;">*</abbr>&nbsp;
+                                                                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__creditcardexpirydatemmyy}" for="CreditCardExpDate"/>
+                                                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                                                                            <apex:inputText styleClass="slds-input" id="txtExpiryDateRP" value="{!creditCardExpDate}" disabled="{!IF(((editPaymentInfo == false && editCCExpiryDateInfo == false) || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess)), true, false)}" />
+                                                                                            &nbsp;
+                                                                                            <apex:commandLink rendered="{!editPaymentInfo == false && editCCExpiryDateInfo == false && !saveSuccess}" value="Edit" action="{!editCCExpiryDate}" reRender="payMB" style="color:blue" status="PaymentStatus"/>
+                                                                                        </apex:outputPanel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                    <div class="slds-form-element slds-size--1-of-2"></div>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <!--<fieldset class="slds-form--compound"><div class="slds-form-element__group"><div class="slds-form-element__row"><div class="slds-form-element slds-size--1-of-2"></div><div class="slds-form-element slds-size--1-of-2"></div></div></div></fieldset>-->
+                                                    </div>
+                                                </apex:outputPanel>
+                                            </apex:outputPanel>
+                                            <!--All the command buttons-->
+                                            <apex:outputPanel id="pgBlkButtons">
+                                                <fieldset class="slds-form--compound">
+                                                    <div class="slds-form-element__group">
+                                                        <div class="slds-form-element__row">
+                                                            <!-- Process One time payment -->
+                                                            <div class="slds-form-element slds-size--1-of-2" style="{!IF(mPayment = 'CC' && editPaymentInfo == true, 'padding-left:23%;','padding-left:33%;')}"> 
+                                                                <span> 
+                                                                    <apex:actionStatus id="buttonstatus"> 
+                                                                        <apex:facet name="stop"> 
+                                                                            <apex:commandButton value="{!$Label.iatspayment__processonetimepayment}" action="{!processPaymentButton}" oncomplete="addErrorClass();fnDatePicker();hideSpinner();" onclick="showSpinner();"
+                                                                                                reRender="mainSection,updateRecurringWindow"  styleClass="slds-button slds-button--brand slds-button--small" rendered="{!paymentType = 'onetime' && gwa = null }" disabled="{!IF(((mPayment == 'ACH' && IATSAccountSystem == 'UK') || resultOK), true, false)}"/>
+                                                                        </apex:facet> 
+                                                                        
+                                                                        <apex:facet name="start">
+                                                                            <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" value="{!$Label.iatspayment__processonetimepayment}" oncomplete="addErrorClass();fnDatePicker();hideSpinner();" onclick="showSpinner();"
+                                                                                                rendered="{!paymentType = 'onetime' && gwa = null }" disabled="true"/>
+                                                                        </apex:facet>
+                                                                    </apex:actionStatus>
+                                                                </span>
+                                                                <!-- Save Payment info -->
+                                                                <span>
+                                                                    <apex:actionStatus id="buttonstatusSave"> 
+                                                                        <apex:facet name="stop">
+                                                                            <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" value="{!$Label.iatspayment__savepaymentinformation}" action="{!savePaymentInfoButton}"
+                                                                                                oncomplete="addErrorClass();fnDatePicker();hideSpinner();" onclick="showSpinner();" reRender="mainSection" rendered="{!gwa = 's'}" disabled="{!(editPaymentInfo == false || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess))}"/>
+                                                                        </apex:facet> 
+                                                                        
+                                                                        <apex:facet name="start">
+                                                                            <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" value="{!$Label.iatspayment__savepaymentinformation}" action="{!savePaymentInfoButton}"
+                                                                                                oncomplete="addErrorClass();hideSpinner();" onclick="showSpinner();" reRender="mainSection" rendered="{!gwa = 's'}" disabled="true"/>
+                                                                        </apex:facet> 
+                                                                    </apex:actionStatus>
+                                                                </span>
+                                                                
+                                                                <!--Process Payment-->
+                                                                <span>
+                                                                    <apex:actionStatus id="buttonstatusProcess"> 
+                                                                        <apex:facet name="stop">
+                                                                            <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" value="Process Payment" action="{!processPaymentButton}"
+                                                                                                oncomplete="addErrorClass();fnDatePicker();hideSpinner();" onclick="showSpinner();" rendered="{!gwa = 'c'}" reRender="mainSection" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)}"/>
+                                                                        </apex:facet> 
+                                                                        <apex:facet name="start">
+                                                                            <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" value="Process Payment" action="{!processPaymentButton}"
+                                                                                                oncomplete="addErrorClass();hideSpinner();" onclick="showSpinner();" rendered="{!gwa = 'c'}" disabled="true"/>
+                                                                        </apex:facet> 
+                                                                    </apex:actionStatus>
+                                                                </span>
+                                                                
+                                                                <!-- Validate Account -->
+                                                                <span>
+                                                                    <apex:actionStatus id="buttonstatusValidate"> 
+                                                                        <apex:facet name="stop">
+                                                                            <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" value="{!$Label.iatspayment__validateaccount}" action="{!validateUK}" 
+                                                                                                rendered="{!paymentType = 'recurring' && 
+                                                                                                processor = 'legacy' &&
+                                                                                                customerCodeRecord.id = null 
+                                                                                                          && (validateACH_Class.AUTHSTATUS != 'OK' || refNumberStatus != 'Registration OK')
+                                                                                                          && mPayment == 'ACH' && IATSAccountSystem == 'UK' 
+                                                                                                          && editPaymentInfo == true && IATSAccountCurrency != 'EURO'}"
+                                                                                                id="validateACH" oncomplete="addErrorClass();fnDatePicker();hideSpinner();" onclick="showSpinner();" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)}"
+                                                                                                rerender="updateRecurringWindow,myFrm"/>
+                                                                        </apex:facet> 
+
+                                                                        <apex:facet name="start">
+                                                                            <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" value="{!$Label.iatspayment__validateaccount}" action="{!validateUK}"
+                                                                                                rendered="{!paymentType = 'recurring' && customerCodeRecord.id = null 
+                                                                                                          && (validateACH_Class.AUTHSTATUS != 'OK' || refNumberStatus != 'Registration OK')
+                                                                                                          && mPayment == 'ACH' && IATSAccountSystem == 'UK' 
+                                                                                                          && editPaymentInfo == true && IATSAccountCurrency != 'EURO'}" 
+                                                                                                id="validateACHStart" disabled="true" oncomplete="addErrorClass();hideSpinner();" onclick="showSpinner();"/>
+                                                                        </apex:facet> 
+                                                                    </apex:actionStatus>
+                                                                </span>
+                                                                
+                                                                <!-- Create SEPA mandate ID -->
+                                                                <span>
+                                                                    <apex:actionStatus id="buttonstatusMandate"> 
+                                                                        <apex:facet name="stop">
+                                                                            <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" value="Create SEPA Mandate ID" action="{!createSEPAMandateID}"
+                                                                                                rendered="{!paymentType = 'recurring' && customerCodeRecord.id = null 
+                                                                                                          && (validateACH_Class.AUTHSTATUS != 'OK' || refNumberStatus != 'Registration OK')
+                                                                                                          && mPayment == 'ACH' && IATSAccountSystem == 'UK' && mandateId == null
+                                                                                                          && editPaymentInfo == true && IATSAccountCurrency == 'EURO'}" reRender="myFrm,updateRecurringWindow"
+                                                                                                id="validateACHEURO" oncomplete="addErrorClass();fnDatePicker();hideSpinner();" onclick="showSpinner();" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)}"/> 
+                                                                        </apex:facet> 
+                                                                        
+                                                                        <apex:facet name="start">
+                                                                            <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" value="Create SEPA Mandate ID" action="{!createSEPAMandateID}"
+                                                                                                rendered="{!paymentType = 'recurring' && customerCodeRecord.id = null 
+                                                                                                          && (validateACH_Class.AUTHSTATUS != 'OK' || refNumberStatus != 'Registration OK')
+                                                                                                          && mPayment == 'ACH' && IATSAccountSystem == 'UK' && mandateId == null
+                                                                                                          && editPaymentInfo == true && IATSAccountCurrency == 'EURO'}" disabled="true"
+                                                                                                id="validateACHEUROStart" oncomplete="addErrorClass();fnDatePicker();hideSpinner();" onclick="showSpinner();"/>
+                                                                        </apex:facet> 
+                                                                    </apex:actionStatus>
+                                                                </span>
+                                                                
+                                                                
+                                                                <!-- Create/Update Recurring Payments-->
+                                                                
+                                                                <span>
+                                                                    <apex:actionStatus id="buttonstatusRecurring"> 
+                                                                        <apex:facet name="stop">
+                                                                            <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" action="{!createUpdateRecurringButton}" 
+                                                                                                reRender="counterStatus,updateRecurringWindow,payMB,updateRecurringButton,mainSection,errorMessage,topErrHead,codeInfo,myFrm" 
+                                                                                                value="{!IF((customerCodeRecurringAmount != '' && customerCodeRecurringAmount != '0.00') || (recurringPaymentsCreated == true),
+                                                                                                       $Label.UpdateRecurringPayments, $Label.CreateRecurringPayments)}"
+                                                                                                oncomplete="{!IF(recurringResponse != null,'updateRecurringFunction()','blankFunction()')};addErrorClass();fnDatePicker();hideSpinner();" onclick="showSpinner();" 
+                                                                                                id="updateRecurringButton" rendered="{!paymentType = 'recurring'}" 
+                                                                                                disabled="{!IF(((mPayment == 'ACH' && customerCodeRecord.id = null && 
+                                                                                                processor = 'legacy' && (validateACH_Class.AUTHSTATUS != 'OK' || refNumberStatus != 'Registration OK') && IATSAccountSystem == 'UK' && editPaymentInfo == true) || (resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)), true, false)}"/>   
+                                                                        </apex:facet> 
+                                                                        
+                                                                        <apex:facet name="start">
+                                                                            <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" action="{!createUpdateRecurringButton}" 
+                                                                                                reRender="counterStatus,updateRecurringWindow,errorMessage,topErrHead,codeInfo,payMB,updateRecurringButton,mainSection" 
+                                                                                                value="{!IF((customerCodeRecurringAmount != '' && customerCodeRecurringAmount != '0.00') || (recurringPaymentsCreated == true),
+                                                                                                       $Label.UpdateRecurringPayments, $Label.CreateRecurringPayments)}"
+                                                                                                oncomplete="{!IF(recurringResponse != null,'updateRecurringFunction()','blankFunction()')};addErrorClass();fnDatePicker();hideSpinner();" onclick="showSpinner();" 
+                                                                                                id="updateRecurringButtonStart" rendered="{!paymentType = 'recurring'}" disabled="true"/>   
+                                                                        </apex:facet> 
+                                                                    </apex:actionStatus>
+                                                                </span>
+                                                                
+                                                                <!-- Clear CC Info -->
+                                                                <span>
+                                                                    <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" value="{!$Label.iatspayment__clearccinfo}" onclick="clearCCData();" 
+                                                                                        rendered="{!mPayment = 'CC' && editPaymentInfo == true}" oncomplete="fnDatePicker();addErrorClass();hideSpinner();" disabled="{!(resultOK && saveSuccess && recurrUpdate) || (recurrUpdate && saveSuccess) || (resultOK && saveSuccess)}"/>
+                                                                </span>
+                                                                <!-- Cancel -->
+                                                                <!--<span>
+                                                                    <apex:commandButton styleClass="slds-button slds-button--brand slds-button--small" onclick="window.open('/{!callingRecordId}','_parent');" value="Cancel" rendered="{!paymentType != ''}"/>
+                                                                </span>-->
+                                                                <!-- Counter Status Loading image -->
+                                                                <span>
+                                                                    <apex:actionStatus id="counterStatus">
+                                                                        <apex:facet name="start">
+                                                                            <apex:image url="{!$Resource.IATSPayment__loadingImageSmall}"/> 
+                                                                        </apex:facet>
+                                                                    </apex:actionStatus>
+                                                                </span>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+                                    <!-- End of One Time Payment Information -->
+                                </fieldset>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </body>
+            </apex:form>
+        </div>
+    </html>
+</apex:page>

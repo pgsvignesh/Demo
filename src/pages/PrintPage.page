@@ -1,0 +1,32 @@
+<apex:page >
+  <head>
+  <script src="https://docraptor.com/docraptor-1.0.0.js"></script>
+  <script>
+    var downloadPDF = function() {
+      DocRaptor.createAndDownloadDoc("YOUR_API_KEY_HERE", {
+        test: true, // test documents are free, but watermarked
+        type: "pdf",
+        document_content: document.querySelector('html').innerHTML, 
+        document_content: "<h1>Hello world!</h1>",               
+        document_url: "http://example.com/your-page",            
+        javascript: true,                                       
+        prince_options: {
+        media: "screen",                                       
+        }
+      })
+    }
+  </script>
+  <style>
+    @media print {
+      #pdf-button {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Example!</h1>
+  <input id="pdf-button" type="button" value="Download PDF" onclick="downloadPDF()" />
+</body>
+
+</apex:page>

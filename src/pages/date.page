@@ -1,0 +1,88 @@
+<apex:page standardController="Event" extensions="ControlleurEvent" showHeader="true">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<apex:stylesheet value="{!URLFOR($Resource.TimePicker, 'jquery.timepicker.css')}"/>
+<script type="text/javascript" src="{!URLFOR($Resource.TimePicker, 'jquery.timepicker.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.TimePicker, 'lib/bootstrap-datepicker.js')}"></script>
+  <apex:stylesheet value="{!URLFOR($Resource.TimePicker, 'lib/bootstrap-datepicker.css')}"/>
+<script>
+j$= jQuery.noConflict();
+    j$(function(){
+       j$("[id$='startDateHour']").timepicker({ 'timeFormat': 'H:i' });
+       j$("[id$='endDateHour']").timepicker({ 'timeFormat': 'H:i' });
+
+        j$('#setHour').click(function(){
+        j$("[id$='startDateHour']").val('{!startHour}');
+        sd = j$("[id$='startDateHour']").val();
+        sds = sd.split(":");
+        var d = new Date();
+        d.setHours(sds[0]);
+        d.setMinutes(sds[1]);
+        d.setHours(d.getHours() + 1);
+        var h = d.getHours();
+        h = ("0" + h).slice(-2);
+        var m = d.getMinutes();
+        m = ("0" + m).slice(-2);
+        end = h+":"+m;
+        j$("[id$='endDateHour']").val(end);
+        });
+
+        j$("[id$='startDateHour']").change(function(){
+        sd = j$("[id$='startDateHour']").val();
+        sds = sd.split(":");
+        var d = new Date();
+        d.setHours(sds[0]);
+        d.setMinutes(sds[1]);
+        d.setHours(d.getHours() + 1);
+        var h = d.getHours();
+        h = ("0" + h).slice(-2);
+        var m = d.getMinutes();
+        m = ("0" + m).slice(-2);
+        end = h+":"+m;
+        j$("[id$='endDateHour']").val(end);
+        });
+        //Test by Sailappa
+        j$("[id$='dateField']").focus(function(){
+            DatePicker.pickDate(false,this, false);
+            var newd = j$("[id$='dateField']").val();
+            j$("[id$='enddate']").val(newd);
+        });
+
+        j$("[id$='enddate']").focus(function(){
+            DatePicker.pickDate(false,this, false);
+        });
+
+        j$('#setendHour').click(function(){
+        j$("[id$='endDateHour']").val('{!startHour}');
+        });
+});
+</script>
+<apex:form >
+<apex:sectionHeader title="Calendrier" subtitle="Nouvel événement" />
+        <apex:pageBlock title="Création de l'événement" mode="edit" tabStyle="event">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Enregistrer" action="{!saving}"/>
+                <apex:commandButton value="Annuler" action="{!cancel}" immediate="true"/>
+            </apex:pageBlockButtons>
+            <div style="margin-left: 300px;"><b><font color ="red"><apex:messages /></font></b></div>
+            <br />
+            <apex:pageBlockSection collapsible="false" columns="2" title="Détails du calendrier">
+                <apex:pageBlockSectionItem id="debut" >
+                <apex:outputLabel value="Début" for="debut" />
+                <apex:outputPanel >
+                    <apex:inputText value="{!startDate}" id="dateField"  style="width:80px; height:20px;" required="true"/>
+                    <apex:inputText value="{!startHour}" id="startDateHour" style="width:75px; height:20px;" />
+                    [&nbsp;<a id="setHour" style="text-decoration: underline; cursor:pointer;" >{!startHour}</a>&nbsp;]
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem id="fin" >
+                <apex:outputLabel value="Fin" for="fin"/>
+                <apex:outputPanel >
+                    <apex:inputText value="{!endDate}" id="enddate" style="width:80px; height:20px;" required="true"/>
+                    <apex:inputText value="{!endHour}" id="endDateHour" style="width:75px; height:20px;" />
+                    [&nbsp;<a id="setendHour" style="text-decoration: underline; cursor:pointer;" >{!startHour}</a>&nbsp;]
+                </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

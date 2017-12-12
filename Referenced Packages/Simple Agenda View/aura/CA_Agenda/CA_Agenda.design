@@ -1,0 +1,16 @@
+<design:component label="Silverline Simple Agenda View">
+    <design:attribute name="simpleObject" label="Object name"  required="true" description="API name of the object that will be displayed on the calendar like Opportunity, Event, etc.." />
+    <design:attribute name="simpleTitle" label="Title field"  required="true" description="API name of the field from the object that will be displayed as the title for the record." />
+    <design:attribute name="simpleStart" label="Start date field " required="true"  description="API name of the field which contains the start date of the record. Can contain date, datetime or formula (date) field type" />
+    <design:attribute name="simpleStop" label="End date field"  required="true"   description="API name of the field which contains the end date of the record." />
+    <design:attribute name="simpleFieldSet" label="Field set"  description="API name of the field set on the object that determines what fields will be displayed for each record when detail arrow is clicked." />
+<!--    <design:attribute name="simpleListView" label="List View Name"  description="List View Name" />-->
+	<design:attribute name="simpleReferenceKey" label="Record filter field"  description="Works as a filter when the component is added to a record home page. Must specify the API name of the look up field on the object the calendar is based on. The ID of the record the user is on is passed to the component to filter against the field specified here. If blank, all records for the object will be displayed i.e. no filter. Filter does not work on the home page." />
+    
+    <design:attribute name="simpleQuickCreate" label="Display add record icon"  description="When checked an add icon will be displayed on the top part of the component that allows users to create records." />
+    <design:attribute name="simpleHeight" label="Height"  description="Height in pixels of the component in the page. Accepted range is 500 to 2000." />
+
+    <design:attribute name="simpleHeader" label="Heading"  description="Heading displayed for the component." />
+
+
+</design:component>

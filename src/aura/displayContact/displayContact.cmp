@@ -1,0 +1,67 @@
+<aura:component controller="ExpenseController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <ltng:require styles="/resource/slds090/assets/styles/salesforce-lightning-design-system.min.css"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <H1>Inside the Component</H1>
+    <aura:attribute name="contacts" type="contact[]"/>
+   
+    <aura:attribute name="newContact" type="Contact"
+                    default="{ 'sobjectType': 'Contact',
+                         'Name': '',                         
+                         'Email': '', 
+                         'Phone': '' 
+                             }"/>
+     <div class="container">
+    <form class="slds-form--stacked">
+      
+      <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+      
+          <ui:inputText aura:id="name" label="Name"
+                        class="slds-input"
+                        labelClass="slds-form-element__label"
+                        value="{!v.newContact.Name}"
+                        placeholder="Name"
+                        required="true"/>
+         </div>
+       </div>
+       
+        <div class="slds-form-element">
+          <div class="slds-form-element__control">
+            <ui:inputPhone aura:id="phone" label="Phone"
+                          class="slds-input"
+                          labelClass="slds-form-element__label"
+                          value="{!v.newContact.Phone}"
+                          placeholder="(000)-000-0000"/>
+           </div>
+         </div>
+         <div class="slds-form-element">
+           <div class="slds-form-element__control">
+             <ui:inputEmail aura:id="email" label="Email"
+                               class="slds-input"
+                               labelClass="slds-form-element__label"
+                               value="{!v.newContact.Email}"
+                               />
+            </div>
+          </div>
+          <div class="slds-form-element">            
+            <ui:button label="Submit" 
+                       class="slds-button slds-button--neutral"
+                       labelClass="label"
+                       press="{!c.createContact}"/>
+           </div>
+    </form>
+  </div>
+    
+    <div class="container slds-p-top--medium">
+        <div id="list" class="row">                
+            <aura:iteration items="{!v.contacts}" var="contact">                      
+                <div class="slds-card">                    
+                        <header class="slds-card__header slds-grid grid--flex-spread">
+                            <a aura:id="contact" href="{!'/' + contact.Id}">
+                                <h3>{!contact.Name}</h3>
+                            </a>
+                        </header>                </div>
+            </aura:iteration>
+        </div>
+    </div> 
+</aura:component>

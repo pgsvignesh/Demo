@@ -1,0 +1,1348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>AVS_International__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>AVS International</label>
+        <length>2</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVS_Response_Code__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>AVS Response Code</label>
+        <length>2</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVS_Zip__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>AVS Zip</label>
+        <length>2</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Transactions</relationshipLabel>
+        <relationshipName>Transactions</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Amount__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Amount_available_for_Refund__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Amount available for Refund</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Authorization__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Authorization</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bank_Account_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Bank Account Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bank_Account_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Bank Account Number</label>
+        <length>175</length>
+        <maskChar>asterisk</maskChar>
+        <maskType>lastFour</maskType>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>EncryptedText</type>
+    </fields>
+    <fields>
+        <fullName>Bank_Account_Status__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>This field only works with certain gateways. See our documentations for more details.</inlineHelpText>
+        <label>Transaction Status</label>
+        <length>32</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bank_Account_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Bank Account Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Checking</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Savings</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Business Checking</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Bank_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Bank Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bank_Routing_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Bank Routing Number</label>
+        <length>11</length>
+        <maskChar>asterisk</maskChar>
+        <maskType>lastFour</maskType>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>EncryptedText</type>
+    </fields>
+    <fields>
+        <fullName>Bank_Transfer_Settlement_Date__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>This field only works with certain gateways. See our documentations for more details.</inlineHelpText>
+        <label>Settlement Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Address_Line_2__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Billing Address Line 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Address__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Billing Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Billing_City__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Billing City</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Company__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Billing Company</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Country__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Billing Country</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>United States</fullName>
+                    <default>true</default>
+                </value>
+                <value>
+                    <fullName>Canada</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Billing_Email__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Billing Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Fax__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Billing Fax</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Billing_First__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Billing First</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Last__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Billing Last</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Phone__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Billing Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Postal_Code__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Billing Postal Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Province__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Billing Province</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_State__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Billing State</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Alabama</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Alaska</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Arizona</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Arkansas</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>California</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Colorado</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Connecticut</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Delaware</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>District of Columbia</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Florida</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Georgia</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Hawaii</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Idaho</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Illinois</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Indiana</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Iowa</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Kansas</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Kentucky</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Louisiana</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Maine</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Maryland</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Massachusetts</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Michigan</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Minnesota</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Mississippi</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Missouri</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Montana</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Nebraska</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Nevada</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>New Hampshire</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>New Jersey</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>New Mexico</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>New York</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>North Carolina</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>North Dakota</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Ohio</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Oklahoma</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Oregon</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Pennsylvania</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Puerto Rico</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Rhode Island</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>South Carolina</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>South Dakota</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Tennessee</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Texas</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Utah</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Vermont</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Virginia</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Washington</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>West Virginia</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Wisconsin</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Wyoming</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Card_Code_Response__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Security Response</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Card_Last_4__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Card Last 4</label>
+        <length>4</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cash_Disbursement__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Cash Disbursement</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cash_Receipt__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Cash Receipt</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Credit_Card_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Credit Card Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Credit_Card_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Credit Card Number</label>
+        <length>16</length>
+        <maskChar>asterisk</maskChar>
+        <maskType>lastFour</maskType>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>EncryptedText</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Card_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Credit Card Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Visa</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Mastercard</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Discover</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>American Express</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>MC Eurocard</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>UK Maestro</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>JCB Card</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Solo</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Electron</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Currency__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Currency</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Customer_Token__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Customer Token</label>
+        <length>16</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>32000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Details_Payflow__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <formula>IF( 
+BEGINS(Gateway_ID__c, &quot;0&quot;), &quot;&quot;, HYPERLINK( &quot;https://manager.paypal.com/performSearchTransaction.do?searchType=transID&amp;searchTypePP=partialEmail&amp;firstName=&amp;searchValue=&quot; &amp; Gateway_ID__c &amp; &quot;&amp;submitbutton=Submit&amp;subaction=search&amp;reportName=SearchTransaction&amp;MerchId=&amp;menukey=Unsettled&quot; , &quot;Details&quot;, &quot;_blank&quot;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Details (Payflow)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Details__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <formula>IF(
+BEGINS(Gateway_ID__c, &quot;0&quot;), &quot;&quot;, HYPERLINK( &quot;https://account.authorize.net/UI/themes/anet/merch.aspx?page=history&amp;sub=detail&amp;transID=&quot; &amp; Gateway_ID__c  &amp; &quot;&amp;MerchId=&amp;menukey=Unsettled&quot; , &quot;Details&quot;, &quot;_blank&quot;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Link to Gateway transaction details</inlineHelpText>
+        <label>Details (Authorize.net)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gateway_Date__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Gateway Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Gateway_ID__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Gateway ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gateway_Response__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Gateway Response</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>7</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Gateway__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Gateway</label>
+        <referenceTo>ChargentBase__Gateway__c</referenceTo>
+        <relationshipLabel>Transaction</relationshipLabel>
+        <relationshipName>Transaction</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Order__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Order</label>
+        <referenceTo>ChargentOrder__c</referenceTo>
+        <relationshipLabel>Transactions</relationshipLabel>
+        <relationshipName>Transactions</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Payment_Method__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Payment Method</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Credit Card</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Check</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Check (Paper)</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Cash</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Payment_Request__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Payment Request</label>
+        <referenceTo>Payment_Request__c</referenceTo>
+        <relationshipLabel>Transactions</relationshipLabel>
+        <relationshipName>Transactions</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Reason_Code__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Reason Code</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Reason_Text__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Reason Text</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recurring__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Recurring</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Response_Code__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Response Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Response_Message__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Response Message</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Response_Status__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Response Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Response__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Response</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tokenization__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>The token that was used for this transaction.</inlineHelpText>
+        <label>Tokenization</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Authorization</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Charge</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Void</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Refund</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Transaction</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>CREATED_DATE</columns>
+        <columns>NAME</columns>
+        <columns>Gateway_ID__c</columns>
+        <columns>Credit_Card_Type__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Type__c</columns>
+        <columns>Response_Status__c</columns>
+        <columns>Response_Message__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <columns>NAME</columns>
+        <columns>Order__c</columns>
+        <columns>Gateway_Date__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Type__c</columns>
+        <columns>Credit_Card_Type__c</columns>
+        <columns>Response_Message__c</columns>
+        <columns>Response_Status__c</columns>
+        <columns>Gateway__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Transactions</label>
+    </listViews>
+    <listViews>
+        <fullName>Errors_and_Declines</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Response_Status__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Recurring__c</columns>
+        <columns>Response_Message__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Response_Status__c</field>
+            <operation>equals</operation>
+            <value>Error,Declined</value>
+        </filters>
+        <label>Errors and Declines</label>
+    </listViews>
+    <nameField>
+        <displayFormat>TRX-{000000000}</displayFormat>
+        <label>Transaction ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Transactions</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Order__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Gateway_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Amount__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Response_Message__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Credit_Card_Type__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Order__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Gateway_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Amount__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Credit_Card_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Response_Message__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Order__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Gateway_Date__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Amount__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Type__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Credit_Card_Type__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Response_Message__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>Order__c</searchFilterFields>
+        <searchFilterFields>Gateway_Date__c</searchFilterFields>
+        <searchFilterFields>Credit_Card_Type__c</searchFilterFields>
+        <searchFilterFields>Response_Message__c</searchFilterFields>
+        <searchFilterFields>Type__c</searchFilterFields>
+        <searchResultsAdditionalFields>Order__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Gateway_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Amount__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Credit_Card_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Response_Message__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <webLinks>
+        <fullName>Charge_Authorized</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Charge Authorized</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/apex.js&quot;)} 
+
+disableButtons();
+
+var result = sforce.apex.execute(&quot;ChargentOrders.TChargentOperations&quot;, &quot;ChargeAuthorizedTransaction_Click&quot;, {TransactionId: &quot;{!Transaction__c.Id}&quot; });
+	result = result[0];
+	if (result.DebugString) {
+		alert(result.Message+&apos;\n\n&apos;+result.DebugString);
+	}
+	else {
+		alert(result.Message);
+	}
+	if (result.Reload == &quot;true&quot;) {
+		window.location.reload();
+	}
+enableButtons();
+
+// CHARD-495
+function disableButtons() { 
+	var buttons = document.getElementsByName(&apos;chargentorders__charge_authorized&apos;); 
+	if (buttons != null) { 
+		for (i = 0; i &lt; buttons.length; i++) { 
+			buttons[i].setAttribute(&apos;disabled&apos;, &apos;true&apos;); 
+		} 
+	} 
+} 
+
+function enableButtons() { 
+	var buttons = document.getElementsByName(&apos;chargentorders__charge_authorized&apos;); 
+	if (buttons != null) { 
+		for (i = 0; i &lt; buttons.length; i++) { 
+			buttons[i].removeAttribute(&apos;disabled&apos;); 
+		} 
+	} 
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Partial_Refund</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Partial Refund</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&apos;/soap/ajax/31.0/apex.js&apos;)} 
+{!REQUIRESCRIPT(&apos;/soap/ajax/31.0/connection.js&apos;)} 
+{!REQUIRESCRIPT(&apos;/js/functions.js&apos;)} 
+{!REQUIRESCRIPT(&apos;/resource/ChargentBase__jQuery/jquery-ui/js/jquery-1.9.1.js&apos;)} 
+{!REQUIRESCRIPT(&apos;/resource/ChargentBase__jQuery/jquery-ui/js/jquery-ui-1.10.3.custom.js&apos;)} 
+{!REQUIRESCRIPT(&apos;/resource/ChargentBase__jQuery/jquery-ui/js/jquery-ui-1.10.3.custom.min.js&apos;)} 
+
+function createPaymentDialog() { 
+sd = new SimpleDialog(&quot;PaymentDialog&quot;, true); 
+sd.setWidth(&quot;400&quot;); 
+sd.setTitle(&apos;&lt;a title=&quot;Close&quot; tabindex=&quot;0&quot; onclick=&quot;window.parent.sd.cancel(); parent.location.reload();&quot; href=&quot;javascript:void(0)&quot; class=&quot;dialogClose&quot;&gt;Close&lt;/a&gt;&lt;h2 id=&quot;title&quot;&gt;Partial Refund&lt;/h2&gt;&apos;); 
+sd.createDialog();	
+window.parent.sd = sd;	
+var iframe_url = &apos;{!URLFOR(&quot;/apex/ChargentBase__PaymentRequestModal&quot;)}&apos;;
+if (iframe_url.indexOf(&quot;?&quot;) == -1) {
+   iframe_url = &apos;{!URLFOR(&quot;/apex/ChargentBase__PaymentRequestModal&quot;)}&apos; + &apos;?objId=&apos; + &apos;{!Transaction__c.Id}&apos;;
+} else {
+   iframe_url = &apos;{!URLFOR(&quot;/apex/ChargentBase__PaymentRequestModal&quot;)}&apos; + &apos;&amp;objId=&apos; + &apos;{!Transaction__c.Id}&apos;;
+}
+sd.setContentInnerHTML(&apos;&lt;iframe id=&quot;iframeContentId&quot; src=&quot;&apos; + iframe_url + &apos;&quot; frameborder=&quot;0&quot; height=&quot;190&quot; width=&quot;350&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; align=&quot;center&quot; scrolling=&quot;no&quot; style=&quot;overflow-y: hidden !important; overflow-x: hidden !important;&quot; /&gt;&apos;); 
+} 
+
+function setElements() { 
+try{ 
+document.getElementById(&quot;PaymentDialogContent&quot;).style.padding = &quot;20px&quot;; 
+document.getElementById(&quot;PaymentDialogContent&quot;).style.overflowY = &quot;hidden&quot;; 
+document.getElementById(&quot;PaymentDialogContent&quot;).style.overflowX = &quot;hidden&quot;; 
+document.getElementsByClassName(&quot;middle&quot;)[0].style.background = &apos;#aaa&apos;; 
+document.getElementsByClassName(&quot;middle&quot;)[1].style.background = &apos;#aaa&apos;; 
+document.getElementsByClassName(&quot;middle&quot;)[1].style.borderBottomRightRadius= &apos;10px&apos;; 
+document.getElementsByClassName(&quot;middle&quot;)[1].style.borderBottomLeftRadius= &apos;10px&apos;; 
+document.getElementsByClassName(&quot;bottomRight&quot;)[1].style.display = &apos;none&apos;; 
+document.getElementById(&apos;PaymentDialog&apos;).style.overflow = &quot;auto&quot;; 
+} catch(e) {} 
+} 
+
+function showPaymentDialog(){	
+if (window.parent.sd == undefined) { 
+createPaymentDialog(); 
+sd.show();	
+} else { 
+window.parent.sd.show(); 
+}	
+
+setElements(); 
+} 
+
+showPaymentDialog();</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Refund</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Refund</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/apex.js&quot;)} 
+
+disableButtons();
+
+var result = sforce.apex.execute(&quot;ChargentOrders.TChargentOperations&quot;, &quot;RefundTransaction_Click&quot;, {TransactionId: &quot;{!Transaction__c.Id}&quot; });
+	result = result[0];
+	if (result.DebugString) {
+		alert(result.Message+&apos;\n\n&apos;+result.DebugString);
+	}
+	else {
+		alert(result.Message);
+	}
+	if (result.Reload == &quot;true&quot;) {
+		window.location.reload();
+	}
+enableButtons();
+
+// CHARD-495
+function disableButtons() { 
+	var buttons = document.getElementsByName(&apos;chargentorders__refund&apos;); 
+	if (buttons != null) { 
+		for (i = 0; i &lt; buttons.length; i++) { 
+			buttons[i].setAttribute(&apos;disabled&apos;, &apos;true&apos;); 
+		} 
+	} 
+} 
+
+function enableButtons() { 
+	var buttons = document.getElementsByName(&apos;chargentorders__refund&apos;); 
+	if (buttons != null) { 
+		for (i = 0; i &lt; buttons.length; i++) { 
+			buttons[i].removeAttribute(&apos;disabled&apos;); 
+		} 
+	} 
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Void</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Void</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/apex.js&quot;)} 
+
+disableButtons();
+
+var result = sforce.apex.execute(&quot;ChargentOrders.TChargentOperations&quot;, &quot;VoidTransaction_Click&quot;, {TransactionId: &quot;{!Transaction__c.Id}&quot; });
+	result = result[0];
+	if (result.DebugString) {
+		alert(result.Message+&apos;\n\n&apos;+result.DebugString);
+	}
+	else {
+		alert(result.Message);
+	}
+	if (result.Reload == &quot;true&quot;) {
+		window.location.reload();
+	}
+enableButtons();
+
+// CHARD-495
+function disableButtons() { 
+	var buttons = document.getElementsByName(&apos;chargentorders__void&apos;); 
+	if (buttons != null) { 
+		for (i = 0; i &lt; buttons.length; i++) { 
+			buttons[i].setAttribute(&apos;disabled&apos;, &apos;true&apos;); 
+		} 
+	} 
+} 
+
+function enableButtons() { 
+	var buttons = document.getElementsByName(&apos;chargentorders__void&apos;); 
+	if (buttons != null) { 
+		for (i = 0; i &lt; buttons.length; i++) { 
+			buttons[i].removeAttribute(&apos;disabled&apos;); 
+		} 
+	} 
+}</url>
+    </webLinks>
+</CustomObject>

@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event template" >
+<aura:attribute name="date" type="Date"/>
+<aura:attribute name="scroll" type="Boolean"/>
+</aura:event>

@@ -1,0 +1,104 @@
+<apex:page controller="IATSPayment.AURASetup" cache="false" standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0">
+
+    <apex:stylesheet value="{!URLFOR($Resource.IATSPayment__lightiningCSS, '/assets/styles/salesforce-lightning-design-system.min.css')}" />
+    <script type="text/javascript">
+        function GoToAURASetup(to,p) {
+            var myForm = document.createElement("form");
+            myForm.method="post" ;
+            myForm.action = to ;
+            for (var k in p) {
+                var myInput = document.createElement("input") ;
+                myInput.setAttribute("name", k) ;
+                myInput.setAttribute("value", p[k]);
+                myForm.appendChild(myInput) ;
+            }
+            document.body.appendChild(myForm) ;
+            myForm.target="AURAiFrame";
+            myForm.submit() ;
+            
+            document.body.removeChild(myForm);
+        }
+    </script>
+    
+    <style>
+    #container header-section {
+    display:none;
+    }
+    ul li {
+        margin-left: 0px;
+    }
+    .slds-hint-parent:hover {
+        background: #FFFFFF !important;
+    }
+    .slds-table:not(.slds-no-row-hover) tbody tr:hover>td {
+        background: #FFFFFF !important;
+    }
+    </style>
+    
+    <apex:form >
+        <div class="slds">
+            <div class="slds-page-header">
+                <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media slds-no-space slds-grow">
+                            <div class="slds-media__body">
+                                <p class="slds-text-title--caps slds-line-height--reset">{!$Label.iatspayment__iatsaurasetup}</p>
+                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate">{!$Label.iatspayment__configuresettings}</h1>
+                                <p class="slds-truncate">{!$Label.iatspayment__aurasettings}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>  
+        
+        
+        <!--<apex:sectionHeader title="iATS AURA Setup" subtitle="Configure Settings">
+        <description>
+            Settings that control the behavior of the iATS AURA application. 
+        </description>
+        </apex:sectionHeader>-->
+        
+        
+            <apex:outputPanel id="selectAccountBlock">
+                    <apex:outputPanel >
+                        <div class="slds-table slds-max-medium-table--stacked-horizontal">
+                            <table class="slds-table slds-max-medium-table--stacked-horizontal" border="0">
+                                <tr class="slds-hint-parent">
+                                    <td class="slds-cell-wrap" style="padding-bottom:0px;">
+                                        <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__pleaseselectaniatsaccount}" style="font-weight:bold;margin-bottom:0px;"/>
+                                    </td>
+                                </tr>
+                                <tr class="slds-hint-parent">
+                                    <td style="width:20%" class="slds-cell-wrap">
+                                        <div class="slds-select_container">
+                                            <apex:selectList styleClass="slds-select" value="{!IATSAccountId}" size="1" id="accountName">
+                                                <apex:selectOptions value="{!ClientCodeOptions}"/>
+                                                <apex:actionSupport event="onchange" action="{!LoginSetupPage}" status="updateAccountStatus" reRender="selectAccountBlock"/> 
+                                            </apex:selectList>
+                                        </div>
+                                    </td>
+                                    <td style="width:15%" class="slds-cell-wrap">    
+                                        <div class="slds-form-element">
+                                            <button type="button" style="margin-left: 30px;" class="slds-button slds-button--brand" value="{!$Label.Submit}" onclick="GoToAURASetup('{!JSENCODE(AURAPageUrl)}',{Username:'{!JSENCODE(username)}',Password:'{!JSENCODE(password)}',HideMainMenue:'true',lang:'EN'})">{!$Label.Submit}</button>
+                                          </div>
+                                    </td>
+                                    <td style="width:65%; vertical-align: middle;" class="slds-cell-wrap">
+                                        <apex:actionStatus startText=" Please wait..." startStyle="color: blue" id="updateAccountStatus">
+                                        </apex:actionStatus>
+                                    </td>
+                                </tr>
+                                <tr class="slds-hint-parent">
+                                    <td class="slds-cell-wrap"><apex:messages style="color:red;"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </apex:outputPanel>
+            </apex:outputPanel>
+        </div>
+    </apex:form>
+    
+    <apex:outputPanel >
+        <apex:iframe src="" scrolling="true" id="AURAiFrame"/>
+    </apex:outputPanel>
+
+</apex:page>

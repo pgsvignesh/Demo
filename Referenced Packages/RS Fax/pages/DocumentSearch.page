@@ -1,0 +1,481 @@
+<apex:page showHeader="false" sidebar="false" controller="efaxapp.DocumentSearchController" docType="html-5.0">
+
+<style>
+.num { text-align:right;width:60px; }
+.name { text-align:right;width:250px; }
+.upload { width:55px;height:15px;position:relative;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;border:1px solid gray; }
+.upload .line { width:0%;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;border:0 none;background-color:#E7F4F8;position:absolute; }
+.upload .percent { text-align:center;width:60px;position:absolute; }
+.del { margin-right:5px; }
+.error { color: #f00 !important; }
+</style>
+
+<script type="text/javascript" src="{!URLFOR($Resource.Common, '/js/common.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.Common, '/js/jquery-1.9.1.min.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.Common, '/js/jquery.blockUI.js')}"></script>
+<script src="/soap/ajax/27.0/connection.js" type="text/javascript"></script>
+<script src="/soap/ajax/27.0/apex.js" type="text/javascript"></script>
+
+   
+<script type="text/javascript">
+	sforce.connection.sessionId = '{!$Api.Session_ID}';
+	
+	var origin = 'https://' + window.location.search.match(/origin=([^&]+)/)[1];
+	var documentId = getDocumentId();
+
+	var inProgress = false;
+
+	function encodeHtml(str) {
+		return str && str.replace ? str.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>') : str;
+	}
+	
+	function getDocumentId() {
+		var m = window.location.search.match(/id=([\w\d]{15})/);
+		if (m && m.length > 1)
+			return m[1];
+		return null;
+	}
+	
+	function getDocumentById(docid, callback) {
+		Visualforce.remoting.Manager.invokeAction(
+        	'{!$RemoteAction.DocumentSearchController.SearchFileById}', 
+        	docid,
+	        function(document){
+				callback(document);
+			}, 
+        	{escape: false}
+      	);
+	}
+	
+	function blockUI() {
+		$.blockUI({ 
+			message: '<div><span id="imgProgress"><img style="vertical-align:middle;" src="{!URLFOR($Resource.Common, '/img/loading.gif')}"/></span>&nbsp;Please wait...</div>',
+			css: {
+				border: '0 none',
+				backgroundColor: 'transparent'
+			},
+			overlayCSS: { 
+        		backgroundColor: '#fff'
+        	},
+        	fadeIn:0,fadeOut:0 
+		});		
+	}
+	
+	function unblockUI() {
+		$.unblockUI({fadeIn:0,fadeOut:0});
+	}
+	
+	function blockTable() {
+		$('#result').block({ 
+			message: '<div><span id="imgProgress"><img style="vertical-align:middle;" src="{!URLFOR($Resource.Common, '/img/loading.gif')}"/></span>&nbsp;Please wait...</div>',
+			css: {
+				border: '0 none',
+				backgroundColor: 'transparent'
+			},
+			overlayCSS: { 
+        		backgroundColor: '#fff'
+        	},
+        	fadeIn:0,fadeOut:0 
+		});		
+	}
+	
+	function unblockTable() {
+		$('#result').unblock({fadeIn:0,fadeOut:0});
+	}
+		
+	function setSelectedDocument(event) {
+		var a = $(event.target);
+		var docid = a.attr('docid');
+		blockUI();
+		getDocumentById(docid, function(document){
+			window.opener.postMessage({
+				documentFolder: document.Folder ? document.Folder.Name : '',
+				documentName: document.Name,
+				documentId: document.Id
+			}, origin);
+	        window.close();
+		});
+	}
+	
+	function populateSearchFields(documentId) {
+		getDocumentById(documentId, function(document){
+			$('#fileName').val(document.Name);
+			$('[id$=slctFolder]')[0].selectedIndex = 0;
+			$('[id$=slctFolder] option').each(function(i,o){ if (o.innerText == (document.Folder ? document.Folder.Name : '')) $('[id$=slctFolder]')[0].selectedIndex = i; });
+			composeTable([{
+				Id: document.Id,
+				Name: document.Name,
+				Folder: { Name: document.Folder ? document.Folder.Name : '' }
+			}]);
+			$('#txtMatches').text('Total Matches: 1');
+			$('div.clearResults').show();
+		});	
+	}
+	
+	function populateNoData(tbl) {
+		tbl.find('tr[file!="new"]').remove();	
+		tbl.prepend('<tr class="dataRow"><td class="dataCell" colspan="3">No documents found</td></tr>');
+	}
+
+  	function formatSize(fileSize) {
+        var KB = 1000; // note: we use 1000 instead of 1024 for rounding
+        var MB = 1000 * KB;
+        var metrics = [MB, KB];
+        var units = ['MB', 'KB'];
+        for (var i = 0; i < metrics.length; i++) {
+            if (fileSize >= metrics[i]) {
+                var size = Math.round(fileSize / metrics[i]);
+                return size + ' ' + units[i];
+            }
+        }
+        return fileSize + ' Bytes';
+    }
+        	
+	function composeTable(docs) {
+		var tbl = $('#tblResults tbody');
+		if (!docs.length) {
+			populateNoData(tbl);
+			return;
+		}
+		var trs = [];
+		$.each(docs, function(i, doc){
+			var dic = i % 2 == 0 ? 'even' : 'odd';
+			var tr = $('<tr class="dataRow ' + dic + '"></tr>');
+			
+			var tdName = $('<td class="dataCell"></td>');
+			tdName.html('<a href="#" docid="' + doc.Id + '">' + encodeHtml( doc.Name ) + '</a>');
+
+			var tdSize = $('<td class="dataCell num"></td>');
+			tdSize.text(formatSize(doc.BodyLength));
+						
+			var tdFolder = $('<td class="dataCell name"></td>');
+			tdFolder.text(doc.Folder ? doc.Folder.Name : '');
+						
+			tr.append([tdName[0].outerHTML, tdSize[0].outerHTML, tdFolder[0].outerHTML].join(''));
+			
+			trs.push(tr[0].outerHTML);
+		});	
+		tbl.find('tr[file!="new"]').remove();		
+		tbl.prepend(trs.join(''));
+		tbl.find('tr[file!="new"] a').click(setSelectedDocument);
+	}
+
+	function appendFiles(files) {
+ 		var tbl = $('#tblResults tbody');
+		var i = 0;
+		$.each(files, function(j, file) {
+			if (!file.name.match(/\.pdf$/)) return;
+			
+			var dic = i % 2 == 0 ? 'even' : 'odd';
+			var tr = $('<tr file="new" class="dataRow ' + dic + '"></tr>');
+			
+			var filename = encodeHtml( file.name );
+			
+			var tdName = $('<td class="dataCell" filename="' + filename + '"></td>');
+			tdName.append('<a class="del" href="#" onclick="return deleteRow(event);">Del</a>');
+			tdName.append('<span>' + filename + '</span>');
+
+            var tdSize = $('<td class="dataCell num"></td>');
+            tdSize.text(formatSize(file.size));
+            if (file.size > 25000000) { 
+                tr.attr('error', 'error'); 
+                tdSize.css('color','red'); 
+                tdSize.attr('title', 'File size should be less or equal 1.5MB'); 
+            } else {
+                tr.data('fileBody', file);
+            }
+                        
+            var tdFolder = $('<td class="dataCell name"></td>');
+                        
+            tr.append([tdName[0].outerHTML, tdSize[0].outerHTML, tdFolder[0].outerHTML].join(''));
+            
+            tbl.append(tr);
+                        
+            i++;
+        });            
+        $('#fileInput')[0].value = '';
+    } 
+    
+    function deleteRow(event) {
+    	event = event || window.event;
+		var t = event.target || event.srcElement;
+		var a = $(t); 
+		var tr = a.parents('tr:first');
+		tr.data('fileBody', null);
+		tr.remove();
+		return false;
+    }
+    	
+	function clearSearchResults() {
+		$('#fileName').val('');
+		$('[id$=slctFolder]')[0].selectedIndex = 0;
+		populateNoData($('#tblResults tbody'));
+		$('#txtMatches').text('Total Matches: 0');
+		$('div.clearResults').hide();
+	}
+	
+	function searchDocumentsTimeout(e) {
+		if (e.keyCode == 13 || e.which == 13) {
+			window.setTimeout(searchDocuments, 10);
+			return false;
+		}
+	}
+		
+	function searchDocuments() {
+		var fileName = $.trim($('#fileName').val());
+		var folderName = $.trim($('[id$=slctFolder] option:selected').val());
+		if (inProgress)
+			return;
+		inProgress = true;
+		$('#btnSearch').attr('class', 'btnDisabled');
+		blockTable();
+		Visualforce.remoting.Manager.invokeAction(
+        	'{!$RemoteAction.DocumentSearchController.SearchFilesByName}', 
+        	fileName,
+			folderName,
+	        function(documents){
+				composeTable(documents);
+				$('#txtMatches').text('Total Matches: ' + documents.length);
+				$('div.clearResults').show();
+				$('#btnSearch').attr('class', 'btn');
+				unblockTable();
+				inProgress = false;
+			}, 
+        	{escape: false}
+      	);
+	}
+  
+  	function showUploadProgress(row, progress) {
+  		$(row).find('.upload .percent').html(progress + '%');
+  		$(row).find('.upload .line').css('width', progress + '%');
+  	}
+  	
+  	function commitFileRow(file, row, docid) {
+  		var tr = $(row);
+  		tr.find('td:eq(0)').html('<a href="#" docid="' + docid + '">' + encodeHtml( file.name ) + '</a>');
+  		tr.find('td:eq(1)').text(formatSize(file.size));
+  		tr.find('td:eq(0) a').click(setSelectedDocument);
+  		tr.attr('file', 'uploaded');
+  		tr.data('fileBody', null);
+  	}
+ 
+ 	function addErrorFileRow(file, row, message) {
+ 		var tr = $(row);
+ 		tr.attr('error', 'error');
+ 		tr.find('td:eq(0) span').css('color', 'red');
+ 		tr.find('td:eq(0) span').attr('title', message);
+ 		tr.find('td:eq(1)').text(formatSize(file.size));
+ 		tr.attr('file', 'error');
+ 		tr.data('fileBody', null);
+ 		if (window.console) console.error(message);
+ 	}
+  	
+  	function extractErrorMessage(html) {
+  		var i = html.indexOf('theErrorPage:theError');
+  		var s = html.indexOf('>', i);
+  		var e = html.indexOf('<', s);
+  		return html.substring(s + 1, e);
+  	}
+ 
+	 function ie() {
+	    var ua = window.navigator.userAgent;
+	    var msie = ua.indexOf('MSIE ');
+	    var trident = ua.indexOf('Trident/');
+	    return msie > 0 || trident > 0;
+	}
+ 	
+    function uploadDocumentList() {
+    	if (inProgress)
+    		return;
+    	inProgress = true;
+    	var queue = new Array();
+    	queue.getTop = function() { 
+    		this.index = this.index || 0;
+    		if (this.index >= this.length) 
+    			return undefined; 
+    		var item = this[this.index]; 
+    		this.index++;
+    		return item; 
+    	}
+    	$('#tblResults tr[file="new"]').each(function(i, tr) {
+    		if ($(tr).attr('error')) return;
+    		var file = $(tr).data('fileBody');
+    		if (!file) return;
+    		file.row = tr;
+    		queue.push(file);
+    	});
+    	uploadNextDocument(queue);
+    }
+       
+    function uploadNextDocument(queue) {
+    	var file = queue.getTop();
+    	if (!file) { 
+    		inProgress = false;
+    		$('#tblResults a.del').show();
+    		return;
+    	}
+    	
+    	$('#tblResults a.del').hide();
+    	
+    	var reader = new FileReader();
+	    reader.onload = function() {
+	    	uploadData(queue, file, this.result);
+	    };
+        ie() ? reader.readAsDataURL(file) : reader.readAsArrayBuffer(file);
+    }
+                            
+	function uploadData(queue, file, fileData) {
+        var xhr = new XMLHttpRequest();    
+		
+		var progressHandler = function(e) {
+            if (e.lengthComputable) {
+                var progress = Math.floor( e.loaded / e.total * 100 );
+                showUploadProgress(file.row, progress);
+            }
+        }
+        
+        var et = null;
+		if (!xhr.upload) {
+			// emulate progress
+			var emulateProgress = function(step) {
+				var progress = step * 20000;
+				if (progress >= file.size * 0.9)
+					progress = file.size * 0.9;
+				progressHandler({ lengthComputable: true, loaded: progress, total: file.size });
+				et = window.setTimeout(function() { emulateProgress(step + 1) }, 150);
+			}
+			et = window.setTimeout(function() { emulateProgress(1) }, 150);
+		} else {
+	        xhr.upload.addEventListener('progress', progressHandler, false);
+        }
+            
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) { // ready
+                if (et) window.clearTimeout(et);
+                         
+                
+                var res = JSON.parse(xhr.response || xhr.responseText);
+                
+                for(var rr in res[0]){
+                    if(res[0][rr] == 'MAXIMUM_SIZE_OF_DOCUMENT'){
+                        $(file.row).find('td:eq(1)').html(formatSize(file.size));
+                        $(file.row).find('td').addClass("error");
+                        $(file.row).attr('title', 'File too large for uploading to Salesforce Documents');
+                    }
+                }
+                                
+                if (res.success) {
+                    commitFileRow(file, file.row, res.id);  
+                } else {
+                    addErrorFileRow(file, file.row, errors[0].message);
+                }
+                uploadNextDocument(queue);
+            }
+        };
+    	
+    	$(file.row).find('td:eq(1)').html('<div class="upload"><div class="line">&nbsp;</div><div class="percent">0%</div></div>');
+    	
+    	xhr.open('POST', '/services/data/v29.0/sobjects/Document.json', true);
+    	xhr.setRequestHeader('Authorization', 'Bearer {!$Api.Session_ID}');
+    	
+    	if (ie()) {
+    		xhr.setRequestHeader('Content-Type', 'application/json');
+    		xhr.send(JSON.stringify({ Name: file.name, ContentType: 'application/pdf', FolderId: '{!$User.ID}', Body: fileData.substring(fileData.indexOf('base64,') + 'base64,'.length) }));
+    	} else {
+    		var sboundary = '---------------------------' + Date.now().toString(16);
+			xhr.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + sboundary);
+		       
+	        var starting = strToUTF8Arr('--' + sboundary + '\r\n' +
+				'Content-Disposition: form-data; name="document_fields";\r\n' +
+				'Content-Type: application/json\r\n' + 
+				'\r\n' +
+				JSON.stringify({ Name: file.name, ContentType: 'application/pdf', FolderId: '{!$User.ID}' }) + '\r\n' +
+				'\r\n' +	
+				'--' + sboundary + '\r\n' +
+				'Content-Disposition: form-data; name="Body"; filename="' + encodeURIComponent(file.name) + '"\r\n' +
+				'Content-Type: application/pdf\r\n' +
+				'\r\n'
+			);
+				
+			var ending = strToUTF8Arr('\r\n--' + sboundary + '--\r\n');
+    	    	
+			xhr.send( appendByteArrays( starting.buffer, fileData, ending.buffer ) );
+		}		
+    }
+                
+	$(function() {
+		$('#btnSearch').click(searchDocuments);
+		$('#fileName').keypress(searchDocumentsTimeout);
+		$('[id$=slctFolder]').change(searchDocuments);
+		$('div.clearResults a').click(clearSearchResults);
+		$('#fileInput').change(function() { appendFiles(this.files); });
+		$('#btnBrowse').click(function() { $('#fileInput').click(); });
+		if (documentId && documentId != '000000000000000')
+			populateSearchFields(documentId);
+		else
+			searchDocuments();
+	})
+</script>
+
+<body class="hasMotif lookupTab LookupSearchFrame brandNoBgrImg">
+<apex:form >
+	<div class="lookup">
+		<div class="bPageTitle">
+			<div class="ptBody secondaryPalette">
+				<div class="content"><img src="/s.gif" alt="" class="pageTitleIcon" title="" />
+					<h1>Document Lookup</h1>
+				</div>
+			</div>
+		</div>
+		<div class="pBody"> 
+			<table>
+				<tr>
+					<td><apex:outputLabel for="slctFolder" value="Folder:"/></td>
+					<td><apex:selectList id="slctFolder" size="1">
+			            <apex:selectOptions value="{!FolderList}"/>
+			        </apex:selectList></td>
+					<td><label for="fileName">Document Name:</label></td>
+					<td><input id="fileName" maxlength="80" size="20" type="text" value="" /></td>
+					<td><input value=" Search  Documents " class="btn" id="btnSearch" title="Search Documents" type="button" /></td>
+				</tr>										
+			</table>
+			<div class="bDescription" style="padding-left:52px;">You can use "*" as a wildcard next to other characters to improve your search results.</div>
+		</div>
+	</div>
+	<div style="margin-top:50px;"></div>
+	<div id="result" class="lookup">
+		<div class="clearResults" style="display:none;">
+			&lt;&nbsp;<a href="#">Clear Search Results</a>
+		</div>
+		<div class="srch"><table style="width:100%;"><tr><td style="width:200px;">Search Results</td><td id="txtMatches" style="text-align:right;">Total Matches: 0</td></tr></table></div>
+		<div class="listRelatedObject lookupBlock">
+			<div class="bPageBlock brandSecondaryBrd secondaryPalette">
+				<div class="pbBody">
+					<table id="tblResults" class="list" cellspacing="0" cellpadding="0" border="0" style="border-bottom:0 none;">
+						<thead>
+							<tr class="headerRow">
+								<th class="zen-deemphasize">Document</th>
+								<th class="zen-deemphasize" style="width:60px;">Size</th>
+								<th class="zen-deemphasize"  style="width:250px;">Folder</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="dataRow even">
+								<td colspan="2" class="dataCell">No documents found</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div style="text-align:right;">
+			<input id="fileInput" type="file" accept="application/pdf" multiple="true" style="display:none;" />
+			<input id="btnBrowse" type="button" class="btn" value="Browse" />
+			<input id="btnUpload" type="button" class="btn" value="Upload" onclick="uploadDocumentList();" />
+		</div>
+		<div class="listElementBottomNav"></div>
+		<div class="footer">Copyright &copy; {!YEAR(TODAY())} ramseysolutions.com. All rights reserved.</div>
+	</div>
+</apex:form>
+</body>
+</apex:page>

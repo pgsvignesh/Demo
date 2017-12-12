@@ -1,0 +1,33 @@
+<apex:page title="Sortable Data Grids" showHeader="true" sidebar="false" standardController="sortablegrid__SDG__c" recordSetVar="records" >
+    <apex:sectionHeader title="Sortable Data Grids" ></apex:sectionHeader>
+        <apex:stylesheet value="{!URLFOR($Resource.sortablegrid__SLDS0121, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+
+   <div class="slds">
+       <div class="slds-text-longform">
+    <p>
+        This Lightning component enables you to render grids of data that support Sorting, Filtering and Paging.  It supports Field Level Security, Translation Workbench and can be used with multiple currencies.  It supports two types of configuration:
+    </p>
+    <ul>
+        <li>Simple mode: Relationships and Fieldsets</li>
+        <li>Advanced mode: Custom configuration using a custom object</li>
+    </ul>
+    <p>
+        To use the component, use Lightning App Builder to place the 'Sortable Data Grid' component on the relevant page.  Note you need to have configured MyDomain, and enabled App Builder to do this.  
+        Then populate the design properties as follows:
+    </p>
+    <ol>
+        <li>Provide a title to the component.</li>
+        <li>Simple mode: Provide the relationship name from the master record.  eg on Account page, input 'Opportunities' for relationship name.</li>
+        <li>Simple mode: If you do not provide a fieldset name, then the component will only show the name.  Create a fieldset if you want to choose which columns to display.</li>
+        <li>Advanced mode: First create a Sortable Data Grid configuration below, then input the Tag value in the design properties.  Leave the relationship name and the fieldset name blank</li>
+        <li>SVG Name: provide a value as shown on <a href='https://www.lightningdesignsystem.com/resources/icons'>Lightning Design System</a> </li>
+        <li>Save and activate the page</li>
+    </ol>
+    
+    <p>
+        To create an Advanced Config, view help files <a href='sdgConfigHelp'>here</a>
+    </p>
+       </div>
+    </div><apex:listViews type="sortablegrid__SDG__c"/>
+
+</apex:page>

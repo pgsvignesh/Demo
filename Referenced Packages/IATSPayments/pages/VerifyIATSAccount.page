@@ -1,0 +1,2 @@
+<apex:page standardController="IATSPayment__IATS_Account__c" extensions="IATSPayment.IATSPayments_Controller">
+</apex:page>

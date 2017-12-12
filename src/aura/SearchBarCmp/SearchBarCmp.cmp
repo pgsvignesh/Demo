@@ -1,0 +1,6 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+    <input type="text" class="form-control" onchange="{!c.searchKeyChange}"
+            placeholder="Search"/>
+
+</aura:component>

@@ -1,0 +1,103 @@
+<apex:page docType="html-5.0" title="Getting Started" showHeader="true" sidebar="false">
+<apex:stylesheet value="{!URLFOR($Resource.IATSPayment__lightiningCSS, '/assets/styles/salesforce-lightning-design-system.min.css')}" /> 
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="icon" href="../../favicon.ico"/>
+    <link rel="stylesheet" href="/assets/styles/slds.css"/><link rel="stylesheet" href="/assets/styles/site.css"/>
+    <link rel="stylesheet" href="/assets/styles/demo.css" />
+    <link rel="stylesheet" href="/assets/styles/salesforce-lightning-design-system.css" />
+
+    <title>Getting Started with iATS Brickwork</title>
+  </head>
+
+  <body style="padding:0px;">
+
+    <div class="bootstrap">
+
+    <!-- Top heading for a primary marketing message or call to action -->
+    <div>
+    
+    </div>
+    
+    <div class="container">
+    <div class="slds">
+    <div class="slds-page-header">
+                <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media slds-no-space slds-grow">
+                            <div class="slds-media__body" style="color:#50B848">
+                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate">Welcome to Brickwork by iATS Payments!</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div> 
+              </div>
+
+     <fieldset class="slds-box slds-theme--default slds-container" style="margin-top: 1%; 
+    border: 1px solid #d8dde6;
+    padding: 1rem;
+    border-radius: .25rem;">
+            <div class="slds-section">
+                <!--<h3 class="slds-section__title">
+                    <a class="slds-button slds-section__title-action">
+                        <svg aria-hidden="true" class="slds-section__title-action-icon slds-button__icon slds-button__icon--left">
+                            <use xlink:href="{!$Resource.lightiningCSS}/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+                        </svg>Transactions
+                    </a>
+                </h3>-->     
+                <!-- Example row of columns -->
+               
+      <div class="row">
+        <div class="col-md-6">
+            <h2 style="color:black;">Getting Started</h2>
+            <div style="margin-top:40px; margin-bottom:55px;">
+            <h4><img src="{!URLFOR($Resource.icons, 'globe.png')}" style="width:45px" alt="iATS Logo"/>
+            <a href="http://home.iatspayments.com/resources/product-guides/">&nbsp;Installation and User Guides</a>
+            </h4>
+            <h4><img src="{!URLFOR($Resource.icons, 'aura.png')}" style="width:45px" alt="iATS Logo"/>
+            <a href="http://home.iatspayments.com/resources/product-guides/">&nbsp;Aura Implementation Guides</a></h4>
+            <h4 style="padding-bottom: 10px;"><img src="{!URLFOR($Resource.icons, 'innerArrows.png')}" style="width:45px" alt="iATS Logo"/>
+            <a href="http://home.iatspayments.com/resources/?tag=Salesforce+Payment+App">&nbsp;Brickwork Video Resources</a></h4>
+            <h4><img src="{!URLFOR($Resource.icons, 'link.png')}" style="width:45px" alt="iATS Logo"/>
+            <a href="http://home.iatspayments.com/services/security-solutions/">&nbsp;Security Solutions and Fraud Prevention Tools</a></h4>
+            </div>
+            </div>
+        
+        <div class="col-md-6">
+        <h2 style="color:black;">Getting Help</h2>
+          <div class="media" style="margin-top:25px; margin-bottom:80px;">
+          <h4><img src="{!URLFOR($Resource.icons, 'head.png')}" style="width:45px" alt="iATS Logo"/>
+          <a href="http://home.iatspayments.com/contact/customer-care/">&nbsp;Submit a Case to our Customer Care team</a></h4>
+          <h4 style="padding-bottom: 10px;"><img src="{!URLFOR($Resource.icons, 'group.png')}" style="width:45px" alt="iATS Logo"/>
+          <a href="https://powerofus.force.com/_ui/core/chatter/groups/GroupProfilePage?g=0F980000000Cjyd">&nbsp;Follow our Brickwork Group</a></h4>
+          <h4><img src="{!URLFOR($Resource.icons, 'comments.png')}" style="width:45px" alt="iATS Logo"/>
+          <a href="https://na42.salesforce.com/sfc/p/#A0000000ZyVz/a/2A0000004VIW/ARRvjDhWXq6lLJuZPXqviM0w2MKgKRbTchwuoiU2K8o">&nbsp;FAQs and Troubleshooting Tips</a></h4>
+          <h4><img src="{!URLFOR($Resource.icons, 'tag.png')}" style="width:45px" alt="iATS Logo"/>
+          <a href="http://home.iatspayments.com/developer-info/reject-codes/">&nbsp;Transaction Rejection Codes</a></h4>
+          <h4><img src="{!URLFOR($Resource.icons, 'heart.png')}" style="width:45px" alt="iATS Logo"/>
+          &nbsp;Call our Customer Care Team 
+          <br><a href="tel:1.888.955.5455" style="padding-left: 55px;">U.S./CAN: 1.888.955.5455</a> | <a href="tel:0808.234.0466"> UK: 0808.234.0466</a></br>
+          </h4>
+        </div>
+        </div>
+     </div>    
+            </div>  
+
+        </fieldset>    
+
+      
+    </div> <!-- /container -->
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <apex:includeScript value="{!URLFOR($Resource.IATSPayment__CumulusStaticResources, '/jquery/jquery-1.10.2.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.IATSPayment__CumulusStaticResources, '/Bootstrap/js/bootstrap.min.js')}" />
+    <apex:styleSheet value="{!URLFOR($Resource.IATSPayment__CumulusStaticResources, '/Bootstrap/css/bootstrap-namespaced.css')}" />
+ 
+
+ </div>
+  </body>
+</apex:page>

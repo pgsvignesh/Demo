@@ -1,0 +1,6 @@
+<aura:component controller="MyContactListController">
+    <aura:handler name="init" action="{!c.myAction}" value="{!this}" />
+<aura:attribute name="contacts" type="Contact[]" />
+
+	
+</aura:component>

@@ -1,0 +1,35 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId" controller="ConvertLead">
+    
+    <ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />    
+    <aura:attribute name="redirect" type="String" description="Used to redirect"/>     
+    <aura:attribute name="confirmMsg" type="String" description="Used to display message"/>
+    <aura:attribute name="recordId" type="String" default="{!recordId}" />  
+       <aura:handler name="init" value="{!this}" action="{!c.doInit}" />      
+    <div class="slds">
+        <p>Lead Converted Successfully!</p>
+        <button class="slds-button slds-button--neutral" onclick="{!c.redirect}">Okay</button>
+   
+    <div aria-hidden="true" role="dialog" class="slds-modal slds-modal--prompt slds-fade-in-hide" aura:id="modaldialog">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header slds-theme--error slds-theme--alert-texture">
+                <h2 class="slds-text-heading--medium">Lead Conversion</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+                <div>
+                    <p>Lead Converted Successfully!</p>
+                 </div>
+            </div>
+            <div class="slds-modal__footer slds-theme--default">
+              <button class="slds-button slds-button--neutral" onclick="{!c.redirect}">Okay</button>
+            </div>
+        </div>
+    </div>
+  
+</div>
+
+    
+    <!-- alert section -->
+    
+    
+    
+</aura:component>

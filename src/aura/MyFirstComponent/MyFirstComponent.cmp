@@ -1,0 +1,5 @@
+<aura:component >
+    <aura:attribute name="setMeOnInit" type="String" default="default value" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <H1> Welcome to Lightning </H1>	{!v.setMeOninit}
+</aura:component>

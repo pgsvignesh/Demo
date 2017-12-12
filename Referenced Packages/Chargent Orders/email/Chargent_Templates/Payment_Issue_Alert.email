@@ -1,0 +1,9 @@
+Hello {!Transaction__c.Billing_First__c} {!Transaction__c.Billing_Last__c}
+
+Your recurring subscription payment of {!Transaction__c.Amount__c} returned a response of "{!Transaction__c.Response_Status__c}" by your bank on {!Transaction__c.CreatedDate}. The card we have on file ends in {!Transaction__c.Card_Last_4__c}. 
+
+Please contact us to update your billing information and prevent suspension of service.
+
+{!Organization.Name}
+{!Organization.Address}
+{!Organization.Phone}

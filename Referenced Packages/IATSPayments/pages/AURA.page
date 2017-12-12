@@ -1,0 +1,16 @@
+<apex:page showHeader="false" sidebar="false" controller="IATSPayment.IATSPaymentsController" action="{!Paymentbox}">
+
+<div id="header">
+<apex:image url="{!$Resource.IATSPayment__IATS_Header_Image}" width="480" height="65" />
+</div>
+<br/>
+<p>
+<b>
+This is the Salesforce Sites page for IATS Brickwork/Aura integration.
+</b>
+</p>
+<p>
+For information regarding configuring and testing the integration, please reference the Brickwork installation guide. 
+</p>
+
+</apex:page>

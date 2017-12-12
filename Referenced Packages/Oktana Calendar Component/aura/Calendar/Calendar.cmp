@@ -1,0 +1,29 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="okty_cale.CalendarLightning" access="global">
+    <ltng:require styles="/resource/okty_cale__calendar/okty_cale__calendar/calendar.css"
+                  scripts='/resource/okty_cale__hammer/hammer.min.js' 
+                  afterScriptsLoaded="{!c.doInit}"/>
+    <aura:attribute name="isSpinnerGeneric" type="Boolean" default="false" access="global" />
+    <aura:attribute name="loadedScript" type="Boolean" default="false" access="global"/>
+    <aura:attribute name="nextMonth" type="Boolean" default="false" access="global"/>
+	<aura:attribute name="prevMonth" type="Boolean" default="false" access="global"/>
+    <aura:attribute name="current_date" type="Date" access="global"/>
+    <aura:attribute name="calendar" type="Object" default="" access="global"/>
+    <aura:attribute name="activities" type="Object" access="global"/>
+     
+    <div aura:id="_okty_calendar" class="okty_calendar">
+        
+        <div class="{!v.isSpinnerGeneric ? 'oktana-spinner': 'hideSpinner'}"></div>
+        
+        <div class="okty_calendar_header">
+            <div class="okty_calendar_container_left" onclick="{!c.showPrevMonth}">
+                <div class="okty_calendar_left">
+                </div>
+            </div>
+            <h1 aura:id="calendar_title" class="okty_calendar_title"></h1>
+            <div class="okty_calendar_container_right" onclick="{!c.showNextMonth}">
+                <div class="okty_calendar_right">
+                </div>
+            </div>
+        </div>        
+    </div>
+</aura:component>

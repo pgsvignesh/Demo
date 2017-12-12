@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <icon>Public/IatsAuraLogo.png</icon>
+    <label>iATS AURA Setup</label>
+    <mobileReady>false</mobileReady>
+    <motif>Custom253: TV Widescreen</motif>
+    <page>aurasetup_Lightning</page>
+</CustomTab>

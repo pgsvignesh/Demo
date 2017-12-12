@@ -1,0 +1,99 @@
+<apex:page controller="MSTMassEmail.MassEmailSettingsController">
+    <apex:pageMessages />
+    <apex:form >
+    <apex:outputPanel id="fullBlock">
+        <apex:pageBlock >
+            <apex:pageBlockSection title="MST Mass email settings" columns="1"
+                id="listingBlock">
+                <apex:facet name="header">
+                    <span style="color: Black">MST Mass email settings</span>
+                </apex:facet>
+                <apex:pageBlockTable value="{!settings}" var="item" columnsWidth="8%, 5%, 10%, 10%, 5%, 10%, 10%">
+                    <apex:column title="Operation" rendered="{!UserAllowedToEditFlag}">
+                         <apex:commandLink value="Clone" title="Clone" action="{!cloneRecord}" style="{!IF((item.MSTMassEmail__SourceType__c ='Package'), '' , 'display:none;')}"
+                            rerender="fullBlock">
+                            <apex:param name="tabRef" value="{!item.name}" assignTo="{!tabRef}" />
+                        </apex:commandLink> 
+
+                        <apex:commandLink value="Edit" title="Edit" action="{!setupEdit}" style="{!IF((item.MSTMassEmail__SourceType__c ='Package'), 'display:none;','')}"
+                            rerender="editBlock">
+                            <apex:param name="tabRef" value="{!item.name}" assignTo="{!tabRef}" />
+                        </apex:commandLink> 
+                         &nbsp;
+                        <apex:commandLink value="Del" title="Del"
+                            action="{!deleteRecord}" rerender="fullBlock"
+                            style="{!IF((item.MSTMassEmail__SourceType__c ='Package'), 'display:none;','')}">
+                            <apex:param name="tabRef" value="{!item.name}" assignTo="{!tabRef}" />
+                        </apex:commandLink>
+                    </apex:column>
+                    <apex:column value="{!item.MSTMassEmail__SourceType__c}">
+                     <apex:facet name="header">Owner</apex:facet>
+                     </apex:column>
+                    <apex:column value="{!item.MSTMassEmail__SettingName__c}" />
+                    <apex:column value="{!item.MSTMassEmail__ObjectName__c}" />
+                    <apex:column value="{!item.MSTMassEmail__IdFilterEnabled__c}">
+                     <apex:facet name="header">Search filter</apex:facet>
+                    </apex:column>
+                    <apex:column value="{!item.MSTMassEmail__SearchField__c}" />
+                    <apex:column value="{!item.MSTMassEmail__ContactField__c}" />
+                    <apex:column value="{!item.MSTMassEmail__LeadField__c}" />
+
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="MST Settings update" columns="1"
+                id="editBlock" rendered="{!UserAllowedToEditFlag}">
+                <apex:facet name="header">
+                    <span style="color: Black">Settings update</span>
+                </apex:facet>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Setting Name" for="SETTINGNAME" />
+                    <apex:inputText value="{!currRecord.MSTMassEmail__SettingName__c}"
+                        id="SETTINGNAME" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Object Name" for="OBJECTNAME" />
+                    <apex:selectList value="{!currRecord.MSTMassEmail__ObjectName__c}" size="1"
+                        multiselect="false" id="OBJECTNAME">
+                        <apex:actionSupport event="onchange" action="{!setupFields}"
+                            reRender="editBlock" />
+                        <apex:selectOptions value="{!objectList}" />
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Search Filter" for="ISSEARCHFIELD" />
+                    <apex:inputCheckbox value="{!currRecord.MSTMassEmail__IdFilterEnabled__c}"
+                        id="ISSEARCHFIELD" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Search Field" for="SEARCHFIELD" />
+                     <apex:selectList value="{!currRecord.MSTMassEmail__SearchField__c}" size="1"
+                        multiselect="false" id="SEARCHFIELD">                        
+                        <apex:selectOptions value="{!searchFieldList}" />
+                    </apex:selectList>                    
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Contact Field" for="CONTACTFIELD" />
+                    <apex:selectList value="{!currRecord.MSTMassEmail__ContactField__c}" size="1"
+                        multiselect="false" id="CONTACTFIELD">                        
+                        <apex:selectOptions value="{!contactFieldList}" />
+                    </apex:selectList>                       
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Lead Field" for="LEADFIELD" />
+                      <apex:selectList value="{!currRecord.MSTMassEmail__LeadField__c}" size="1"
+                        multiselect="false" id="LEADFIELD">                        
+                        <apex:selectOptions value="{!leadFieldList}" />
+                    </apex:selectList> 
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+
+            <apex:pageBlockButtons location="bottom" rendered="{!UserAllowedToEditFlag}">
+                <apex:commandButton value="Clear" action="{!setupAddNew}" />
+                <apex:commandButton value="Save" action="{!save}" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        </apex:outputPanel>
+    
+    </apex:form>
+</apex:page>

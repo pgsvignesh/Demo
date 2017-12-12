@@ -1,0 +1,38 @@
+.THIS .forceCommunityGlobalNavigation {
+    background-color:transparent !important;
+}
+.THIS .forceSearchInputDesktop .inputWrapper {
+    background:rgba(255,255,255,.2);
+}
+.THIS .logoContainer {
+    background-image: t('url(' + brandLogoImage  + ')');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 99;
+    cursor: pointer;
+    position: relative;
+    max-width: 100%;
+    max-height: 52px;
+    display: block;
+    outline: 0;
+    height: 50px;
+}
+.THIS .forceSearchInputDesktop .uiInput .uiInputTextForAutocomplete::-webkit-input-placeholder {
+    color:rgba(255,255,255,.5);
+}
+.THIS .forceSearchInputDesktop .uiInput .uiInputTextForAutocomplete {
+    color:rgba(255,255,255,1);
+}
+.THIS .topheader {
+    min-height: 170px;
+    background: rgb(9,175,159); /* Old browsers */
+    background: -moz-linear-gradient(-45deg,  rgba(9,175,159,1) 0%, rgba(23,120,189,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg,  rgba(9,175,159,1) 0%,rgba(23,120,189,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg,  rgba(9,175,159,1) 0%,rgba(23,120,189,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#09af9f', endColorstr='#1778bd',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+.THIS .top {
+    height:100%;
+    padding:2rem;
+}

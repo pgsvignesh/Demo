@@ -1,0 +1,81 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable"  access="global" controller="sortablegrid.ltngObjectManager"  >
+    <aura:handler event="sortablegrid:evtObjectManager" action="{!c.handleevtObjectManager}"/> 
+    <aura:attribute name="Options" type="List" />
+    <aura:attribute name="CoreEvent" type="Object" />
+    <aura:attribute name="sObjectType" type="String" access="public" />
+    <aura:attribute name="rtid" type="String" access="public" />    
+
+    <style>
+        <!-- just to ensure it's not visible at initial load time -->
+        .slds-hide{
+        display:none;
+        } 
+    </style>
+    <div class="slds hide" aura:id="wrapper"  >
+        <div class="slds-hide" aura:id="createdialog">
+            <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h2 class="slds-text-heading--medium">Choose Record Type
+                            </h2>
+                        <button class="slds-button slds-button--icon-inverse slds-modal__close">
+                            <sortablegrid:sdgSVG class="slds-button__icon slds-button__icon--large" xlinkHref="action-sprite/svg/symbols.svg#close">
+                                <span class="slds-assistive-text">Close</span></sortablegrid:sdgSVG>
+                        </button>
+                    </div>
+                    <div class="slds-modal__content">
+                        <div>
+                            <fieldset class="slds-form-element">
+                                <legend class="slds-form-element__label slds-form-element__label--top">Options</legend>
+                                
+                                <aura:iteration items="{!v.Options}" var="option">
+                                    <div class="slds-form-element__control slds-m-left--xx-large">
+                                        <label class="slds-radio">
+                                            <ui:inputRadio name="recordtype" text="{!option.Name}" click="{!c.setRecordTypeID}" aura:id="radioRecordType"/>
+                                            
+                                            <span class="slds-radio--faux"></span>
+                                            <span class="slds-form-element__label">{!option.Name}</span>
+                                        </label>
+                                    </div>
+                                </aura:iteration>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <div class="slds-x-small-buttons--horizontal">
+                            <button class="slds-button slds-button--neutral" onclick="{!c.cancel}">Cancel</button>
+                            <button class="slds-button slds-button--neutral slds-button--brand" onclick="{!c.create}">Create</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+        </div>
+        <div class="slds-hide" aura:id="deletedialog">
+            <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h2 class="slds-text-heading--medium">Confirmation</h2>
+                        <button class="slds-button slds-button--icon-inverse slds-modal__close">
+                            <sortablegrid:sdgSVG class="slds-button__icon slds-button__icon--large" xlinkHref="action-sprite/svg/symbols.svg#close">
+                                <span class="slds-assistive-text">Close</span></sortablegrid:sdgSVG>
+                        </button>
+                    </div>
+                    <div class="slds-modal__content">
+                        <div>
+                            Are you sure you want to delete this record?
+                            
+                        </div>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <div class="slds-x-small-buttons--horizontal">
+                            <button class="slds-button slds-button--neutral" onclick="{!c.cancel}">Cancel</button>
+                            <button class="slds-button slds-button--neutral slds-button--brand" onclick="{!c.handledelete}">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,94 @@
+<apex:page tabStyle="IATSPayment__Transaction__c" standardController="IATSPayment__Transaction__c" extensions="IATSPayment.IATSPayments_Refund"
+    showHeader="false" sidebar="false" cache="false" id="transactionPage" standardStylesheets="false" docType="html-5.0">
+    
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<apex:stylesheet value="{!URLFOR($Resource.IATSPayment__lightiningCSS, '/assets/styles/salesforce-lightning-design-system.min.css')}" />
+<style>
+    .headerImage{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .msg{
+        color:red;
+        margin-left: 20px;
+    }
+    .loadingImg{
+        padding-left: 10px;
+        padding-right: 20px
+    }
+    .btnRefund{
+        margin-top: 10px;margin-right: 10px;
+    }
+    
+</style>
+<apex:form >
+    <div class="slds"> 
+        <div class="slds-align--absolute-center">
+            <div class="slds-media__figure">
+                <apex:image url="{!$Resource.IATSPayment__IATS_Header_Image_29}" width="480" style="margin-bottom: 25px;"/>
+            </div>
+        </div>
+        <apex:outputPanel id="panelTest">
+            <apex:outputPanel id="errorMessage">
+                <apex:messages styleClass="slds-truncate msg" rendered="{!validationError}"/> 
+            </apex:outputPanel>
+            <apex:outputPanel id="mainBlock" rendered="{!processed == false && validationError == false}">
+                <div class="slds-box slds-theme--default slds-container">
+                    <table border="0">
+                        <tr class="slds-hint-parent">
+                            <td class="slds-cell-wrap">
+                                <p class="slds-text-color--default slds-align--absolute-center">
+                                    <b style="margin-left: 10px;">
+                                    {!$Label.RefundQuestion}&nbsp;<apex:outputField value="{!transactionRecord.IATSPayment__Amount_currency__c}" styleClass="slds-input"/>?
+                                    </b>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr class="slds-hint-parent">
+                            <td class="slds-cell-wrap">
+                                <apex:commandButton value="{!$Label.iatspayment__processrefund}" action="{!processRefundButton}" status="RefundStatus" reRender="panelTest,resultBlock"
+                                    styleClass="slds-button slds-button--brand slds-button--small slds-align--absolute-center" style="margin-top: 20px"/>
+                                    <apex:actionStatus id="RefundStatus">
+                                        <apex:facet name="start">
+                                            <apex:image url="{!$Resource.IATSPayment__loadingImageSmall}" styleClass="loadingImg"/> 
+                                        </apex:facet>
+                                    </apex:actionStatus>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </apex:outputPanel>   
+            
+            <apex:outputPanel id="resultBlock" rendered="{!processed}">
+                <!--<apex:pageBlockButtons location="bottom" id="pageButtons">-->
+                <div class="slds-box slds-theme--default slds-container">              
+                <!--</apex:pageBlockButtons>-->
+      
+                            <div class="slds-notify slds-notify--toast slds-theme--{!IF(errorCodeMessage == null, 'success', 'error')} customMessage messagesZindex slds-align--absolute-center">
+                                <apex:outputText value="{!processedMessage}" />
+                            </div> 
+                
+                            <div class = "slds-align--absolute-center">     
+                            <apex:outputPanel id="errorDetails" rendered="{!IF(errorCodeMessage == null, 'false', 'true')}" >
+                            <div class = "slds-align--absolute-center">
+                                <apex:outputText value="{!errorCodeMessage}"/><br/><br/>
+                            </div>
+                                <apex:outputPanel rendered="{!processor = 'legacy'}">
+                                    <p class="slds-text-color--default slds-align--absolute-center"><b>{!$Label.iatspayment__confirmationtext}</b></p>
+                                    <a href="https://www.iatspayments.com/english/help/rejects.html" target="_blank">
+                                    https://www.iatspayments.com/english/help/rejects.html</a>
+                                </apex:outputPanel>
+
+                                <apex:outputPanel rendered="{!processor = 'faps'}">
+                                   <br /> 
+                                   <b>Same day refund cannot be processed. Please try refund again tomorrow.</b>
+                                   </apex:outputPanel>
+                            </apex:outputPanel> 
+                            </div>  
+                </div>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </div>
+</apex:form>
+</html>
+</apex:page>

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Utilized to track IATS accounts (client codes)</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Click the box if this code will be used with the BW Virtual Terminal. All iATS Client Codes to be used within BW or Aura should be added, but only those you want visible within the Virtual Terminal need to be Active. You can have up to 10 Active Accounts.</inlineHelpText>
+        <label>Active</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Client_Code__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the Client Code that was issued by iATS upon setup of your Merchant Account.</inlineHelpText>
+        <label>Client Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Currency__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the appropriate “iATS System” and “Currency” for the iATS Merchant Account. Choose “NA” if the Account has been setup to accept CAD or USD. Choose “UK” if the Account has been setup to accept any other currency.</inlineHelpText>
+        <label>Currency</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>IATS_System__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Australia Dollar</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Canadian Dollar</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>EURO</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>New Zealand Dollar</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Swiss Franc</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>UK Pound</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>US Dollar</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>NA</controllingFieldValue>
+                <valueName>Canadian Dollar</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>NA</controllingFieldValue>
+                <controllingFieldValue>UK</controllingFieldValue>
+                <valueName>US Dollar</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UK</controllingFieldValue>
+                <valueName>EURO</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UK</controllingFieldValue>
+                <valueName>Swiss Franc</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UK</controllingFieldValue>
+                <valueName>UK Pound</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AU</controllingFieldValue>
+                <valueName>Australia Dollar</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AU</controllingFieldValue>
+                <valueName>New Zealand Dollar</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>Add a description of the iATS Account for future reference. For example, “Aura Online”.</inlineHelpText>
+        <label>Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Direct_Debit_Processor__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Used to determine the UK Direct Debit processor the client has their merchant account with at iATS Payments.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For UK Pound currency Direct Debit merchant account use ONLY. Please select the applicable Bureau your iATS Account is processing with. If unsure, please contact iATS Payments Customer Care.</inlineHelpText>
+        <label>Direct Debit Processor</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>IATS_System__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Smart Debit</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Rapidata</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>UK</controllingFieldValue>
+                <valueName>Smart Debit</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UK</controllingFieldValue>
+                <valueName>Rapidata</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Do_Not_Include_in_Journal_Download__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Optional: iATS Accounts cannot be deleted once used to create iATS Customer Codes or iATS Transactions. To remove an iATS Account from the Nightly Download Journal import, check this checkbox. This should only be used for an iATS Account that is disabled.</inlineHelpText>
+        <label>Do Not Include in Journal Download</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IATS_System__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the appropriate “iATS System” and “Currency” for the iATS Merchant Account. Choose “NA” if the Account has been setup to accept CAD or USD. Choose “UK” if the Account has been setup to accept any other currency.</inlineHelpText>
+        <label>iATS System</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>NA</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>UK</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>AU</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Password__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the Password associated to the Client Code that was issued by iATS upon setup of your Merchant Account. If the password is changed in the future, it will need to be updated here to avoid iATS connection problems.</inlineHelpText>
+        <label>Password</label>
+        <length>255</length>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Primary__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>The Primary checkbox enables one iATS Account to be displayed as the default Account within the Brickwork Virtual Terminal.</inlineHelpText>
+        <label>Primary</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>iATS Merchant Account</label>
+    <listViews>
+        <fullName>All_Brickwork_IATS_Accounts</fullName>
+        <columns>NAME</columns>
+        <columns>Active__c</columns>
+        <columns>Do_Not_Include_in_Journal_Download__c</columns>
+        <columns>Client_Code__c</columns>
+        <columns>IATS_System__c</columns>
+        <columns>Currency__c</columns>
+        <columns>Description__c</columns>
+        <columns>Primary__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>iATS Merchant Account Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>iATS Merchant Accounts</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Active__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Client_Code__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>IATS_System__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Currency__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Description__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Primary__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Do_Not_Include_in_Journal_Download__c</customTabListAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Client_Code</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+LEN(Password__c) &gt; 15, 
+OR(
+ISPICKVAL(IATS_System__c,&apos;NA&apos;) == FALSE,
+ISPICKVAL(Currency__c, &apos;US Dollar&apos;) == FALSE))</errorConditionFormula>
+        <errorMessage>The currency must be set to &apos;US Dollar&apos; and the iATS System to &apos;NA&apos; based on your client code and password.</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Test_IATS_account</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Test IATS account - DEPRECATED</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.iatspayments.com/english/index.html</url>
+    </webLinks>
+</CustomObject>

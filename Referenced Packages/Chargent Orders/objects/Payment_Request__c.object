@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Billing_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Billing Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Payment Requests</relationshipLabel>
+        <relationshipName>Payment_Requests</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ChargentOrder__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Order</label>
+        <referenceTo>ChargentOrder__c</referenceTo>
+        <relationshipLabel>Payment Requests</relationshipLabel>
+        <relationshipName>Payment_Requests</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Email_Address__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>What email address should this Payment Request be sent to?
+This will override the email address of the Contact.</inlineHelpText>
+        <label>Email Address</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Hash_Sum__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>true</externalId>
+        <label>Hash Sum</label>
+        <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Include_Parent_ID__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Include Parent ID</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Notes__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Notes</label>
+        <length>512</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Pay_Link__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>This link will take you to the payment page. Users may send this link directly to a payer.</inlineHelpText>
+        <label>Pay Link</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Link_Formatted__c</fullName>
+        <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(Pay_Link__c , &apos;Payment Link&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Payment Link Formatted</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Payment_Request_Transaction_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Payment Request Transaction Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Charge Full Amount</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Authorize Full Amount</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Authorize Minimum Amount</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Send_Payment_Request_Email__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>When you check this box it will automatically send a Payment Request Email, based on your defined default template.</inlineHelpText>
+        <label>Send Payment Request Email</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>This field shows the current state of the payment request.</inlineHelpText>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Created</fullName>
+                    <default>true</default>
+                </value>
+                <value>
+                    <fullName>Manually Sent</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Auto Sent</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Paid</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Canceled</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Payment Request</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>ChargentOrder__c</columns>
+        <columns>OBJECT_ID</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Unpaid_Payment_Requests</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Contact__c</columns>
+        <columns>Email_Address__c</columns>
+        <columns>ChargentOrder__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Paid</value>
+        </filters>
+        <label>Unpaid Payment Requests</label>
+    </listViews>
+    <nameField>
+        <displayFormat>{YYYY}{MM}{DD}-{0}</displayFormat>
+        <label>Payment Request Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Payment Requests</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Billing_Contact__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Email_Address__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ChargentOrder__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Payment_Link_Formatted__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Billing_Contact__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Email_Address__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ChargentOrder__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Payment_Link_Formatted__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Status__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Billing_Contact__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Email_Address__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ChargentOrder__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Payment_Link_Formatted__c</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Billing_Contact__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Email_Address__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ChargentOrder__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Payment_Link_Formatted__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Block_inactive_PR_transaction_types</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( OR( ISCHANGED(Payment_Request_Transaction_Type__c) , ISNEW() ),
+              NOT( 
+                    OR( 
+                          IF( 
+                              INCLUDES( 
+                                  ChargentOrder__r.Gateway__r.ChargentBase__Available_PR_Transaction_Types__c,&quot;Authorize Full Amount&quot; ), 
+                                      IF( 
+                                          ISPICKVAL(Payment_Request_Transaction_Type__c,&quot;Authorize Full Amount&quot; ), true, false 
+                                      ), 
+                              false 
+                          ), 
+                          IF( 
+                              INCLUDES( 
+                                  ChargentOrder__r.Gateway__r.ChargentBase__Available_PR_Transaction_Types__c,&quot;Charge Full Amount&quot; ), 
+                                  IF( 
+                                  ISPICKVAL(Payment_Request_Transaction_Type__c,&quot;Charge Full Amount&quot; ), true, IF(ISPICKVAL(Payment_Request_Transaction_Type__c,&quot;&quot; ),true, false) 
+                              ), 
+                          false 
+                          ), 
+                          IF( 
+                              INCLUDES( 
+                              ChargentOrder__r.Gateway__r.ChargentBase__Available_PR_Transaction_Types__c,&quot;Authorize Minimum Amount&quot; ), 
+                              IF( 
+                              ISPICKVAL(Payment_Request_Transaction_Type__c,&quot;Authorize Minimum Amount&quot; ), true, false 
+                          ), 
+                          false 
+                          ),
+                           IF( 
+                              ISBLANK( 
+                                  ChargentOrder__r.Gateway__r.ChargentBase__Available_PR_Transaction_Types__c), 
+                                  IF( 
+                                        ISPICKVAL(Payment_Request_Transaction_Type__c,&quot;Charge Full Amount&quot; ), true, IF(ISPICKVAL(Payment_Request_Transaction_Type__c,&quot;&quot; ), true, false)
+                                  ), 
+                          false 
+                          )
+                  ) 
+          ) 
+  )</errorConditionFormula>
+        <errorDisplayField>Payment_Request_Transaction_Type__c</errorDisplayField>
+        <errorMessage>Transaction Type is not allowed.</errorMessage>
+    </validationRules>
+</CustomObject>

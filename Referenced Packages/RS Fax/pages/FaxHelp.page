@@ -1,0 +1,11 @@
+<apex:page sidebar="false" showHeader="false">
+<script>
+        var windowOnresize = window.onresize;
+        window.onresize = function() {
+            if (windowOnresize) windowOnresize();
+            document.getElementById('theFrame').height = window.innerHeight;
+        };
+</script>
+    <apex:iframe src="https://docs.google.com/a/ramseysolutions.com/document/d/1Ii_pkOH6fwhlYYncX3h1NmwWHrCh0iruAm89POIQ858/edit" id="theFrame" />
+    <script>document.getElementById('theFrame').height = window.innerHeight;</script>
+</apex:page>

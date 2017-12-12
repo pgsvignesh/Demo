@@ -1,0 +1,56 @@
+<aura:component >
+	
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	
+
+	<aura:attribute name="events" type="Object" description=""/>
+	<aura:attribute name="monthDate" type="Datetime" description=""/>
+	<aura:attribute name="displayMode" type="String" description=""/>
+	<aura:attribute name="parentId" type="String" description="parent Component Id"/>
+
+	<aura:handler name="change" value="{!v.events}" action="{!c.recalculateItems}"/>
+	<aura:handler name="change" value="{!v.monthDate}" action="{!c.setMonthDate}"/>
+	<aura:handler event="aura:doneRendering" action="{!c.doneRendering}"/>
+	<aura:attribute name="_calculatedMonths" type="Object" description="" access="private"/>
+    
+	<aura:registerEvent name="evtChangeDate" type="SL_LIGHT_CAAV:CA_SimpleAgendaChangeDate"/>
+
+<!--	<aura:registerEvent name="evtOpenDetails" type="c:CA_SimpleAgendaOpenDetails"/>
+	<aura:handler name="evtOpenDetails" action="{!c.evtOpenDetails}"/>-->
+
+	<div class="_agenda_body" aura:id="_agenda_body" onscroll="{!c.doScroll}">
+		<div class="slds-text-align--center ">
+			<ui:button press="{!c.goLeft}" label="Show more" class="slds-button slds-button--neutral _round_button"/>
+		</div>
+
+		<aura:iteration var="monthEvents" items="{!v._calculatedMonths}">
+		<div data-month="{!monthEvents.month}" data-dt="{!monthEvents.dt}" aura:id="monthes">
+			<aura:iteration var="dayEvents" items="{!monthEvents.data}">
+				<h1 class="slds-text-heading--small slds-text-align--center _date_sticker" 
+					aura:id="days"
+					data-dt="{!dayEvents.dt}" 
+
+				><span class="_title">{!dayEvents.title}</span><span class="_dotted"></span></h1>
+				<SL_LIGHT_CAAV:CA_SimpleAgendaEventCards cardEvents="{!dayEvents.data}" 
+					cardDate="{!dayEvents.date}"
+					evtOpenDetails="{!c.evtOpenDetails}"
+
+				></SL_LIGHT_CAAV:CA_SimpleAgendaEventCards>
+			</aura:iteration>
+			<aura:renderIf isTrue="{!monthEvents.data == undefined || monthEvents.data.length == 0}">
+			<div class="_no_events">
+				<h1 class="slds-text-heading--small slds-text-align--center _date_sticker" >
+				<span class="_title">No events to show for {!monthEvents.monthTitle}</span><span class="_dotted"></span>
+				</h1>
+			
+			</div>
+			</aura:renderIf>
+			
+		</div>
+		</aura:iteration>
+		<div class="slds-text-align--center ">
+			<ui:button press="{!c.goRight}" label="Show more" class="slds-button slds-button--neutral _round_button"/>
+		</div>
+	</div>
+
+</aura:component>

@@ -1,0 +1,236 @@
+<apex:page controller="efaxapp.RecipientSearchController" showHeader="false" sidebar="false">
+<body class="hasMotif lookupTab LookupSearchFrame brandNoBgrImg">
+<apex:form >
+	<div class="lookup">
+		<div class="bPageTitle">
+			<div class="ptBody secondaryPalette">
+				<div class="content"><img src="/s.gif" alt="" class="pageTitleIcon" title="" />
+					<h1>Recipient Lookup</h1>
+				</div>
+			</div>
+		</div>
+		<div class="pBody"> 
+			<table>
+				<tr>
+					<td><label for="recipientName">Recipient Name:</label></td>
+					<td><input id="recipientName" maxlength="80" size="20" type="text" value="" onkeypress="return searchTimeout(event);" /></td>
+					<td><input value=" Search " class="btn" id="btnSearch" onclick="search()" title="Search" type="button" /></td>
+				</tr>										
+			</table>
+			<div class="bDescription" style="padding-left:102px;">You can use "*" as a wildcard next to other characters to improve your search results.</div>
+		</div>
+	</div>
+	<div style="margin-top:50px;"></div>
+	<div id="result" class="lookup">
+		<div class="clearResults" style="display:none;">
+			&lt;&nbsp;<a href="#" onclick="clearSearchResults()">Clear Search Results</a>
+		</div>
+		<div class="srch"><table style="width:100%;"><tr><td style="width:200px;">Search Results</td><td id="txtMatches" style="text-align:right;">Total Matches: 0</td></tr></table></div>
+		<div class="listRelatedObject lookupBlock">
+			<div class="bPageBlock brandSecondaryBrd secondaryPalette">
+				<div class="pbBody">
+					<table id="tblResults" class="list" cellspacing="0" cellpadding="0" border="0" style="border-bottom:0 none;">
+						<thead>
+							<tr class="headerRow">
+								<th class="zen-deemphasize">Recipient</th>
+								<th class="zen-deemphasize">Type</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="dataRow even">
+								<td colspan="2" class="dataCell">No documents found</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="listElementBottomNav"></div>
+		<div class="footer">Copyright � {!YEAR(TODAY())} ramseysolutions.com. All rights reserved.</div>
+	</div>
+</apex:form>
+</body>
+<script src="/soap/ajax/29.0/connection.js" type="text/javascript"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.Common, '/js/jquery-1.9.1.min.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.Common, '/js/jquery.blockUI.js')}"></script>
+<script>
+	var jq = jQuery.noConflict(true);
+		
+	var canSearch = true;
+	var origin = 'https://' + window.location.search.match(/origin=([^&]+)/)[1];
+	var recordId = getRecordId();
+	var recordType = getRecordType();
+	
+	sforce.connection.sessionId = '{!$Api.Session_ID}';
+	
+	function findAll(text, handler) {
+		sforce.connection.search('{!SearchQuery}'.replace('{}', '{' + escapeSingleQuotes(text) + '}'), function(r){ 
+			var recs = r && r.getArray ? r.getArray('searchRecords') : [];
+			var arr = [];
+			for (var i = 0; i < recs.length; i++) {
+				var item = recs[i].record;	
+				arr.push({ Id: item.Id, Type: item.type, Name: (item.Name || item.CaseNumber) });
+			}
+			handler(arr);
+		});
+	}
+
+	function encodeHtml(str) {
+		return str && str.replace ? str.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>') : str;
+	}
+		
+	function escapeSingleQuotes(str) {
+		return str.replace(/'/g, '\\\'');
+	}
+	
+	function getNameField(recType) {
+		return recType.toLowerCase() == 'case' ? 'CaseNumber' : 'Name';
+	}
+	
+	function getRecordType() {
+		var m = window.location.search.match(/type=([^&]+)/);
+		if (m && m.length > 1)
+			return m[1];
+		return null;
+	}
+
+	function getRecordId() {
+		var m = window.location.search.match(/id=([\w\d]{15})/);
+		if (m && m.length > 1)
+			return m[1];
+		return null;
+	}
+		
+	function getRecordById(recId, recType, callback) {
+		sforce.connection.query('select Id, ' + getNameField(recType) + ' from ' + escapeSingleQuotes(recType) + ' where Id = \'' + escapeSingleQuotes(recId) + '\'', function(rec){
+			var recs = rec && rec.getArray ? rec.getArray('records') : [];
+			callback(recs && recs.length ? recs[0] : null);			
+		});
+	}
+	
+	function blockTable() {
+		jq('#result').block({ 
+			message: '<div><span id="imgProgress"><img style="vertical-align:middle;" src="{!URLFOR($Resource.Common, '/img/loading.gif')}"/></span>&nbsp;Please wait...</div>',
+			css: {
+				border: '0 none',
+				backgroundColor: 'transparent'
+			},
+			overlayCSS: { 
+        		backgroundColor: '#fff'
+        	},
+        	fadeIn:0,fadeOut:0 
+		});		
+	}
+	
+	function unblockTable() {
+		jq('#result').unblock({fadeIn:0,fadeOut:0});
+	}
+		
+	function setSelected(event) {
+		var a = jq(event.target);
+		var recId = a.attr('rec-id');
+		var recType = a.attr('rec-type');
+		var recName = a.attr('rec-name');
+		window.opener.postMessage({
+			recipientType: recType,
+			recipientName: recName,
+			recipientId: recId
+		}, origin);
+        window.close();
+	}
+	
+	function populateSearchFields(recId, recType) {
+		blockTable();
+		jq('#btnSearch').attr('class', 'btnDisabled');
+		getRecordById(recId, recType, function(rec){
+			composeTable(rec ? [{
+				Id: rec.Id,
+				Name: rec.Name || rec.CaseNumber,
+				Type: recType
+			}] : []);
+			jq('#recipientName').val(rec ? (rec.Name || rec.CaseNumber) : '');
+			jq('#txtMatches').text('Total Matches: ' + (rec ? 1 : 0));
+			jq('div.clearResults').show();
+			jq('#btnSearch').attr('class', 'btn');
+			unblockTable();
+		});	
+	}
+	
+	function showError(msg) {
+		jq('#btnSearch').after('<span id="error" class="bDescription" style="color:red;display:inline-block;padding-left:10px;">' + encodeHtml(msg) + '</span>');
+	}
+	
+	function populateNoData(tbl) {
+		tbl.html('<tr class="dataRow"><td class="dataCell" colspan="2">No records found</td></tr>');
+	}
+	
+	function composeTable(recs) {
+		var tbl = jq('#tblResults tbody');
+		if (!recs.length) {
+			populateNoData(tbl);
+			return;
+		}
+		var trs = [];
+		jq.each(recs, function(i, rec){
+			var dic = i % 2 == 0 ? 'even' : 'odd';
+			var tr = jq('<tr class="dataRow ' + dic + '"></tr>');
+			
+			var tdName = jq('<td class="dataCell"></td>');
+			tdName.html('<a href="#" rec-id="' + encodeHtml(rec.Id) + '" rec-name="' + encodeHtml(rec.Name) + '" rec-type="' + encodeHtml(rec.Type) + '">' + encodeHtml(rec.Name) + '</a>');
+			
+			var tdObjectType = jq('<td class="dataCell"></td>');
+			tdObjectType.text(rec.Type);
+						
+			tr.append([tdName[0].outerHTML, tdObjectType[0].outerHTML].join(''));
+			
+			trs.push(tr[0].outerHTML);
+		});			
+		tbl.html(trs.join(''));
+		tbl.find('a').click(setSelected);
+	}
+	
+	function clearSearchResults() {
+		jq('#recipientName').val('');
+		populateNoData(jq('#tblResults tbody'));
+		jq('#txtMatches').text('Total Matches: 0');
+		jq('div.clearResults').hide();
+	}
+	
+	function searchTimeout(e) {
+		if (e.keyCode == 13 || e.which == 13) {
+			window.setTimeout(search, 10);
+			return false;
+		}
+		return true;
+	}
+		
+	function search() {
+		jq('#error').remove();
+		var recipientName = jq.trim(jq('#recipientName').val());
+		if (!canSearch)
+			return;
+		if (recipientName.replace(/\*/g, '').length < 2) {
+			showError('You should type at least 2 significant characters to search');
+			return;
+		}
+		canSearch = false;
+		jq('#btnSearch').attr('class', 'btnDisabled');
+		blockTable();
+		findAll(recipientName, function(recs) {
+			composeTable(recs);
+			jq('#txtMatches').text('Total Matches: ' + recs.length);
+			jq('div.clearResults').show();
+			jq('#btnSearch').attr('class', 'btn');
+			unblockTable();
+			canSearch = true;
+		});
+	}
+
+	jq(function() {
+		if (recordId && recordId != '000000000000000' && recordType)
+			populateSearchFields(recordId, recordType);
+		else if (jq.trim(jq('#recipientName').val()).length)
+			search();
+	})
+</script>
+</apex:page>

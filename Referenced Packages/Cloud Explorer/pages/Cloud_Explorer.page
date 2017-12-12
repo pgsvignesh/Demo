@@ -1,0 +1,11 @@
+<apex:page controller="ucinnce.CloudExplorer" standardStylesheets="false" sidebar="false">
+
+    <apex:canvasApp developerName="Cloud_Explorer_for_Salesforce"
+                    namespacePrefix="ucinnce"
+                    width="100%"
+                    maxHeight="infinite"
+                    parameters="{orgType:'{!OrgType}', orgId:'{!OrgId}', username:'{!UserName}', userId:'{!UserId}'}"
+                    scrolling="auto"
+                    id="cloud_explorer"/>
+
+</apex:page>

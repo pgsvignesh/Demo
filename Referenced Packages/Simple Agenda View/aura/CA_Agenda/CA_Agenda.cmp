@@ -1,0 +1,103 @@
+<aura:component controller="SL_LIGHT_CAAV.CA_SimpleAgenda" 
+	implements="flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:recordTab,forceCommunity:availableForAllPageTypes,force:hasRecordId" access="global"
+>
+<!-- force:hasRecordId, -->
+	<aura:attribute name="simpleObject" type="String" default="Event" description="Calendar oject field" required="true" access="global"/>
+	<aura:attribute name="simpleStart" type="String" default="startdatetime" description="Start field name" required="true" access="global"/>
+	<aura:attribute name="simpleStop" type="String" default="enddatetime" description="End field name" required="true" access="global"/>
+	<aura:attribute name="simpleTitle" type="String" default="subject" description="Title field name" required="true" access="global"/>
+	<aura:attribute name="simpleFieldSet" type="String" default="" description="Field set" access="global"/>
+	<aura:attribute name="simpleListView" type="String" default="" description="ListView" access="global"/>
+	<aura:attribute name="simpleDate" type="Datetime" description="Agenda start date" access="global"/>
+	<aura:attribute name="displayMode" type="String" description="Mode" default="month" access="global"/>
+	<aura:attribute name="simpleHeight" type="Integer" description="height" default="500" access="global"/>
+	<aura:attribute name="simpleReferenceKey" type="String" description="Reference key" default="whatid" access="global"/>
+	<aura:attribute name="simpleQuickCreate" type="Boolean" description="Display add record icon" default="true" access="global"/>
+	<aura:attribute name="simpleHeader" type="String" description="Component header" default="" access="global"/>
+
+
+
+
+	<!--<aura:handler name="force:recordSaveSuccess" event="force:recordSaveSuccess" action="{!c.refreshEvents}" />-->
+
+
+
+	
+	
+
+	<aura:attribute name="_events" type="Object" description="" access="private"/>
+	<aura:attribute name="_setupMessage" type="String" description="" access="private"/>
+	<aura:attribute name="_setupFields" type="Object" description="" access="private"/>
+	<aura:attribute name="_dateTitle" type="String" description="" access="private"/>
+	<aura:attribute name="_skipScrolling" type="Boolean" description="" access="private"/>
+
+	<aura:attribute name="_monthCalendar" type="Object" description="" access="private"/>
+	
+	<aura:registerEvent name="evtChangeDate" type="SL_LIGHT_CAAV:CA_SimpleAgendaChangeDate"/>
+	<aura:handler name="evtChangeDate" action="{!c.changeEventDate}"/>
+
+
+
+
+    
+    <!--<ltng:require styles="/resource/SL_LIGHT_CAAV__SL_LIGHT_CAAV__sds/assets/styles/salesforce-lightning-design-system-vf.css"/>-->
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+	<div aura:id="CA_Simple" class="{!'slds slds-text-body--small ' + (v.simpleHeader != '' ? '_ca_agenad_header' : '')}">
+	<div class="_title_header slds-text-align--left">{!v.simpleHeader}</div>
+	<div class="_header" aura:id="ca_header">
+		
+		<div class="_create slds-button-group" role="group">
+			<aura:if isTrue="{!v.simpleQuickCreate}">
+			<span class="slds-icon__container  " onclick="{!c.create}"  >
+			<SL_LIGHT_CAAV:SL_Svgicon icon="add" class="slds-icon slds-icon--small slds-icon-text-default"/>
+			</span>	
+			</aura:if>
+			<span class="slds-icon__container  " onclick="{!c.reload}"  >
+			<SL_LIGHT_CAAV:SL_Svgicon icon="refresh" class="slds-icon slds-icon--small slds-icon-text-default"/>
+			</span>	
+		</div>
+		<div class="_dateButton">
+			<span class="slds-icon__container  " onclick="{!c.goLeft}">
+			<SL_LIGHT_CAAV:SL_Svgicon icon="chevronleft" class="slds-icon slds-icon--small slds-icon-text-default"/>
+			</span>	
+		</div>
+		<div class="_dateSelector">{!v._dateTitle}</div>
+		<div class="_dateButton">
+			<span class="slds-icon__container  " onclick="{!c.goRight}" aura:id="svg_content" >
+			<SL_LIGHT_CAAV:SL_Svgicon icon="chevronright" class="slds-icon slds-icon--small slds-icon-text-default"/>
+			</span>	
+		</div>
+		<div class="_calendar slds-button-group" role="group">
+
+
+			<span class="slds-icon__container  " onclick="{!c.showCalendar}" aura:id="svg_content">
+			<SL_LIGHT_CAAV:SL_Svgicon icon="monthlyview" class="slds-icon slds-icon--small slds-icon-text-default"/>
+			</span>		
+			
+		</div>
+
+	</div>
+	<div aura:id="body"
+		class="{!'_body slds-text-body--small ' + (v._monthCalendar == 'calendar' ? '_calendar_on' : '')}" 
+		id="{!globalId + '_body'}"
+	>
+ 		
+		<div class="{!'_display_mode _mode_month ' + (v.displayMode != 'setup' ? '_on' : '')}">
+		<SL_LIGHT_CAAV:CA_SimpleAgendaMonth events="{!v._events}" monthDate="{!v.simpleDate}" parentId="{!globalId}"  monthCalendar="calendar">
+		</SL_LIGHT_CAAV:CA_SimpleAgendaMonth>
+		</div>
+
+		<div class="{!'_display_mode _mode_agenda ' + (v.displayMode != 'setup' ? '_on' : '')}" >
+		<SL_LIGHT_CAAV:CA_SimpleAgendaAgenda events="{!v._events}" monthDate="{!v.simpleDate}" parentId="{!globalId}"  >
+		</SL_LIGHT_CAAV:CA_SimpleAgendaAgenda>
+		</div>
+		
+
+		<div class="{!'_display_mode _mode_setup ' + (v.displayMode == 'setup' ? '_on' : '')}">
+			<aura:unescapedHtml value="{!v._setupMessage}"/>
+		</div>
+	</div>
+</div>
+</aura:component>

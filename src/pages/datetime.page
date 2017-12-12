@@ -1,0 +1,20 @@
+<apex:page standardController="Event" Extensions="aaPage27">
+    <apex:form id="MyTest">
+        <apex:inputfield value="{!Event.ActivityDate}" >
+            <apex:actionSupport event="onchange" action="{!DoNothing}" rerender="MyTest"/>
+        </apex:inputField>
+        <apex:outputText value="&nbsp;" escape="false" />
+        <apex:selectList value="{!OptionTime}" size="1">
+            <apex:selectOptions value="{!OptionTimes}"/>
+            <apex:actionSupport event="onchange" action="{!DoNothing}" rerender="MyTest"/>
+        </apex:selectList>
+        <apex:outputText value="[&nbsp;" escape="false"/>
+        <apex:commandLink action="{!ClickTime}" rerender="MyTest">
+            {!ClickTimeNow}
+            <apex:param name="Time" value="{!ClickTimeNow}"/>
+        </apex:commandLink>
+        <apex:outputText value="&nbsp]" escape="false"/><br/>
+        Timestamp: {!Timestamp}<br/>
+        <apex:commandButton value="Update Timestamp" action="{!DoNothing}"  rerender="MyTest"/>   
+    </apex:form>
+</apex:page>

@@ -1,0 +1,14 @@
+<aura:component >
+    <aura:attribute name="static" default="/resource/SL_LIGHT_CAAV__sds/assets/icons" type="String" description="path tpo static icons folder"/>
+    <aura:attribute name="path" default="/utility-sprite/svg/symbols.svg" type="String" description="Subpath to Ico File" />
+    <aura:attribute name="icon" default="" type="String" description="Icon name" />
+    <aura:attribute name="class" default="slds-button__icon slds-button__icon--medium slds-icon-text-default" type="String" 
+    description="CSS CLass name" />
+    <aura:handler name="change" value="{!v.icon}" action="{!c.reDraw}"/>
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<aura:attribute name="_html" default="" type="String"  access="private"/>
+
+    <div aura:id="svg_content">
+    <aura:unescapedHtml value="{!v._html}"/>
+    </div>
+</aura:component>

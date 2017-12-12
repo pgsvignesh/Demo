@@ -1,0 +1,111 @@
+<apex:page standardcontroller="account" extensions="IATSPayment.IATSPayments_Controller" 
+showHeader="false" sidebar="false" cache="false">
+
+<style type="text/css" media="screen">
+
+#Content {
+    width:494px;
+    margin:5px auto; /* Right and left margin widths set to "auto" */
+    text-align:left; /* Counteract to IE5/Win Hack */
+    }
+    
+#header {
+    width:480px;
+    margin:5px auto; /* Right and left margin widths set to "auto" */
+    text-align:left; /* Counteract to IE5/Win Hack */
+    }
+form {
+margin: 10px;
+padding: 0px;
+}
+
+</style>
+
+<div id="header">
+<apex:image url="{!$Resource.IATSPayment__IATS_Header_Image_29}" width="480" height="65" />
+</div>
+
+<apex:pageBlock id="paymentsMainBlock"/>
+<br/>
+<div id="Content">
+
+<apex:outputPanel rendered="{!gwa != 's'}">
+<table border="0">
+    <tr>
+        <td><table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td width="600" bgcolor="#555152"><p
+                align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font
+                color="#FFFFFF" size="5"
+                face="verdana,arial,swiss"><strong>
+                <apex:outputText value="{!oneTimePaymentResultMsg_title}"/>
+                </strong></font></p>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td valign="top" width="600" bgcolor="#DAD9DA">
+                    <div align="center"><center><pre><font
+face="Arial"> </font></pre>
+                    </center></div><p align="center"><font
+                    size="3" face="Arial"><strong>
+                    <apex:outputText value="{!oneTimePaymentResultMsg_truncated}"/>
+</strong></font></p>
+            <p align="center"></p>
+                    <center><a href="javascript:window.close();">Close This Window</a></center>           
+                </td>
+            </tr>
+        </table>
+        </td>
+    </tr>
+</table>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!gwa == 's'}">
+<table border="0">
+    <tr>
+        <td><table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td width="600" bgcolor="#555152"><p
+                align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font
+                color="#FFFFFF" size="5"
+                face="verdana,arial,swiss"><strong>Save Payment Info Result</strong></font></p>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td valign="top" width="600" bgcolor="#DAD9DA">
+                    <div align="center"><center><pre><font
+face="Arial"> </font></pre>
+                    </center></div><p align="center"><font
+                    size="3" face="Arial"><strong><apex:outputText value="{!savePaymentInfoResponse}" rendered="{!gwa != null}"/>
+</strong></font></p>
+            <p align="center"></p>
+                    <center><a href="javascript:window.close();">Close This Window</a></center>           
+                </td>
+            </tr>
+        </table>
+        </td>
+    </tr>
+</table>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!CCResult == 'invalid' && gwa != 's'}">
+
+<p><b>Transaction could not be completed! Please check the IATS Account information.</b></p>
+
+<center><a href="javascript:window.close();">Close This Window</a></center> 
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!contains(CCResult,'Reject') && CCResult != 'invalid' && gwa != 's'}">
+<br /><br />
+<b>Reject codes information available at:</b>
+<br />
+<a href="https://www.iatspayments.com/english/help/rejects.html" target="_blank">https://www.iatspayments.com/english/help/rejects.html</a>
+       
+</apex:outputPanel>
+
+</div>
+</apex:page>

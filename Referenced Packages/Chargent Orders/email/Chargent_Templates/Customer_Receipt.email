@@ -1,0 +1,35 @@
+Thank you for your order! 
+
+Order Information 
+Merchant: {!Organization.Name} 
+Description: {!ChargentOrder__c.Order_Information__c} 
+Invoice Number: {!ChargentOrder__c.Invoice_Number__c} 
+Total: {!Transaction__c.Amount__c} 
+Card Type: {!CASE(Transaction__c.Payment_Method__c, 
+"Check", "Check", 
+"Credit Card", CASE(Transaction__c.Credit_Card_Type__c, 
+"Visa", "Visa", 
+"Mastercard", "Mastercard", 
+"Discover", "Discover", 
+"American Express", "American Express", 
+"AMEX", "American Express", 
+"MC Eurocard", "MC Eurocard", 
+"UK Maestro", "UK Maestro", 
+"JCB Card", "JCB Card", 
+"Solo", "Solo", 
+"Electron", "Electron", 
+""), 
+"")} 
+Date/Time: {!Transaction__c.Gateway_Date__c} 
+Transaction ID: {!Transaction__c.Id}
+
+__________________________________________
+Billing Information 
+Name: {! IF(Transaction__c.Credit_Card_Name__c != NULL, Transaction__c.Credit_Card_Name__c, Transaction__c.Billing_First__c + ' ' + Transaction__c.Billing_Last__c)} 
+Company: {!Transaction__c.Billing_Company__c} 
+Email: {!Transaction__c.Billing_Email__c} 
+Billing Address:
+{!Transaction__c.Billing_Address__c} 
+{!Transaction__c.Billing_Address_Line_2__c}
+{!Transaction__c.Billing_City__c}, {!Transaction__c.Billing_State__c} 
+{!Transaction__c.Billing_Postal_Code__c}

@@ -1,0 +1,12 @@
+<aura:component >
+	<ltng:require styles="/resource/SLDS203/assets/styles/salesforce-lightning-design-system.css"/>
+      <div class="slds-grid slds-m-around--small slds-grid--vertical">
+                <button class="slds-col slds-m-bottom--small slds-button slds-button--neutral" onclick="sPadClear();">Clear</button>               
+              
+            
+            
+            <div class="slds-col slds-col-rule--top slds-col-rule--right slds-col-rule--bottom slds-col-rule--left">
+                <canvas class="sPad" id="sPad"/>
+            </div>
+        </div>
+</aura:component>

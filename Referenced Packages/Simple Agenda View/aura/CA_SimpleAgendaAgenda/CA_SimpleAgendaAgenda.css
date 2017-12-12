@@ -1,0 +1,69 @@
+.THIS.container {	width: 100%;
+	padding: 10px 0px;
+	margin: 0px;
+}
+
+.THIS._agenda_body {
+	position: absolute;
+	top:0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow-y: auto; 
+}
+
+.THIS .center {
+	margin: 0px auto;
+}
+
+.THIS .content {
+	max-width: 768px;
+	font-size: 12px;
+	color: #3c3d3e;
+}
+
+.THIS h1._date_sticker{
+    font-size:1.2rem;
+    position: relative;
+    background-color: #fff;
+}
+
+	.THIS h1._date_sticker span._dotted{
+		position: absolute;
+		z-index: 0;
+		height: .5rem;
+	    line-height: 1rem;
+	    border-bottom: 1px dashed rgb(216, 221, 230);
+	    overflow: visible;
+	    clear: both;
+	    margin-bottom: 2rem;
+	    display: block;
+	    top:50%;
+	    margin-top: -6px;
+	    width: 100%;
+	    left:0;
+	}
+	.THIS h1._date_sticker span._title{
+		background-color: #fff;
+		padding:0 3px;
+		font-weight: normal;
+		position: relative;
+		font-size: 1.05rem;
+		z-index:1;
+	}
+
+
+.THIS .slds-card .slds-card__body{
+	display: none;
+}
+
+.THIS .slds-card._open .slds-card__body{
+	display: block;
+}
+
+.THIS ._round_button{
+	border-radius: 15rem;
+	margin:3px auto;
+	padding: .5rem 1.5rem;
+	line-height: 1rem;
+}

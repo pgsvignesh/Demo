@@ -1,0 +1,1876 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>ACHDirectDebit</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ACH/Direct Debit</shortDescription>
+        <value>ACH/Direct Debit</value>
+    </labels>
+    <labels>
+        <fullName>AccountIBAN</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account (IBAN)</shortDescription>
+        <value>Account (IBAN)</value>
+    </labels>
+    <labels>
+        <fullName>AccountName</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>iATS Merchant Account Name</shortDescription>
+        <value>IATS Merchant Account Name</value>
+    </labels>
+    <labels>
+        <fullName>AccountNumber</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Number</shortDescription>
+        <value>Account Number</value>
+    </labels>
+    <labels>
+        <fullName>AccountType</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>fr</language>
+        <protected>false</protected>
+        <shortDescription>Account Type</shortDescription>
+        <value>Account Type</value>
+    </labels>
+    <labels>
+        <fullName>Active</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>Add</fullName>
+        <categories>iATS Settings</categories>
+        <language>fr</language>
+        <protected>false</protected>
+        <shortDescription>Add</shortDescription>
+        <value>Add</value>
+    </labels>
+    <labels>
+        <fullName>AdditionalSettings</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Additional Settings</shortDescription>
+        <value>Additional Settings</value>
+    </labels>
+    <labels>
+        <fullName>AdditionalSettingsHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Additional Settings Help</shortDescription>
+        <value>Additional settings for the Recurring Donations package (will open in new browser tab or window).</value>
+    </labels>
+    <labels>
+        <fullName>Address</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Address</shortDescription>
+        <value>Address</value>
+    </labels>
+    <labels>
+        <fullName>Advanced</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Advanced</shortDescription>
+        <value>Advanced</value>
+    </labels>
+    <labels>
+        <fullName>AdvancedLogicHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Advanced Logic Help</shortDescription>
+        <value>To change the default AND relationship between each filter: Click Add | Filter Logic. Enter each filter line number, separated by an operator: AND Finds records that match both values. OR  Finds records that match either value. An expression&apos;s syntax can affect filtering results. Example: (1 AND 2) OR 3 Description: Finds records that match both the first two filter lines or the third. Use this expression with the following filter conditions: Example: 1 AND (2 OR 3)</value>
+    </labels>
+    <labels>
+        <fullName>AmountInCorrectFormat</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Amount In Correct Format</shortDescription>
+        <value>amount in the correct format (for example: &quot;20.00&quot; or &quot;20&quot;)</value>
+    </labels>
+    <labels>
+        <fullName>Annually</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Annually</shortDescription>
+        <value>Annually</value>
+    </labels>
+    <labels>
+        <fullName>ApprovedStageHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Approved Stage Help</shortDescription>
+        <value>If using a web donation form with Brickwork, this will be the stage that is set if the transaction is approved. This stage will also be used if a virtual terminal transaction is approved and the &apos;Update Stage if iATS Transaction is Approved&apos; field is checked.</value>
+    </labels>
+    <labels>
+        <fullName>AresponsfomiatsPaymentsserversnotreceived</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>A response from IATS Payments servers was not received. Please contact IATS and</shortDescription>
+        <value>A response from IATS Payments servers was not received. Please contact IATS and verify that the request was processed by logging into the IATS web interface at:</value>
+    </labels>
+    <labels>
+        <fullName>AuraEvent</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Aura Event</shortDescription>
+        <value>Aura Event</value>
+    </labels>
+    <labels>
+        <fullName>AuraField</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Aura Field</shortDescription>
+        <value>Aura Field</value>
+    </labels>
+    <labels>
+        <fullName>AuraFieldMapping</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Aura Field Mapping</shortDescription>
+        <value>Aura Field Mapping</value>
+    </labels>
+    <labels>
+        <fullName>AuraSettings</fullName>
+        <categories>iATS Aura Setup</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Aura Settings</shortDescription>
+        <value>Settings that control the behavior of the iATS AURA application.</value>
+    </labels>
+    <labels>
+        <fullName>BankNumber</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bank Number</shortDescription>
+        <value>Bank Number</value>
+    </labels>
+    <labels>
+        <fullName>Basic</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Basic</shortDescription>
+        <value>Basic</value>
+    </labels>
+    <labels>
+        <fullName>BatchDownloadTransactions</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Batch Download Transactions</shortDescription>
+        <value>Batch Download Transactions</value>
+    </labels>
+    <labels>
+        <fullName>BatchDownloadTransactionsText</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Batch Download Transactions Text</shortDescription>
+        <value>Allows you to download transactions from iATS that may not have been previously entered into Salesforce. Note that UK Direct Debit Returns will only be completed for the begin date.</value>
+    </labels>
+    <labels>
+        <fullName>BeginDate</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Begin Date</shortDescription>
+        <value>Begin Date</value>
+    </labels>
+    <labels>
+        <fullName>Cancel</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>CardReader</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Card Reader</shortDescription>
+        <value>Card Reader</value>
+    </labels>
+    <labels>
+        <fullName>Checking</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>fr</language>
+        <protected>false</protected>
+        <shortDescription>Checking</shortDescription>
+        <value>Checking</value>
+    </labels>
+    <labels>
+        <fullName>City</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>City</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>ClearCCInfo</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Clear CC Info</shortDescription>
+        <value>Clear CC Info</value>
+    </labels>
+    <labels>
+        <fullName>CloseThisWindow</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close This Window</shortDescription>
+        <value>Close This Window</value>
+    </labels>
+    <labels>
+        <fullName>CompanyName</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Company Name</shortDescription>
+        <value>Company Name</value>
+    </labels>
+    <labels>
+        <fullName>ConfigureSettings</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Configure Settings</shortDescription>
+        <value>Configure Settings</value>
+    </labels>
+    <labels>
+        <fullName>Contact</fullName>
+        <categories>iATS Settings</categories>
+        <language>fr</language>
+        <protected>false</protected>
+        <shortDescription>Contact</shortDescription>
+        <value>Contact</value>
+    </labels>
+    <labels>
+        <fullName>ContactField</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Field</shortDescription>
+        <value>Contact Field</value>
+    </labels>
+    <labels>
+        <fullName>ContactMatchSettings</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Match Settings</shortDescription>
+        <value>Contact Match Settings</value>
+    </labels>
+    <labels>
+        <fullName>ContactMatchType</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Match Type</shortDescription>
+        <value>Contact Match Type</value>
+    </labels>
+    <labels>
+        <fullName>ContactMatchTypeHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Match Type Help</shortDescription>
+        <value>Basic option: Matches against any email type field. Standard option: Matches against the standard First Name AND Last Name fields AND (any email OR phone type) fields. Advanced option: Matches based on logic selected via the Advanced Logic‚section. Includes all Standard and Custom fields on the Contact record.</value>
+    </labels>
+    <labels>
+        <fullName>ContactMatchTypeWarning</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Match Type Warning</shortDescription>
+        <value>Warning! If Contact Match settings are saved as &quot;NONE&quot;, Brickwork will not attempt to match IATS Transactions to an existing Contact record and a new contact will be created for each new transaction. 
+This option is not recommended unless alternate contact match/merge functions are programmed directly
+within Salesforce.</value>
+    </labels>
+    <labels>
+        <fullName>Continue</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Continue</shortDescription>
+        <value>Continue</value>
+    </labels>
+    <labels>
+        <fullName>Country</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>CreateNewDonation</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Create New Donation</shortDescription>
+        <value>Create New Donation</value>
+    </labels>
+    <labels>
+        <fullName>CreateRecurringPayments</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Create Recurring Payments</shortDescription>
+        <value>Create Recurring Payments</value>
+    </labels>
+    <labels>
+        <fullName>CreateScheduledPaymentRecords</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Create Scheduled Payment Records</shortDescription>
+        <value>Create Scheduled Payment Records</value>
+    </labels>
+    <labels>
+        <fullName>CreateScheduledPaymentRecordsHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Create Scheduled Payment Records Help</shortDescription>
+        <value>If this field is checked, future Payment records will be created based on the &apos;Begin Date&apos; and &apos;End Date&apos; field values submitted via Aura to Brickwork or via the virtual terminal.</value>
+    </labels>
+    <labels>
+        <fullName>CreditCard</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit Card</shortDescription>
+        <value>Credit Card</value>
+    </labels>
+    <labels>
+        <fullName>CreditCardEntryMode</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit Card Entry Mode</shortDescription>
+        <value>Credit Card Entry Mode</value>
+    </labels>
+    <labels>
+        <fullName>CreditCardExpiryDatemmyy</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit Card Expiry Date: (mm/yy)</shortDescription>
+        <value>Credit Card Expiry Date: (mm/yy)</value>
+    </labels>
+    <labels>
+        <fullName>CreditCardNumber</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit Card Number</shortDescription>
+        <value>Credit Card Number</value>
+    </labels>
+    <labels>
+        <fullName>CreditCardType</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit Card Type</shortDescription>
+        <value>Credit Card Type</value>
+    </labels>
+    <labels>
+        <fullName>DeclinedStage</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Declined Stage</shortDescription>
+        <value>Stage if iATS Transaction is Rejected</value>
+    </labels>
+    <labels>
+        <fullName>DeclinedStageHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Declined Stage Help</shortDescription>
+        <value>This stage will be used if a virtual terminal transaction is rejected and the &apos;Update Stage if iATS Transaction is Rejected&apos; field is checked.</value>
+    </labels>
+    <labels>
+        <fullName>DefaultCreditCardEntryMode</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Credit Card Entry Mode</shortDescription>
+        <value>Default Credit Card Entry Mode</value>
+    </labels>
+    <labels>
+        <fullName>DefaultCreditCardEntryModeHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Credit Card Entry Mode Help</shortDescription>
+        <value>The default value of the &apos;Credit Card Entry Mode&apos; field on the virtual terminal.</value>
+    </labels>
+    <labels>
+        <fullName>DefaultOpportunityContactRole</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Opportunity Contact Role</shortDescription>
+        <value>Default Opportunity Contact Role</value>
+    </labels>
+    <labels>
+        <fullName>DefaultOpportunityContactRoleHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Opportunity Contact Role Help</shortDescription>
+        <value>If using a web donation form with Brickwork, please select the default Opportunity (Donation) Contact Role that should be assigned to the contact donor. Please note that this field should be set to &apos;-none-&apos; if using the Nonprofit Starter Pack (and the &apos;Enable Opportunity Contact Role Trigger&apos; is checked) as this application will already create an opportunity contact role for the contact donor.</value>
+    </labels>
+    <labels>
+        <fullName>DefinedLogicisTooComplex</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Defined Logic is Too Complex</shortDescription>
+        <value>The defined logic is too complex. Please reduce complexity or contact iATS Payments for additional assistance.</value>
+    </labels>
+    <labels>
+        <fullName>Delete</fullName>
+        <categories>iATS Settings</categories>
+        <language>fr</language>
+        <protected>false</protected>
+        <shortDescription>Delete</shortDescription>
+        <value>Delete</value>
+    </labels>
+    <labels>
+        <fullName>DirectDebitRegistrationwasRejected</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Direct Debit Registration was Rejected. Please re-validate information and re-at</shortDescription>
+        <value>Direct Debit Registration was Rejected. Please re-validate information and re-attempt</value>
+    </labels>
+    <labels>
+        <fullName>DoNotCreateOpportunityRecords</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do Not Create Opportunity Records</shortDescription>
+        <value>Do Not Automatically Create Opportunity (Donation) Records</value>
+    </labels>
+    <labels>
+        <fullName>DoNotCreateOpportunityRecordsHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do Not Create Opportunity Records Help</shortDescription>
+        <value>Selecting this option will prevent Brickwork from automatically creating a related Opportunity (Donation) record for online Aura transactions and via the Download Journal. Opportunity (Donation) records can still be created manually and via the iATS Virtual Terminal if desired. It is highly recommended that Custom Field Mapping be utilized to receive all standard and custom data from the Aura Form as this information normally posts to an Opportunity (Donation) Record.</value>
+    </labels>
+    <labels>
+        <fullName>DoNotCreatePastRecurringPayments</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do Not Create Past Recurring Payments</shortDescription>
+        <value>Do Not Create Past Recurring Payments</value>
+    </labels>
+    <labels>
+        <fullName>DoNotCreatePastRecurringPaymentsHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do Not Create Past Recurring Payments Help</shortDescription>
+        <value>Prevents past recurring Payment records from automatically being created.</value>
+    </labels>
+    <labels>
+        <fullName>DoNotPopulateVTHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do Not Populate VT Help</shortDescription>
+        <value>The amount field on the virtual terminal will automatically populate with the amount of the opportunity (donation) record unless this field is checked. Only applicable for the Opportunity (donation) virtual terminal.</value>
+    </labels>
+    <labels>
+        <fullName>DoNotUpdateIfBlank</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do Not Update If Blank</shortDescription>
+        <value>Do Not Update If Blank</value>
+    </labels>
+    <labels>
+        <fullName>DoNotautomaticallyPopulateVirtualTerminalwithAmountFieldValue</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do Not automatically Populate Virtual Terminal with Amount Field Value</shortDescription>
+        <value>Do Not automatically Populate Virtual Terminal with Amount Field Value</value>
+    </labels>
+    <labels>
+        <fullName>Edit</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>fr</language>
+        <protected>false</protected>
+        <shortDescription>Edit</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>EditAllSavedPaymentInformation</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>fr</language>
+        <protected>false</protected>
+        <shortDescription>Edit All Saved Payment Information</shortDescription>
+        <value>Edit All Saved Payment Information</value>
+    </labels>
+    <labels>
+        <fullName>Email</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Email</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>EndDate</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>End Date</shortDescription>
+        <value>End Date</value>
+    </labels>
+    <labels>
+        <fullName>EndDateLaterThanStartDate</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>End Date Later Than Start Date</shortDescription>
+        <value>End date must be later than start date.</value>
+    </labels>
+    <labels>
+        <fullName>End_date_must_be_at_least_one_week_after_begin_date</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>End date must be at least one week after begin date</shortDescription>
+        <value>End date must be at least one week after begin date</value>
+    </labels>
+    <labels>
+        <fullName>Enddatemustbeatleastonemonthafterbegindate</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>End date must be at least one month after begin date</shortDescription>
+        <value>End date must be at least one month after begin date</value>
+    </labels>
+    <labels>
+        <fullName>Enddatemustbeatleastoneyearafterbegindate</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>End date must be at least one year after begin date</shortDescription>
+        <value>End date must be at least one year after begin date</value>
+    </labels>
+    <labels>
+        <fullName>Enddatemustbeatleastthreemonthafterbegindate</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>End date must be at least 3 months after begin date</shortDescription>
+        <value>End date must be at least 3 months after begin date</value>
+    </labels>
+    <labels>
+        <fullName>Fax</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Fax</shortDescription>
+        <value>Fax</value>
+    </labels>
+    <labels>
+        <fullName>FirstName</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>First Name</shortDescription>
+        <value>First Name</value>
+    </labels>
+    <labels>
+        <fullName>Household</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Household</shortDescription>
+        <value>Household</value>
+    </labels>
+    <labels>
+        <fullName>IATSMessage</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATS Message</shortDescription>
+        <value>IATS Message</value>
+    </labels>
+    <labels>
+        <fullName>IATSRecurringPaymentsDateChangeAction</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATS Recurring Payments Date Change Action</shortDescription>
+        <value>IATS Recurring Payments Date Change Action</value>
+    </labels>
+    <labels>
+        <fullName>Individual</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Individual</shortDescription>
+        <value>Individual</value>
+    </labels>
+    <labels>
+        <fullName>Invalidaccountnumber</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid account number</shortDescription>
+        <value>Invalid account number</value>
+    </labels>
+    <labels>
+        <fullName>Invalidroutingnumber</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid routing number</shortDescription>
+        <value>Invalid routing number</value>
+    </labels>
+    <labels>
+        <fullName>Invalidsortcode</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid sort code</shortDescription>
+        <value>Invalid sort code</value>
+    </labels>
+    <labels>
+        <fullName>Invalidtransitnumber</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid transit number</shortDescription>
+        <value>Invalid transit number</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceNumber</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>fr</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Number</shortDescription>
+        <value>Invoice Number</value>
+    </labels>
+    <labels>
+        <fullName>LastName</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Last Name</shortDescription>
+        <value>Last Name</value>
+    </labels>
+    <labels>
+        <fullName>Limit</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Limit</shortDescription>
+        <value>Limit</value>
+    </labels>
+    <labels>
+        <fullName>LimitHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Limit Help</shortDescription>
+        <value>This field is utilized to set the number of months for the &apos;Time Period Limit&apos; or the number of Payment records for the &apos;Number of Payment Records Limit&apos;. More than 50 payments may result in errors.</value>
+    </labels>
+    <labels>
+        <fullName>MandateSigningDate</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Mandate Signing Date</shortDescription>
+        <value>Mandate Signing Date</value>
+    </labels>
+    <labels>
+        <fullName>MandateSigningdatemustbetodayorgreater</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Mandate Signing date must be today or greater</shortDescription>
+        <value>Mandate Signing date must be today or greater</value>
+    </labels>
+    <labels>
+        <fullName>Manual</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Manual</shortDescription>
+        <value>Manual</value>
+    </labels>
+    <labels>
+        <fullName>MapField</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Map Field</shortDescription>
+        <value>Map Field</value>
+    </labels>
+    <labels>
+        <fullName>MaximumTimePeriod</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Maximum Time Period</shortDescription>
+        <value>Maximum time period is 31 days. Please update date fields.</value>
+    </labels>
+    <labels>
+        <fullName>Mobile</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Mobile</shortDescription>
+        <value>Mobile</value>
+    </labels>
+    <labels>
+        <fullName>Monthly</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Monthly</shortDescription>
+        <value>Monthly</value>
+    </labels>
+    <labels>
+        <fullName>NightlyBatchDownloadNotification</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Nightly Batch Download Notification</shortDescription>
+        <value>Nightly Batch Download Notification</value>
+    </labels>
+    <labels>
+        <fullName>NightlyBatchDownloadNotificationHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Nightly Batch Download Notification Help</shortDescription>
+        <value>Receive status notifications via email for scheduled nightly batch transaction downloads. Please note that notifications will always be sent if errors occur during the downloads.</value>
+    </labels>
+    <labels>
+        <fullName>NoApplicableiATSAccounts</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Applicable iATS Accounts</shortDescription>
+        <value>No applicable iATS Accounts exist to download transactions!</value>
+    </labels>
+    <labels>
+        <fullName>None</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>--None--</shortDescription>
+        <value>--None--</value>
+    </labels>
+    <labels>
+        <fullName>NonprofitStarterPackDataModel</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Nonprofit Starter Pack Data Model</shortDescription>
+        <value>Nonprofit Sucess Pack Data Model</value>
+    </labels>
+    <labels>
+        <fullName>NonprofitStarterPackDataModelHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Nonprofit Starter Pack Data Model Help</shortDescription>
+        <value>If the Nonprofit Success Pack is installed, which data model is being utilized?</value>
+    </labels>
+    <labels>
+        <fullName>NonprofitStarterPackSettings</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Nonprofit Starter Pack Settings</shortDescription>
+        <value>Nonprofit Sucess Pack Settings</value>
+    </labels>
+    <labels>
+        <fullName>NotEqualto</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Not Equal to</shortDescription>
+        <value>not equal to</value>
+    </labels>
+    <labels>
+        <fullName>NotificationEmail</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Notification Email</shortDescription>
+        <value>Notification Email</value>
+    </labels>
+    <labels>
+        <fullName>NotificationEmailHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Notification Email Help</shortDescription>
+        <value>Email address to receive Brickwork notifications.</value>
+    </labels>
+    <labels>
+        <fullName>NumberofPaymentRecordsLimit</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Number of Payment Records Limit</shortDescription>
+        <value>Number of Payment Records Limit</value>
+    </labels>
+    <labels>
+        <fullName>Object</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Object</shortDescription>
+        <value>Object</value>
+    </labels>
+    <labels>
+        <fullName>Off</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Off</shortDescription>
+        <value>Off</value>
+    </labels>
+    <labels>
+        <fullName>OneTimePayment</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>One-Time Payment</shortDescription>
+        <value>One-Time Payment</value>
+    </labels>
+    <labels>
+        <fullName>OnetoOne</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>One-to-One</shortDescription>
+        <value>One-to-One</value>
+    </labels>
+    <labels>
+        <fullName>OpenEndedStatus</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Open Ended Status</shortDescription>
+        <value>Open Ended Status</value>
+    </labels>
+    <labels>
+        <fullName>OpenEndedStatusHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Open Ended Status Help</shortDescription>
+        <value>Default value for the recurring donation &apos;Open Ended Status&apos; field when a recurring donation is created via an aura online donation.</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity</fullName>
+        <categories>iATS Settings</categories>
+        <language>fr</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity</shortDescription>
+        <value>Opportunity</value>
+    </labels>
+    <labels>
+        <fullName>OpportunityCreation</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Creation</shortDescription>
+        <value>Opportunity Creation</value>
+    </labels>
+    <labels>
+        <fullName>OpportunityCreationandDelete</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Creation and Delete</shortDescription>
+        <value>Opportunity Creation and Delete</value>
+    </labels>
+    <labels>
+        <fullName>OpportunityCreationandsettoClosedLost</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Creation and set to Closed Lost</shortDescription>
+        <value>Opportunity Creation and set to Closed Lost</value>
+    </labels>
+    <labels>
+        <fullName>OpportunityDonationandPayments</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity (Donation) and Payments</shortDescription>
+        <value>Opportunity (Donation) and Payments</value>
+    </labels>
+    <labels>
+        <fullName>OpportunitySettings</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity (Donation) Settings</shortDescription>
+        <value>Opportunity (Donation) Settings</value>
+    </labels>
+    <labels>
+        <fullName>PayerInformation</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payer Information</shortDescription>
+        <value>Payer Information</value>
+    </labels>
+    <labels>
+        <fullName>PaymentCreation</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment Creation</shortDescription>
+        <value>Payment Creation</value>
+    </labels>
+    <labels>
+        <fullName>PaymentCreationandDelete</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment Creation and Delete</shortDescription>
+        <value>Payment Creation and Delete</value>
+    </labels>
+    <labels>
+        <fullName>PaymentCreationandWriteoff</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment Creation and Writeoff</shortDescription>
+        <value>Payment Creation and Writeoff</value>
+    </labels>
+    <labels>
+        <fullName>PaymentMethod</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment Method</shortDescription>
+        <value>Payment Method</value>
+    </labels>
+    <labels>
+        <fullName>PaymentinformationcouldnotbesavedPleasecontactCustomer</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment information could not be saved! Please contact Customer Care at 1-888-95</shortDescription>
+        <value>Payment information could not be saved! Please contact Customer Care at 1-888-955-5455 for assistance.</value>
+    </labels>
+    <labels>
+        <fullName>PaymentinformationcouldnotbeupdatedPleasecheck</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment information could not be updated! Please check IATS Account information.</shortDescription>
+        <value>Payment information could not be updated! Please check IATS Account information.</value>
+    </labels>
+    <labels>
+        <fullName>Paymentinformationwassuccessfullysaved</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment information was successfully saved!</shortDescription>
+        <value>Payment information was successfully saved!</value>
+    </labels>
+    <labels>
+        <fullName>Paymentinformationwassuccessfullyupdated</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment information was successfully updated!</shortDescription>
+        <value>Payment information was successfully updated!</value>
+    </labels>
+    <labels>
+        <fullName>PendingStageHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pending Stage Help</shortDescription>
+        <value>If using a web donation form with Brickwork, this will be the stage that is set if the transaction is pending. This stage will also be used if a virtual terminal transaction is pending and the &apos;Update Stage if iATS Transaction is Pending&apos; field is checked.</value>
+    </labels>
+    <labels>
+        <fullName>Phone</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Phone</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>PleaseEnterA</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please Enter A</shortDescription>
+        <value>Please enter a</value>
+    </labels>
+    <labels>
+        <fullName>PleaseEnterAn</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please Enter An</shortDescription>
+        <value>Please enter an</value>
+    </labels>
+    <labels>
+        <fullName>PleaseEnterBeginDate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please Enter Begin Date</shortDescription>
+        <value>Please enter a begin date.</value>
+    </labels>
+    <labels>
+        <fullName>PleaseEnterEndDate</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please Enter End Date</shortDescription>
+        <value>Please enter an end date.</value>
+    </labels>
+    <labels>
+        <fullName>PleaseEnterLogicRow</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please Enter Logic Row</shortDescription>
+        <value>Please enter at least one logic row.</value>
+    </labels>
+    <labels>
+        <fullName>PleaseSelect</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please Select..</shortDescription>
+        <value>Please Select..</value>
+    </labels>
+    <labels>
+        <fullName>PleaseSelectAniATSAccount</fullName>
+        <categories>iATS Aura Setup</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please Select An iATS Account</shortDescription>
+        <value>Please Select An iATS Account:</value>
+    </labels>
+    <labels>
+        <fullName>PleaseSelectMatchingFields</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please Select Matching Fields</shortDescription>
+        <value>Please select matching fields in both columns of all the logic rows.</value>
+    </labels>
+    <labels>
+        <fullName>PleaseSelectPaymentAcceptedStage</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please Select Payment Accepted Stage</shortDescription>
+        <value>Please select a &apos;Payment Accepted Stage&apos; or deselect the &apos;Update Stage if Payment Accepted field&apos;.</value>
+    </labels>
+    <labels>
+        <fullName>PleaseSelectaPaymentDonationType</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please Select a Payment / Donation Type:</shortDescription>
+        <value>Please Select a Payment / Donation Type:</value>
+    </labels>
+    <labels>
+        <fullName>Pleaseenterrecurringpaymentamountincorrectformat</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please enter a recurring payment amount in correct format</shortDescription>
+        <value>Please enter a recurring payment amount in correct format. For example: &quot;20.00&quot; or &quot;20&quot;</value>
+    </labels>
+    <labels>
+        <fullName>PrepopulatedVirtualTerminalRecurringFields</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pre-populated Virtual Terminal Recurring Fields</shortDescription>
+        <value>Pre-populated Virtual Terminal Recurring Fields</value>
+    </labels>
+    <labels>
+        <fullName>PrepopulatedVirtualTerminalRecurringFieldsHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pre-populated Virtual Terminal Recurring Fields Help</shortDescription>
+        <value>This field determines if the fields on the &apos;recurring payment&apos; section of the virtual terminal are pre-populated based on the related fields of the related recurring donation record.</value>
+    </labels>
+    <labels>
+        <fullName>ProcessOneTimePayment</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Process One-Time Payment</shortDescription>
+        <value>Process One-Time Payment</value>
+    </labels>
+    <labels>
+        <fullName>ProcessRefund</fullName>
+        <categories>iATS Refund</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Process Refund</shortDescription>
+        <value>Process Refund</value>
+    </labels>
+    <labels>
+        <fullName>Quarterly</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quarterly</shortDescription>
+        <value>Quarterly</value>
+    </labels>
+    <labels>
+        <fullName>RecurringAmount</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring Amount</shortDescription>
+        <value>Recurring Amount</value>
+    </labels>
+    <labels>
+        <fullName>RecurringDonations</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring Donations</shortDescription>
+        <value>Recurring Donations</value>
+    </labels>
+    <labels>
+        <fullName>RecurringDonationsSettings</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring Donations Settings</shortDescription>
+        <value>Recurring Donations Settings</value>
+    </labels>
+    <labels>
+        <fullName>RecurringDonationsandOpportunitiesDonations</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring Donations and Opportunities (Donations)</shortDescription>
+        <value>Recurring Donations and Opportunities (Donations)</value>
+    </labels>
+    <labels>
+        <fullName>RecurringInstallmentAmount</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring Installment Amount</shortDescription>
+        <value>Recurring Installment Amount</value>
+    </labels>
+    <labels>
+        <fullName>RecurringPaymentModelCannotBeSelectedBrickworkPayments</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring Payment Model Cannot Be Selected Brickwork Payments</shortDescription>
+        <value>The recurring payments model cannot be selected because the Brickwork payments extension is not installed.</value>
+    </labels>
+    <labels>
+        <fullName>RecurringPaymentModelCannotBeSelectedBrickworkRecurring</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring Payment Model Cannot Be Selected Brickwork Recurring</shortDescription>
+        <value>The recurring payments model cannot be selected because the Brickwork recurring donations extension is not installed.</value>
+    </labels>
+    <labels>
+        <fullName>RecurringPaymentModelCannotBeSelectedNPSPRecurring</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring Payment Model Cannot Be Selected NPSP Recurring</shortDescription>
+        <value>The recurring payments model cannot be selected because the Nonprofit Success Pack Recurring Donations package is not installed.</value>
+    </labels>
+    <labels>
+        <fullName>RecurringPayments</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring Payments</shortDescription>
+        <value>Recurring Payments</value>
+    </labels>
+    <labels>
+        <fullName>RecurringPaymentsAmountMethod</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring Payments Amount Method</shortDescription>
+        <value>Recurring Payments Amount Method</value>
+    </labels>
+    <labels>
+        <fullName>RecurringPaymentsAmountMethodHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring Payments Amount Method Help</shortDescription>
+        <value>Determines how the Opportunity (Donation) amount field is populated when an opportunity record is created for an online Aura recurring payment transaction. If nothing is selected, defaults to &apos;Total Recurring Value Amount&apos;.</value>
+    </labels>
+    <labels>
+        <fullName>RecurringPaymentsModel</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring Payments Model</shortDescription>
+        <value>Recurring Payments Model</value>
+    </labels>
+    <labels>
+        <fullName>RecurringpaymentscouldnotbecreatedPleasecontactCustomer</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring payments could not be created! Please contact Customer Care at 1-888-9</shortDescription>
+        <value>Recurring payments could not be created! Please contact Customer Care at 1-888-955-5455 for assistance.</value>
+    </labels>
+    <labels>
+        <fullName>RecurringpaymentscouldnotbeupdatedPleasecheck</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring payments could not be updated! Please check IATS Account information.</shortDescription>
+        <value>Recurring payments could not be updated! Please check IATS Account information.</value>
+    </labels>
+    <labels>
+        <fullName>Recurringpaymentshavebeencreated</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recurring payments have been created!</shortDescription>
+        <value>Recurring payments have been created!</value>
+    </labels>
+    <labels>
+        <fullName>RefundQuestion</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Refund Question</shortDescription>
+        <value>Are you sure you want to refund this transaction for</value>
+    </labels>
+    <labels>
+        <fullName>Rejectcodesinformationavailableat</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Reject codes information available at:</shortDescription>
+        <value>Reject codes information available at:</value>
+    </labels>
+    <labels>
+        <fullName>RelatedRecords</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Related Records</shortDescription>
+        <value>Related Records</value>
+    </labels>
+    <labels>
+        <fullName>ReviewErrors</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Review Errors</shortDescription>
+        <value>Review the errors on this page</value>
+    </labels>
+    <labels>
+        <fullName>RoutingNumber</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Routing Number</shortDescription>
+        <value>Routing Number</value>
+    </labels>
+    <labels>
+        <fullName>SavePaymentInformation</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Save Payment Information</shortDescription>
+        <value>Save Payment Information</value>
+    </labels>
+    <labels>
+        <fullName>SavePaymentinfoResult</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Save Payment Info Result</shortDescription>
+        <value>Save Payment Info Result</value>
+    </labels>
+    <labels>
+        <fullName>Savings</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>fr</language>
+        <protected>false</protected>
+        <shortDescription>Savings</shortDescription>
+        <value>Savings</value>
+    </labels>
+    <labels>
+        <fullName>ScheduleType</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Schedule Type</shortDescription>
+        <value>Schedule Type</value>
+    </labels>
+    <labels>
+        <fullName>ScheduledPaymentRecordsLimit</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Scheduled Payment Records Limit</shortDescription>
+        <value>Scheduled Payment Records Limit</value>
+    </labels>
+    <labels>
+        <fullName>ScheduledPaymentRecordsLimitHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Scheduled Payment Records Limit Help</shortDescription>
+        <value>This field determines the limit type on the number of scheduled Payment records that are created.</value>
+    </labels>
+    <labels>
+        <fullName>Select</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Select</shortDescription>
+        <value>--Select--</value>
+    </labels>
+    <labels>
+        <fullName>SelectCreatenewDonationbyDefault</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Select Create new Donation by Default</shortDescription>
+        <value>Select Create new Donation by Default</value>
+    </labels>
+    <labels>
+        <fullName>SelectCreatenewDonationbyDefaultHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Select Create new Donation by Default Help</shortDescription>
+        <value>The default value of the &apos;Create New Donation&apos; field on the virtual terminal.</value>
+    </labels>
+    <labels>
+        <fullName>Settings</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Settings</shortDescription>
+        <value>Settings</value>
+    </labels>
+    <labels>
+        <fullName>SomeFilterConditionsDefined</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Some Filter Conditions Defined</shortDescription>
+        <value>Some filter conditions are defined but not referenced in your filter logic.</value>
+    </labels>
+    <labels>
+        <fullName>SortCode</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sort Code</shortDescription>
+        <value>Sort Code</value>
+    </labels>
+    <labels>
+        <fullName>StageApproved</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Stage Approved</shortDescription>
+        <value>Stage if iATS Transaction is Approved</value>
+    </labels>
+    <labels>
+        <fullName>StageifiATSTransactionisPending</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Stage if iATS Transaction is Pending</shortDescription>
+        <value>Stage if iATS Transaction is Pending</value>
+    </labels>
+    <labels>
+        <fullName>Standard</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Standard</shortDescription>
+        <value>Standard</value>
+    </labels>
+    <labels>
+        <fullName>StateProvince</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>State Province</shortDescription>
+        <value>State/Province</value>
+    </labels>
+    <labels>
+        <fullName>Status</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>StreetAddress</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Street Address</shortDescription>
+        <value>Street Address</value>
+    </labels>
+    <labels>
+        <fullName>Submit</fullName>
+        <categories>iATS Aura Setup</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Submit</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>TheAccountIBANfieldmustvalue</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The &apos;Account (IBAN)&apos; field must have a value</shortDescription>
+        <value>The &apos;Account (IBAN)&apos; field must have a value</value>
+    </labels>
+    <labels>
+        <fullName>Thebegindatemustbeatleast12daysfromtoday</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The begin date must be at least 12 days from today</shortDescription>
+        <value>The begin date must be at least 12 days from today</value>
+    </labels>
+    <labels>
+        <fullName>Thebegindatemustbegreaterthanorequaltotoday</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The begin date must be greater than or equal to today</shortDescription>
+        <value>The begin date must be greater than or equal to today</value>
+    </labels>
+    <labels>
+        <fullName>Thecreditcardhasexpired</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The credit card has expired</shortDescription>
+        <value>The credit card has expired</value>
+    </labels>
+    <labels>
+        <fullName>Theenddatemustbegreaterthanthebegindate</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The end date must be greater than the begin date</shortDescription>
+        <value>The end date must be greater than the begin date</value>
+    </labels>
+    <labels>
+        <fullName>TheseFieldsCompleted</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>fr</language>
+        <protected>false</protected>
+        <shortDescription>These Fields Completed</shortDescription>
+        <value>These required fields must be completed</value>
+    </labels>
+    <labels>
+        <fullName>TimePeriodLimit</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Time Period Limit</shortDescription>
+        <value>Time Period Limit</value>
+    </labels>
+    <labels>
+        <fullName>TotalAmount</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Total Amount</shortDescription>
+        <value>Total Amount</value>
+    </labels>
+    <labels>
+        <fullName>TotalRecurringValueAmount</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Total Recurring Value Amount</shortDescription>
+        <value>Total Recurring Value Amount</value>
+    </labels>
+    <labels>
+        <fullName>TransactionCouldnotbecompletedPleasecheck</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Transaction could not be completed! Please check the iATS Account information</shortDescription>
+        <value>Transaction could not be completed! Please check the iATS Account information</value>
+    </labels>
+    <labels>
+        <fullName>TransitNumber</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Transit Number</shortDescription>
+        <value>Transit Number</value>
+    </labels>
+    <labels>
+        <fullName>TranslationsDownloadedShortly</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Translations Downloaded Shortly</shortDescription>
+        <value>Transactions will be downloaded shortly. An email will be sent to the &apos;Notification Email&apos; address to confirm when the download is complete.</value>
+    </labels>
+    <labels>
+        <fullName>UnableConnecttoIATSserversPleasecontact</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Unable to connect to IATS servers. Please contact your administrator.</shortDescription>
+        <value>Unable to connect to IATS servers. Please contact your administrator.</value>
+    </labels>
+    <labels>
+        <fullName>UpdateRecurringPayments</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>fr</language>
+        <protected>false</protected>
+        <shortDescription>Update Recurring Payments</shortDescription>
+        <value>Update Recurring Payments</value>
+    </labels>
+    <labels>
+        <fullName>UpdateRejectedTransactionPaymenttoWrittenOff</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Update Rejected Transaction Payment to Written Off</shortDescription>
+        <value>Update Rejected Transaction Payment to Written Off</value>
+    </labels>
+    <labels>
+        <fullName>UpdateRejectedTransactionPaymenttoWrittenOffHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Update Rejected Transaction Payment to Written Off Help</shortDescription>
+        <value>Check the payment &apos;Written Off&apos; checkbox when a related iATS Transaction is rejected.</value>
+    </labels>
+    <labels>
+        <fullName>UpdateStageifiATSTransactionisApproved</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Update Stage if iATS Transaction is Approved</shortDescription>
+        <value>Update Stage if iATS Transaction is Approved</value>
+    </labels>
+    <labels>
+        <fullName>UpdateStageifiATSTransactionisApprovedHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Update Stage if iATS Transaction is Approved Help</shortDescription>
+        <value>If checked, the stage will automatically update to the value in the &apos;Stage if iATS Transaction is Approved&apos; field if a virtual terminal transaction is approved.</value>
+    </labels>
+    <labels>
+        <fullName>UpdateStageifiATSTransactionisPending</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Update Stage if iATS Transaction is Pending</shortDescription>
+        <value>Update Stage if iATS Transaction is Pending</value>
+    </labels>
+    <labels>
+        <fullName>UpdateStageifiATSTransactionisPendingHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Update Stage if iATS Transaction is Pending Help</shortDescription>
+        <value>If checked, the stage will automatically update to the value in the &apos;Stage if iATS Transaction is Pending&apos; field if a virtual terminal transaction is pending.</value>
+    </labels>
+    <labels>
+        <fullName>UpdateStageifiATSTransactionisRejected</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Update Stage if iATS Transaction is Rejected</shortDescription>
+        <value>Update Stage if iATS Transaction is Rejected</value>
+    </labels>
+    <labels>
+        <fullName>UpdateStageifiATSTransactionisRejectedHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Update Stage if iATS Transaction is Rejected Help</shortDescription>
+        <value>If checked, the stage will automatically update to the value in the &apos;Stage if iATS Transaction is Rejected&apos; field if a virtual terminal transaction is rejected.</value>
+    </labels>
+    <labels>
+        <fullName>UpdatecouldnotbecompletedbecauseiATSAccountdoesnothaveRecurringPermission</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Update could not be completed because the iATS Account does not have Recurring P</shortDescription>
+        <value>Update could not be completed because the iATS Account does not have Recurring Permission. Please contact Customer Care at 1-888-955-5455 for assistance.</value>
+    </labels>
+    <labels>
+        <fullName>UpdatetheSettings</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Update the Settings</shortDescription>
+        <value>Update the Settings</value>
+    </labels>
+    <labels>
+        <fullName>UpdatingFields</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Updating Fields..</shortDescription>
+        <value>Updating Fields..</value>
+    </labels>
+    <labels>
+        <fullName>ValidateAccount</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Validate Account</shortDescription>
+        <value>Validate Account</value>
+    </labels>
+    <labels>
+        <fullName>VirtualTerminalSettings</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Virtual Terminal Settings</shortDescription>
+        <value>Virtual Terminal Settings</value>
+    </labels>
+    <labels>
+        <fullName>Weekly</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Weekly</shortDescription>
+        <value>Weekly</value>
+    </labels>
+    <labels>
+        <fullName>ZipPostalCode</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Zip/Postal Code</shortDescription>
+        <value>Zip/Postal Code</value>
+    </labels>
+    <labels>
+        <fullName>amountgreaterthan0</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>amount greater than 0</shortDescription>
+        <value>amount greater than 0</value>
+    </labels>
+    <labels>
+        <fullName>biAnnually</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>biAnnually</shortDescription>
+        <value>Bi-Annually</value>
+    </labels>
+    <labels>
+        <fullName>configureSettingsDescription</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>configure Settings Description</shortDescription>
+        <value>Settings that control the behavior of the IATS Brickwork application.</value>
+    </labels>
+    <labels>
+        <fullName>confirmationText</fullName>
+        <categories>iATS Refund</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>confirmation Text</shortDescription>
+        <value>Additional reject codes information available at:</value>
+    </labels>
+    <labels>
+        <fullName>contains</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contins</shortDescription>
+        <value>contains</value>
+    </labels>
+    <labels>
+        <fullName>creditcardexpirationdate</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>credit card expiration date</shortDescription>
+        <value>credit card expiration date</value>
+    </labels>
+    <labels>
+        <fullName>doNotAutomaticallyCreateOpportunityRecordsError</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Do Not Automatically Create Opportunity Records Error</shortDescription>
+        <value>Do Not Automatically Create Opportunity (Donation) Records cannot be checked unless the Recurring Donation Model is set to --none--.</value>
+    </labels>
+    <labels>
+        <fullName>emailAddress</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>emailAddress</shortDescription>
+        <value>email address</value>
+    </labels>
+    <labels>
+        <fullName>equals</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>equals</shortDescription>
+        <value>equals</value>
+    </labels>
+    <labels>
+        <fullName>iATSAURASetup</fullName>
+        <categories>iATS Aura Setup</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>iATS AURA Setup</shortDescription>
+        <value>iATS AURA Setup</value>
+    </labels>
+    <labels>
+        <fullName>iATSAccountInformation</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>iATS Account Information</shortDescription>
+        <value>iATS Account Information</value>
+    </labels>
+    <labels>
+        <fullName>iATSCustomerCode</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>iATS Customer Code</shortDescription>
+        <value>iATS Customer Code</value>
+    </labels>
+    <labels>
+        <fullName>iATSRecurringPaymentsDateChangeActionHelp</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>iATS Recurring Payments Date Change Action Help</shortDescription>
+        <value>This field determines what action should occur if the begin date or end date values are modified via the virtual terminal.</value>
+    </labels>
+    <labels>
+        <fullName>iATSTransaction</fullName>
+        <categories>iATS Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>iATS Transaction</shortDescription>
+        <value>iATS Transaction</value>
+    </labels>
+    <labels>
+        <fullName>scheduleDate</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Schedule Date</shortDescription>
+        <value>Schedule Date</value>
+    </labels>
+    <labels>
+        <fullName>validAmericanExpresscardnumber</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>valid American Express card number</shortDescription>
+        <value>valid American Express card number</value>
+    </labels>
+    <labels>
+        <fullName>validDiscovercardnumber</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>valid Discover card number</shortDescription>
+        <value>valid Discover card number</value>
+    </labels>
+    <labels>
+        <fullName>validMastercard</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>valid Mastercard</shortDescription>
+        <value>valid Mastercard</value>
+    </labels>
+    <labels>
+        <fullName>validVISAcardnumber</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>valid VISA card number</shortDescription>
+        <value>valid VISA card number</value>
+    </labels>
+    <labels>
+        <fullName>validcreditcardnumber</fullName>
+        <categories>iATS Virtual Terminal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>valid credit card number</shortDescription>
+        <value>valid credit card number</value>
+    </labels>
+</CustomLabels>

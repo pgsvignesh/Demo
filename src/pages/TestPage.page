@@ -1,0 +1,15 @@
+<apex:page id="pg" standardController="Account">
+    <script>
+    document.getElementById('pg:frm:pb:pbs:pbsi:dt').value = 'test' ;
+</script>
+<apex:form id="frm">
+    <apex:pageBlock id="pb">
+        <apex:pageBlockSection id="pbs">
+            <apex:pageBlockSectionItem id="pbsi">
+                <apex:inputField id="dt" value="{!Account.name}"/>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:form>
+
+</apex:page>

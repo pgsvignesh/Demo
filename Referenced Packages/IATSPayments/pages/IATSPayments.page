@@ -1,0 +1,11 @@
+<apex:page showHeader="false" sidebar="false" controller="IATSPayment.IATSPaymentsController" action="{!ReceiveData}">
+<p>
+<H1>Online Donation Result</H1><br/>
+Authorization Result: {!AuthResult}<br/>
+<apex:outputPanel >
+<apex:outputPanel rendered="{!processingError != ''}">
+Processing Error: {!processingError}
+</apex:outputPanel>
+</apex:outputPanel>
+</p>
+</apex:page>

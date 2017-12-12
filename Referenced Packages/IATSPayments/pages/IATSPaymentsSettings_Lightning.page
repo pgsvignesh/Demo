@@ -1,0 +1,1774 @@
+<apex:page id="IATSPayments_Settings" controller="IATSPayment.IATSPayments_Settings" action="{!setupSettings}" 
+    cache="false" standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0">
+    
+    <apex:stylesheet value="{!URLFOR($Resource.IATSPayment__lightiningCSS, '/assets/styles/salesforce-lightning-design-system.min.css')}" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+    <script src="{!URLFOR($Resource.aljs, '/jquery.aljs-init.min.js')}"></script>
+    <script src="{!URLFOR($Resource.aljs, '/jquery.aljs-datepicker.min.js')}"></script>
+    <apex:stylesheet value="{!URLFOR($Resource.IATSPayment__multiselect, '/AutoComplete/auto-complete.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.IATSPayment__multiselect, '/AutoComplete/auto-complete.js')}"/>
+    <style>
+        .pbsetItemStyle{
+            width:50%;
+        }
+        .flex-container {
+            display:flex;
+            align-items: center; /* Vertical center alignment */
+            justify-content: center; /* Horizontal center alignment */
+        }
+        .buttonsNow {
+            background-image: none !important;
+            font-family: inherit;
+        }
+        .slds-dropdown {
+            max-width: 21rem !important;
+        }
+        .imgclass:hover{   
+            background-image: url(/img/help/helpOrbs.gif);   
+            background-repeat: no-repeat;   
+            width: 16px;   
+            height: 15px;      
+            background-position: right;   
+          
+        }   
+        .imgclass{   
+            background-image: url(/img/help/helpOrbs.gif);   
+            background-repeat: no-repeat;   
+            width: 16px;   
+            height: 15px;   
+        }
+        a.tooltip {outline:none; }
+        
+        a.tooltip:hover {text-decoration:none;} 
+        a.tooltip span {
+            z-index:10;display:none; padding:14px 20px;
+            margin-top:-30px; margin-left:28px;
+            width:300px; line-height:16px;
+        }
+        
+        a.tooltip:hover span{
+            display:inline-block; position:absolute; text-align: left;
+            border:1px solid orange; background:#fefdb9;
+            width:18em;
+            border:1px solid orange;
+            background-color:#FEFDB9;
+            color:#000;
+            font-weight: normal !important;
+            font-size: 14px;                  
+            white-space:normal;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            //background-image: url(/img/help/helpOrbs.gif);
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #fefdb9;
+            color: #000;
+            text-align: center;
+            border-radius: 6px;
+            border: 1px solid orange;
+            padding: 2px 5px;
+            position: absolute;
+            z-index: 1;
+            top: -5px;
+            left: 110%;
+        }
+        
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            margin-top: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent orange transparent transparent;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+        .padTop {
+            padding-top:15px;
+        }
+        .msgIcon {
+            display: none!important
+        }
+        .customMessage * {
+            color: #fff!important
+        }
+        .customMessage {
+            margin: 5px 0!important;
+            max-width: 1280px;
+            opacity: 1!important;
+            width: 100%;
+            font-size: 12px;
+            border: 0px;
+            padding-left: 10px;
+        }
+        .message {
+            opacity: .1
+        }
+        .alignMiddle {
+            vertical-align:middle !important;
+        }
+        .messagesZindex {
+            z-index: 80 !important;
+        }
+        a.tooltip:hover > .slds-popover{
+            display:block;
+        
+        }
+        #tblHover tbody tr:hover {
+            background: #FFFFFF !important;
+        }
+        .slds-table:not(.slds-no-row-hover) tbody tr:hover>td {
+            background: #FFFFFF !important;
+        }
+        #dvbatch {
+            padding-top: .75rem !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            height: auto !important;
+        }
+        .slds-popover--tooltip{
+            width:250px !important;
+        }
+        
+    </style>
+    
+    <input id="hiddenElement" type="hidden" />
+    <script>
+        $(document).on('mouseenter','.customsldstooltip',function(){
+            $(this).siblings('div.slds-popover').removeClass('slds-hide');
+        });
+        $(document).on('mouseleave','.customsldstooltip',function(){
+            $(this).siblings('div.slds-popover').addClass('slds-hide');
+        });
+        function setFocusOnLoad() {} 
+        
+        function changeContactMatch(elem)
+        {     
+            afshowAdvLogic(elem.value);
+        }
+        function updateSetting() {
+            actUpdateSetting();
+        }
+        function cancelSetting() {
+            actcancelSetting();
+        }
+        function processSetting() {
+            actprocessSetting();
+        }
+        function processBatchCreate() {
+            $('#batchCreate').attr('disabled', true);
+            actProcessBatchCreate();
+        }
+        function processBatchUpdate() {
+            $('#customerCodeUpdate').attr('disabled', true);
+            actProcessBatchUpdate();
+        }
+        function SetFilterTextOnAdd()
+        {
+            var txtFilterLogic = document.getElementById('IATSPayments_Settings:form:txtFilterLogic');                
+            //alert(txtFilterLogic.style.display);
+            var logic = '';
+            if (txtFilterLogic.style.display == 'none')
+            {
+                for(var i = 0; i < 10; i++)
+                {
+                    var brickWorkField = document.getElementById('IATSPayments_Settings:form:rptFilterLogic:'+i+':brickworkOptions');
+                    var contactField = document.getElementById('IATSPayments_Settings:form:rptFilterLogic:'+i+':contactFieldOptions');
+                    if(brickWorkField != null && contactField != null){
+                        //if(brickWorkField.value != '' && contactField.value != ''){
+                            logic = logic + (i+1) + ' AND ';
+                        //}
+                    }
+                }
+                //txtFilterLogic.value = logic.substring(0, logic.length-5);
+            }
+        }
+        function SetFilterTextOnRemove()
+        {
+            var txtFilterLogic = document.getElementById('IATSPayments_Settings:form:txtFilterLogic');                
+            var logic = '';
+            if (txtFilterLogic.style.display == 'none')
+            {
+                for(var i = 0; i < 10; i++)
+                {
+                    var brickWorkField = document.getElementById('IATSPayments_Settings:form:rptFilterLogic:'+i+':brickworkOptions');
+                    var contactField = document.getElementById('IATSPayments_Settings:form:rptFilterLogic:'+i+':contactFieldOptions');
+                    if(brickWorkField != null && contactField != null){
+                        if(brickWorkField.value != '' && contactField.value != ''){
+                            logic = logic + (i+1) + ' AND ';
+                        }
+                    }
+                }
+                txtFilterLogic.value = logic.substring(0, logic.length-5);
+            }
+        }
+        
+        function showFilterText(objElem){
+            var elem = document.getElementById(objElem).innerHTML;
+            if (elem == 'Clear Filter Logic'){                
+                var txtFilterLogic = document.getElementById('IATSPayments_Settings:form:txtFilterLogic');                
+                var logic = '';
+                for(var i=0;i<10;i++){
+                    var brickWorkField = document.getElementById('IATSPayments_Settings:form:rptFilterLogic:'+i+':brickworkOptions');
+                    var contactField = document.getElementById('IATSPayments_Settings:form:rptFilterLogic:'+i+':contactFieldOptions');
+                    if(brickWorkField != null && contactField != null){
+                        if(brickWorkField.value != '' && contactField.value != ''){
+                            logic = logic + (i+1) + ' AND ';
+                        }
+                    }
+                }                
+                txtFilterLogic.value = logic.substring(0,logic.length-5);                
+            }
+            else{                
+                document.getElementById('IATSPayments_Settings:form:txtFilterLogic').value = '';                
+
+            }            
+        }
+       
+        function getRowCount(Index){
+            //alert(document.getElementById('IATSPayments_Settings:form:contactssettings1:auraFieldMapping:pbsecItem:reptAuraFields:'+Index+':imgLoadingDelete'))
+            document.getElementById('IATSPayments_Settings:form:reptAuraFields:'+Index+':imgLoadingDelete').style.display = 'block';
+            callDeleteRow(Index);            
+            //return false;
+        }
+        function getFieldList(ObjName,Index){
+            debugger;
+            //document.getElementById('IATSPayments_Settings:form:contactssettings1:auraFieldMapping:reptAuraFields:'+Index+':imgLoadingChange').style.display = 'block';
+            document.getElementById('IATSPayments_Settings:form:reptAuraFields:'+Index+':imgLoadingChange').style.display = 'block';
+            ChangeFieldList(ObjName,Index);
+        }
+        function callAuraEvent(){
+            AuraEvent();
+        }
+         function callBrickWorkField(){
+            BricworkField();
+        }
+        //Assigning SLDS Static Resource Path To A Variable To Use It With ALJS Initialization
+        var assetsLoc = '{!URLFOR($Resource.lightiningCSS)}';
+        
+        //ALJS Initialization   
+        
+        $.aljsInit({
+            assetsLocation: assetsLoc, //SLDS Static Resource Path
+            scoped: true
+        });
+        
+      
+        
+        $(document).on('focusout',$('input[id$=campaignList]'),function(){
+            debugger;
+            if($('input[id$=campaignList]').val() == ''){
+                $('input[id$=campaignListId]').val('');
+            }        
+        });
+        function renderDatePicker(){
+           $.map($('.clsDateApply'),function(o,idx){
+                var tdt = '<input class="slds-input clsDateApply" data-orgid="' + o.id + '" id="' + o.id + ':' + idx + '" name="' + o.id + ':' + idx + '" size="12" type="text" />';
+                $(document.getElementById(o.id)).closest('span').hide();
+                $(document.getElementById(o.id)).closest('span').before(tdt);
+                $(document.getElementById(o.id + ':' + idx)).datepicker({
+                        initDate: moment(), //Today Date
+                        {!IF(dateFormat = 'monthFirst', "format: 'M/D/YYYY'", "format: 'D/M/YYYY'")},
+                        //format: 'M/D/YYYY', //Date Format Of Datepicker Input Field
+                        onChange: function(datepicker) {
+                            var actDtid = $(datepicker.$el[0]).attr('data-orgid');
+                            var dtval = datepicker.$el[0].value;
+                            $(document.getElementById(actDtid)).val(dtval);
+                        }
+                });
+                
+           });
+        }
+        function overridePageMessages(){    
+            var textureEffect = '';
+            //Uncomment below line for texture effect on page messages
+            //textureEffect = 'slds-theme--alert-texture';
+                         
+            $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage messagesZindex '+textureEffect);          
+            $('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage messagesZindex '+textureEffect);    
+            $('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage messagesZindex '+textureEffect);                  
+            $('.infoM3').addClass('slds-notify slds-notify--toast customMessage messagesZindex '+textureEffect);    
+                             
+            $('.errorM3').removeClass('errorM3'); 
+            $('.confirmM3').removeClass('confirmM3'); 
+            $('.infoM3').removeClass('infoM3');   
+            $('.warningM3').removeClass('warningM3');  
+        }
+
+        function autoCompleteTextBox(txtId) {
+            new autoComplete({
+                selector : document.getElementById(txtId),
+                minChars : 1,
+                source: function(term, suggest){
+                    term = term.toLowerCase();
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.IATSPayments_Settings.searchCampaignName}',
+                        term, function(result, event){
+                            if (event.status) {
+                            //debugger;
+                                //alert(event.status);
+                                suggest(result);
+                            }
+                        },
+                        {escape: true}
+                    );
+                },
+                renderItem: function (item, search) {
+                    search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&amp;');
+                    var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+                    return '<div class="autocomplete-suggestion"  data-langname="'+item.Name+'" data-id="' +item.Id + '" data-val="'+item.Name+'">' + item.Name +'</div>';
+                },
+                onSelect: function(e, term, item) {
+                    $(document.getElementById(txtId)).val(item.getAttribute('data-langname')).attr('data-id',item.getAttribute('data-id'));
+                    $(document.getElementById(txtId)).siblings('input[type=hidden]').val(item.getAttribute('data-id'));
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            renderDatePicker();
+            overridePageMessages();
+            $('.slds-section__title').find('a').find('svg').css('transition', '0.3s');
+            $('.slds-section__title').on("click", function() {
+                $(this).parent().toggleClass('slds-is-open');
+            });
+            autoCompleteTextBox('IATSPayments_Settings:form:campaignList');
+            var disableButtonCustomerCreate = '{!disableButtonCustomerCreate}';
+            var disableButtonBatchCreate = '{!disableButtonBatchCreate}';
+            var numberBatchEntries = '{!numberBatchEntriesToProcess}';
+            var numberCCUpdates = '{!numberCCUpdatesToProcess}';
+            if (disableButtonBatchCreate == 'true' || numberBatchEntries == '0') {
+                $('#batchCreate').attr('disabled', true);
+            } else {
+                $('#batchCreate').attr('disabled', false);
+            }
+            if (disableButtonCustomerCreate == 'true' || numberCCUpdates == '0') {
+                $('#customerCodeUpdate').attr('disabled', true);
+            } else {
+                $('#customerCodeUpdate').attr('disabled', false);
+            }
+        });
+        
+    </script>
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <apex:form id="form" >
+        <apex:actionFunction name="actUpdateSetting" action="{!updateSettings}"/>
+        <apex:actionFunction name="actcancelSetting" action="{!cancel}"/>
+        <apex:actionFunction name="actprocessSetting" action="{!process}"/>
+        <apex:actionFunction name="actProcessBatchCreate" action="{!processBatchCreate}"/>
+        <apex:actionFunction name="actProcessBatchUpdate" action="{!processBatchUpdate}"/>
+        <apex:actionFunction name="AuraEvent" action="{!AuraSetup}" status="changeStatus" reRender="opEventList,opWrpAuraFields,opWrpHeader"/>
+        <apex:actionFunction name="BricworkField" action="{!BrickWorkFieldAura}" status="changeStatusAura" reRender="opWrpAuraFields,opWrpHeader"/>
+        <apex:actionFunction status="changeContactMatch" name="afshowAdvLogic" action="{!showAdvLogic}" rerender="pbsContactMatching">
+            <apex:param id="prmShowAdvLogic" name="prmShowAdvLogic" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction id="afChangeField" name="ChangeFieldList" action="{!ChangeFieldFilters}" reRender="OpnlAuraFields,objectFieldList">
+            <apex:param id="prmObjName" name="prmObjName" value=""/>
+            <apex:param id="prmIndex" name="prmIndex" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction name="callDeleteRow" id="afDelRow" action="{!deleteRow}" reRender="OpnlAuraFields">
+            <apex:param id="prmDeleteRow" name="prmDeleteRow" value=""/>
+        </apex:actionFunction>
+        
+        
+        <apex:pageMessages id="pageMessages"/>
+        
+        <div class="slds">
+            <div class="slds-page-header">
+                <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media slds-no-space slds-grow">
+                            <div class="slds-media__body">
+                                <p class="slds-text-title--caps slds-line-height--reset">iATS Brickwork</p>
+                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate">{!$Label.ConfigureSettings}</h1>
+                                <p class="slds-truncate">{!$Label.ConfigureSettingsDescription}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>  
+            <!--<apex:sectionHeader title="iATS Brickwork" subtitle="Configure Settings">
+                <description>
+                    Settings that control the behavior of the IATS Brickwork application. 
+                </description>
+            </apex:sectionHeader>-->
+                <fieldset class="slds-box slds-theme--default slds-container">
+                    <legend class="slds-text-heading--medium slds-p-vertical--medium">{!$Label.Settings}</legend>
+                        <!--Opportunity (Donation) Settings section-->
+                        <apex:outputPanel id="contactssettings1">
+                        <div class="row">
+                            <div class="columns large-12">
+                                <table class="slds-table slds-max-medium-table--stacked-horizontal">
+                                    <tr class="slds-hint-parent">
+                                        <td class="slds-cell-wrap slds-cell-shrink" style="text-align:center;">
+                                            <input type="button" class="slds-button slds-button--brand slds-button--small" onclick="updateSetting();" value="{!$Label.UpdatetheSettings}"/>
+                                            <!--<apex:commandButton id="updatesettingsbutton" action="{!updateSettings}" value="Update the Settings" styleClass="button"/>-->
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="slds-section">
+                            <h3 class="slds-section__title">
+                                <a class="slds-button slds-section__title-action">
+                                    <svg aria-hidden="true" class="slds-section__title-action-icon slds-button__icon slds-button__icon--left">
+                                        <use xlink:href="{!$Resource.lightiningCSS}/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+                                    </svg>{!$Label.OpportunitySettings}
+                                </a>
+                            </h3>
+                            <div class="slds-section__content">
+                                <div class="slds-table slds-max-medium-table--stacked-horizontal">
+                                    <table id="tblHover" class="slds-table slds-max-medium-table--stacked-horizontal" style="table-layout:fixed;">
+                                        <tr class="slds-hint-parent" width="100%">
+                                            <td class="slds-cell-wrap padTop" width="24%">
+                                                <label class="slds-form-element__label">{!$Label.StageApproved}</label>
+                                            </td>
+                                            <td class="slds-cell-wrap padTop" width="3%">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">{!$Label.ApprovedStageHelp}</div>
+                                                    </div>
+                                                </div>                                   
+                                            </td>
+                                            <td class="slds-cell-wrap" width="23%">  
+                                                <div class="slds-select_container"><apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Payment_Accepted_Stage__c}" multiselect="false" size="1">
+                                                        <apex:selectOptions value="{!stageNames}"/>
+                                                    </apex:selectList>
+                                                </div>
+                                            </td>
+                                            <td class="slds-cell-wrap padTop" width="24%">
+                                                <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__updatestageifiatstransactionisapproved}"/>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="3%" style="padding-top:15px;">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">{!$Label.UpdateStageifiATSTransactionisApprovedHelp}</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="23%" style="text-align:left;padding-bottom: 21px;">
+                                                <label class="slds-checkbox">
+                                                    <apex:inputCheckbox value="{!settings.IATSPayment__Update_Stage_if_Payment_Accepted__c}" styleClass="slds-input"/>
+                                                    <span class="slds-checkbox--faux"></span>
+                                                </label>                                                
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr class="slds-hint-parent" width="100%">
+                                            <td class="slds-cell-wrap" width="24%">
+                                                <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__declinedstage}"/>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="3%">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">{!$Label.DeclinedStageHelp}</div>
+                                                    </div>
+                                                </div>
+                                                <!--<a href="#" class="tooltip">
+                                                    <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                    <span>
+                                                        This stage will be used if a virtual terminal transaction is rejected and the 'Update Stage if iATS Transaction is Rejected' field is checked.
+                                                    </span>
+                                                </a>-->
+                                            </td>
+
+                                            <td class="slds-cell-wrap" width="23%">  
+                                                <div class="slds-select_container">
+                                                    <apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Payment_Declined_Stage__c}" multiselect="false" size="1">
+                                                        <apex:selectOptions value="{!StageNames}"/>
+                                                    </apex:selectList>
+                                                </div>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="24%">
+                                                <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__updatestageifiatstransactionisrejected}"/> 
+                                            </td>
+                                            <td class="slds-cell-wrap" width="3%">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">{!$Label.UpdateStageifiATSTransactionisRejectedHelp}</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="23%" style="text-align:left;padding-bottom: 21px;">
+                                                <label class="slds-checkbox">
+                                                    <apex:inputCheckbox value="{!settings.IATSPayment__Update_Stage_if_Payment_Declined__c}" styleClass="slds-input"/>
+                                                    <span class="slds-checkbox--faux"></span>
+                                                </label>                                                
+                                            </td>
+                                        </tr>
+                                         
+                                        <tr class="slds-hint-parent" width="100%">
+                                            <td class="slds-cell-wrap"  width="24%">
+                                                <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__stageifiatstransactionispending}"/>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="3%">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">{!$Label.PendingStageHelp}</div>
+                                                    </div>
+                                                </div>
+                                                <!--<a href="#" class="tooltip">
+                                                    <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                    <span>
+                                                        If using a web donation form with Brickwork, this will be the stage that is set if the transaction is pending. This stage will also be used if a virtual terminal transaction is pending and the 'Update Stage if iATS Transaction is Pending' field is checked.
+                                                    </span>
+                                                </a>-->
+                                            </td>
+                                            <td class="slds-cell-wrap" width="23%">  
+                                                <div class="slds-select_container">
+                                                <apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Payment_Pending_Stage__c}" multiselect="false" size="1">
+                                                    <apex:selectOptions value="{!stageNames}"/>
+                                                </apex:selectList>
+                                                </div>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="24%">
+                                                <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__updatestageifiatstransactionispending}"/>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="3%">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">{!$Label.UpdateStageifiATSTransactionisPendingHelp}</div>
+                                                    </div>
+                                                </div>
+                                                <!--<a href="#" class="tooltip">
+                                                    <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                    <span>
+                                                        If checked, the stage will automatically update to the value in the 'Stage if iATS Transaction is Pending' field if a virtual terminal transaction is pending.
+                                                    </span>
+                                                </a>-->
+                                            </td>
+                                            <td class="slds-cell-wrap alignMiddle" style="text-align:left;padding-bottom: 22px;" width="23%">
+                                                <label class="slds-checkbox">
+                                                    <apex:inputCheckbox value="{!settings.IATSPayment__Update_Stage_If_Payment_is_Pending__c}" styleClass="slds-input"/>
+                                                    <span class="slds-checkbox--faux"></span>
+                                                </label>                                                
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr class="slds-hint-parent" width="100%">
+                                            <td class="slds-cell-wrap" width="24%">
+                                                <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__defaultopportunitycontactrole}"/>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="3%">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">{!$Label.DefaultOpportunityContactRoleHelp}</div>
+                                                    </div>
+                                                </div>
+                                                <!--<a href="#" class="tooltip">
+                                                    <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                    <span>
+                                                        If using a web donation form with Brickwork, please select the default Opportunity (Donation) Contact Role that should be assigned to the contact donor. Please note that this field should
+                                                        be set to '-none-' if using the Nonprofit Starter Pack (and the 'Enable Opportunity Contact Role Trigger' is checked) as this application will already create an opportunity contact role for the contact donor.
+                                                    </span>
+                                                </a>-->
+                                            </td>
+                                            <td class="slds-cell-wrap" width="23%">  
+                                                <div class="slds-select_container">
+                                                <apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Default_Opportunity_Contact_Role__c}" multiselect="false" size="1">
+                                                    <apex:selectOptions value="{!contactRoles}"/>
+                                                </apex:selectList>
+                                                </div>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="24%">
+                                                <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__donotautomaticallypopulatevirtualterminalwithamountfieldvalue}"/>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="3%">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">{!$Label.DoNotPopulateVTHelp}</div>
+                                                    </div>
+                                                </div>
+                                               <!-- <a href="#" class="tooltip">
+                                                    <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                    <span>
+                                                        The amount field on the virtual terminal will automatically populate with the amount of the opportunity (donation) record unless this field is checked.
+                                                        Only applicable for the Opportunity (donation) virtual terminal.
+                                                    </span>
+                                                </a>-->
+                                            </td>
+                                            <td class="slds-cell-wrap alignMiddle" style="text-align:left;padding-bottom: 22px;" width="23%">
+                                                <label class="slds-checkbox">
+                                                    <apex:inputCheckbox value="{!settings.IATSPayment__Do_Not_Automatically_Fill_Amount_Field__c}" styleClass="slds-input"/>
+                                                    <span class="slds-checkbox--faux"></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr class="slds-hint-parent" width="100%">
+                                            <td class="slds-cell-wrap" width="24%">
+                                                <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__donotcreateopportunityrecords}"/>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="3%">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">{!$Label.DoNotCreateOpportunityRecordsHelp}</div>
+                                                    </div>
+                                                </div>
+                                               <!-- <a href="#" class="tooltip">
+                                                    <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                    <span>
+                                                        Selecting this option will prevent Brickwork from automatically creating a related Opportunity (Donation) record for online Aura transactions and via the Download Journal. 
+                                                        Opportunity (Donation) records can still be created manually and via the iATS Virtual Terminal if desired. 
+                                                        It is highly recommended that Custom Field Mapping be utilized to receive all standard and custom data from the Aura Form as this information normally posts to an Opportunity (Donation) Record.
+                                                    </span>
+                                                </a>-->
+                                            </td>
+                                            <td class="slds-cell-wrap" style="text-align:left;padding-bottom: 23px;" width="23%">  
+                                                <label class="slds-checkbox">
+                                                    <apex:inputCheckbox value="{!settings.IATSPayment__Do_Not_Automatically_Create_Opp_Records__c}" styleClass="slds-input"/>
+                                                    <span class="slds-checkbox--faux"></span>
+                                                </label>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="24%">
+                                                <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__recurringpaymentsamountmethod}"/>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="3%">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">{!$Label.RecurringPaymentsAmountMethodHelp}</div>
+                                                    </div>
+                                                </div>
+                                                  <!--<a href="#" class="tooltip">
+                                                    <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                    <span>
+                                                        Determines how the Opportunity (Donation) amount field is populated when an opportunity record is created for an online Aura recurring payment transaction. If nothing is selected,
+                                                        defaults to 'Total Recurring Value Amount'.
+                                                    </span>
+                                                </a>-->
+                                            </td>
+                                            <td class="slds-cell-wrap" width="23%">
+                                                <div class="slds-select_container">
+                                                <apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__recurring_amount_method__c}" 
+                                                    multiselect="false" size="1">               
+                                                    <apex:selectOption itemLabel="{!$Label.iatspayment__none}" itemValue=""></apex:selectOption>                    
+                                                    <apex:selectOption itemLabel="{!$Label.iatspayment__recurringinstallmentamount}" itemValue="installment"></apex:selectOption> 
+                                                    <apex:selectOption itemLabel="{!$Label.iatspayment__totalrecurringvalueamount}" itemValue="total"></apex:selectOption>                                      
+                                                </apex:selectList> 
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Nonprofit Starter Pack Settings-->
+                        <div class="slds-section">
+                            <h3 class="slds-section__title">
+                                <a class="slds-button slds-section__title-action">
+                                    <svg aria-hidden="true" class="slds-section__title-action-icon slds-button__icon slds-button__icon--left">
+                                        <use xlink:href="{!$Resource.lightiningCSS}/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+                                    </svg>{!$Label.NonprofitStarterPackSettings}
+                                </a>
+                            </h3>
+                            <div class="slds-section__content">
+                                <apex:outputPanel id="nsps">
+                                <table class="slds-table slds-max-medium-table--stacked-horizontal">
+                                    <tr class="slds-hint-parent" width="100%">
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__nonprofitstarterpackdatamodel}"/>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="3%">
+                                            <div>
+                                                <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                  <div class="slds-popover__body">{!$Label.NonprofitStarterPackDataModelHelp}</div>
+                                                </div>
+                                            </div>
+                                            <!--<a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    If the Nonprofit Starter Pack is installed, which data model is being utilized?
+                                                </span>
+                                            </a>-->
+                                        </td>
+                                        <td class="slds-cell-wrap" width="23%">
+                                            <div class="slds-select_container">
+                                            <apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Nonprofit_Starter_Pack_Account_Model__c}" 
+                                                multiselect="false" size="1">
+                                            <apex:actionSupport event="onchange" rerender="contactssettings1"/>
+                                                <apex:selectOptions value="{!accountmodels}" />                      
+                                            </apex:selectList>
+                                            </div> 
+                                        </td>
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__recurringpaymentsmodel}">
+                                                <apex:actionStatus id="changeRecurring">
+                                                    <apex:facet name="start">
+                                                        &nbsp;&nbsp;<img src="/img/loading.gif" height="16" width="16" />
+                                                    </apex:facet>
+                                                </apex:actionStatus>
+                                            </apex:outputLabel>
+                                        </td>
+                                        <!--<td class="slds-cell-wrap slds-cell-shrink" style="visibility:hidden;">
+                                            <a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    If the Nonprofit Starter Pack is installed, which data model is being utilized?
+                                                </span>
+                                            </a>
+                                        </td>-->
+                                        <td class="slds-cell-wrap" width="26%" colspan="2">
+                                            <div class="slds-select_container">
+                                            <apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Recurring_Donation_Model__c}" 
+                                                multiselect="false" size="1"> 
+                                                <apex:actionSupport event="onchange" rerender="nsps" status="changeRecurring"/>
+                                                <apex:selectOption itemLabel="{!$Label.iatspayment__none}" itemValue=""></apex:selectOption>
+                                                <apex:selectOption itemLabel="{!$Label.iatspayment__opportunitydonationandpayments}" itemValue="oppsPayments"></apex:selectOption>         
+                                                <apex:selectOption itemLabel="{!$Label.iatspayment__recurringdonationsandopportunitiesdonations}" itemValue="recurringOpps"></apex:selectOption>                                                         
+                                            </apex:selectList>
+                                            </div>
+                                        </td>
+                                    </tr>
+                               
+                                <!--Row 2 Opportunity-->
+                                    <tr class="slds-hint-parent" style="display:{!if(settings.Recurring_Donation_Model__c = 'oppsPayments','','none')}" width="100%">
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__createscheduledpaymentrecords}">
+                                                <apex:actionStatus id="changeCreatePayments" >
+                                                    <apex:facet name="start">
+                                                        &nbsp;&nbsp;<img src="/img/loading.gif" height="16" width="16" />
+                                                    </apex:facet>
+                                                </apex:actionStatus>
+                                            </apex:outputLabel>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="3%">
+                                            <div>
+                                                <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                  <div class="slds-popover__body">{!$Label.CreateScheduledPaymentRecordsHelp}</div>
+                                                </div>
+                                            </div>
+                                            <!--<a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    If this field is checked, future Payment records will be created based on the 
+                                                    'Begin Date' and 'End Date' field values submitted via Aura to Brickwork 
+                                                    or via the virtual terminal.
+                                                </span>
+                                            </a>-->
+                                        </td>
+                                        <td class="slds-cell-wrap" style="padding-top: 11px;" width="23%">
+                                            <label class="slds-checkbox">
+                                                <apex:inputcheckbox value="{!settings.IATSPayment__Create_Scheduled_Payment_Records__c}" styleClass="slds-checkbox">
+                                                    <apex:actionsupport event="onchange" rerender="nsps" status="changeCreatePayments"/> 
+                                                </apex:inputcheckbox>
+                                                <span class="slds-checkbox--faux"></span>
+                                            </label>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__iatsrecurringpaymentsdatechangeaction}"/>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="3%">
+                                            <div>
+                                                <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                  <div class="slds-popover__body">{!$Label.iATSRecurringPaymentsDateChangeActionHelp}</div>
+                                                </div>
+                                            </div>
+                                            <!--<a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    This field determines what action should occur if the begin date or end date values are modified via the virtual terminal.
+                                                </span>
+                                            </a>-->
+                                        </td>
+                                        <td class="slds-cell-wrap" width="23%">
+                                            <div class="slds-select_container">
+                                                <apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Rec_Payments_Date_Change_Action_OP__c}" 
+                                                    multiselect="false" size="1" disabled="{!settings.IATSPayment__Create_Scheduled_Payment_Records__c == false}">         
+                                                <apex:selectOption itemLabel="{!$Label.iatspayment__none}" itemValue=""></apex:selectOption>                   
+                                                <apex:selectOption itemLabel="{!$Label.iatspayment__paymentcreation}" itemValue="create"></apex:selectOption> 
+                                                <apex:selectOption itemLabel="{!$Label.iatspayment__paymentcreationanddelete}" itemValue="createdelete"></apex:selectOption>
+                                                <apex:selectOption itemLabel="{!$Label.iatspayment__paymentcreationandwriteoff}" itemValue="createupdate"></apex:selectOption>
+                                                </apex:selectList>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <!--Row 3 Opportunity-->
+                                    <tr class="slds-hint-parent" style="display:{!if(settings.Recurring_Donation_Model__c = 'oppsPayments','','none')}" width="100%">
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__updaterejectedtransactionpaymenttowrittenoff}"/>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="3%">
+                                            <div>
+                                                <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                  <div class="slds-popover__body">{!$Label.UpdateRejectedTransactionPaymenttoWrittenOffHelp}</div>
+                                                </div>
+                                            </div>
+                                            <!--<a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    Check the payment 'Written Off' checkbox when a related iATS Transaction is rejected.
+                                                </span>
+                                            </a>-->
+                                        </td>
+                                        <td class="slds-cell-wrap" style="text-align:left;padding-top: 11px;" width="23%">
+                                            <label class="slds-checkbox">
+                                                <apex:inputCheckbox value="{!settings.IATSPayment__Update_Payments_Written_Off__c}" styleClass="slds-input" disabled="{!settings.IATSPayment__Create_Scheduled_Payment_Records__c == false}"/>
+                                                <span class="slds-checkbox--faux"></span>
+                                            </label>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__scheduledpaymentrecordslimit}"/>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="3%">
+                                            <div>
+                                                <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                  <div class="slds-popover__body">{!$Label.ScheduledPaymentRecordsLimitHelp}</div>
+                                                </div>
+                                            </div>
+                                            <!--<a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    This field determines the limit type on the number of scheduled Payment records that are created.
+                                                </span>
+                                            </a>-->
+                                        </td>
+                                        <td style="padding-top: 0px;" class="slds-cell-wrap" width="24%">
+                                            <table>
+                                            <tr>
+                                            <td style="padding-right:0px;padding-left:0px;">
+                                            <apex:outputPanel styleClass="requiredInput" layout="block">  
+                                                <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                                <div class="slds-select_container">
+                                                    <apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Scheduled_Payment_Records_Limit__c}"
+                                                        multiselect="false" size="1" disabled="{!settings.IATSPayment__Create_Scheduled_Payment_Records__c == false}">         
+                                                        <apex:selectOption itemLabel="{!$Label.iatspayment__none}" itemValue=""></apex:selectOption>                    
+                                                        <apex:selectOption itemLabel="{!$Label.iatspayment__timeperiodlimit}" itemValue="time"></apex:selectOption> 
+                                                        <apex:selectOption itemLabel="{!$Label.iatspayment__numberofpaymentrecordslimit}" itemValue="number"></apex:selectOption>                                        
+                                                    </apex:selectList>
+                                                </div>
+                                            </apex:outputPanel>
+                                            </td>
+                                            <td style="padding-right:0px;padding-left:5px;vertical-align: middle;"><abbr style="color:red;" class="required" title="required">*</abbr></td>
+                                            </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    
+                                    <!--Row 4 Opportunity-->
+                                    <tr class="slds-hint-parent" style="display:{!if(settings.Recurring_Donation_Model__c = 'oppsPayments','','none')}" width="100%">
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__donotcreatepastrecurringpayments}"/>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="3%">
+                                            <div>
+                                                <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                  <div class="slds-popover__body">{!$Label.DoNotCreatePastRecurringPaymentsHelp}</div>
+                                                </div>
+                                            </div>
+                                            <!--<a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    Prevents past recurring Payment records from automatically being created.
+                                                </span>
+                                            </a>-->
+                                        </td>
+                                        <td class="slds-cell-wrap" style="text-align:left;padding-top: 11px;" width="23%">
+                                            <label class="slds-checkbox">
+                                                <apex:inputCheckbox value="{!settings.IATSPayment__Do_Not_Create_Past_Payments__c}" styleClass="slds-input" disabled="{!settings.IATSPayment__Create_Scheduled_Payment_Records__c == false}"/>
+                                                <span class="slds-checkbox--faux"></span>
+                                            </label>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__limit}"/>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="3%">
+                                            <div>
+                                                <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                  <div class="slds-popover__body">{!$Label.LimitHelp}</div>
+                                                </div>
+                                            </div>
+                                            <!--<a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    This field is utilized to set the number of months for the 'Time Period Limit' or the number of Payment records for the 'Number of Payment Records Limit'. More than 50 payments may result in errors.
+                                                </span>
+                                            </a>-->
+                                        </td>
+                                        <td style="padding-top: 0px;" class="slds-cell-wrap" width="23%">
+                                            <table>
+                                            <tr>
+                                            <td style="padding-right:0px;padding-left:0px;">
+                                                <apex:outputPanel styleClass="requiredInput" layout="block">  
+                                                <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                                <apex:inputText styleClass="slds-input" value="{!settings.IATSPayment__Limit_OP__c}" disabled="{!settings.IATSPayment__Create_Scheduled_Payment_Records__c == false}"/>
+                                                </apex:outputPanel>
+                                            </td>
+                                            <td style="padding-right:0px;padding-left:5px;vertical-align: middle;"><abbr style="color:red;" class="required" title="required">*</abbr></td>
+                                            </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    
+                                     <!--Row 2 Recurring-->
+                                    <tr class="slds-hint-parent" style="display:{!if(settings.Recurring_Donation_Model__c = 'recurringOpps','','none')}" width="100%">
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__iatsrecurringpaymentsdatechangeaction}"/>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="3%">
+                                            <div>
+                                                <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                  <div class="slds-popover__body">{!$Label.IATSRecurringPaymentsDateChangeActionHelp}</div>
+                                                </div>
+                                            </div>
+                                            <!--<a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    This field determines what action should occur if the begin date or end date values are modified via the virtual terminal.
+                                                </span>
+                                            </a>-->
+                                        </td>
+                                        <td class="slds-cell-wrap" width="23%">
+                                            <div class="slds-select_container">
+                                                <apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Rec_Payments_Date_Change_Action_RO__c}" 
+                                                    multiselect="false" size="1">         
+                                                <apex:selectOption itemLabel="{!$Label.iatspayment__none}" itemValue=""></apex:selectOption>                    
+                                                <apex:selectOption itemLabel="{!$Label.iatspayment__opportunitycreation}" itemValue="create"></apex:selectOption> 
+                                                <apex:selectOption itemLabel="{!$Label.iatspayment__opportunitycreationanddelete}" itemValue="createdelete"></apex:selectOption>
+                                                <apex:selectOption itemLabel="{!$Label.iatspayment__opportunitycreationandsettoclosedlost}" itemValue="createupdate"></apex:selectOption>                                         
+                                            </apex:selectList>
+                                            </div>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__prepopulatedvirtualterminalrecurringfields}"/>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="3%">
+                                            <div>
+                                                <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                  <div class="slds-popover__body">{!$Label.PrepopulatedVirtualTerminalRecurringFieldsHelp}</div>
+                                                </div>
+                                            </div>
+                                            <!--<a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    This field determines if the fields on the 'recurring payment' section of the virtual terminal are pre-populated based on the related fields of the related recurring donation record.
+                                                </span>
+                                            </a>-->
+                                        </td>
+                                        <td class="slds-cell-wrap" style="text-align:left;padding-top: 11px;" width="23%">
+                                            <label class="slds-checkbox">
+                                                <apex:inputCheckbox value="{!settings.IATSPayment__Pre_populate_Virtual_Terminal_Recurring__c}" styleClass="slds-input"/>
+                                                <span class="slds-checkbox--faux"></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    
+                                    <!--Row 3 Recurring-->
+                                    <tr class="slds-hint-parent" style="display:{!if(settings.Recurring_Donation_Model__c = 'recurringOpps','','none')}" width="100%">
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__openendedstatus}"/>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="3%">
+                                            <div>
+                                                <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                  <div class="slds-popover__body">{!$Label.OpenEndedStatusHelp}</div>
+                                                </div>
+                                            </div>
+                                            <!--<a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    Default value for the recurring donation 'Open Ended Status' field when a recurring donation is created via an aura online donation.
+                                                </span>
+                                            </a>-->
+                                        </td>
+                                        <td class="slds-cell-wrap" width="23%">
+                                            <div class="slds-select_container">
+                                                <apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__recurring_Donations_Open_Ended_Status__c}" 
+                                                    multiselect="false" size="1">    
+                                                    <apex:selectOptions value="{!OpenStatusValues}"/>                                               
+                                                </apex:selectList>
+                                            </div>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__additionalsettings}"/>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="3%">
+                                            <div>
+                                                <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                  <div class="slds-popover__body">{!$Label.AdditionalSettingsHelp}</div>
+                                                </div>
+                                            </div>
+                                            <!--<a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    Additional settings for the Recurring Donations package (will open in new browser tab or window).
+                                                </span>
+                                            </a>-->
+                                        </td>
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <a href="/apex/npe03__RecurringDonationsSettings" target="_blank">
+                                            {!$Label.RecurringDonationsSettings}
+                                        </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                        
+                        <!--Contact Match Settings-->
+                        <div class="slds-section">
+                            <h3 class="slds-section__title">
+                                <a class="slds-button slds-section__title-action">
+                                    <svg aria-hidden="true" class="slds-section__title-action-icon slds-button__icon slds-button__icon--left">
+                                        <use xlink:href="{!$Resource.lightiningCSS}/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+                                    </svg>{!$Label.ContactMatchSettings}
+                                </a>
+                            </h3>
+                            <div class="slds-section__content">
+                                <apex:outputPanel id="pbsContactMatching">
+                                    <!--Row 1-->
+                                    
+                                    <table class="slds-table slds-max-medium-table--stacked-horizontal">
+                                        <tr class="slds-hint-parent" width="100%">
+                                            <td class="slds-cell-wrap" width="24%" style="vertical-align:top;">
+                                                <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__contactmatchtype}"/>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="3%" style="vertical-align:top;">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">{!$Label.contactMatchTypeHelp}</div>
+                                                    </div>
+                                                </div>
+                                               <!-- <a href="#" class="tooltip">
+                                                    <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                    <span>
+                                                        Basic option: Matches against any email type field.
+                                                        Standard option: Matches against the standard First Name AND Last Name fields AND (any email OR phone type) fields.
+                                                        Advanced option: Matches based on logic selected via the Advanced Logic‚section. Includes all Standard and Custom fields on the Contact record.
+                                                    </span>
+                                                </a>-->
+                                            </td>
+                                            <td class="slds-cell-wrap" colspan="4" width="{!if(settings.Contact_Match_Type__c!='Advanced','73%','23%')}" style="vertical-align: top;">
+                                                <apex:outputPanel >
+                                                    <div class="slds-select_container">
+                                                    <apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Contact_Match_Type__c}" multiselect="false" size="1" id="brickworkOptions" 
+                                                        onChange="changeContactMatch(this);">
+                                                        <apex:selectOptions value="{!MatchOptions}"/>
+                                                    </apex:selectList>
+                                                    </div>
+                                                    <apex:actionStatus id="changeContactMatch">
+                                                        <apex:facet name="start">
+                                                            &nbsp;&nbsp;<img style="padding-left:10px;" src="/img/loading.gif" />
+                                                        </apex:facet>
+                                                    </apex:actionStatus>
+                                                    <apex:outputPanel id="NoneDescription" style="color:red;" 
+                                                        rendered="{!settings.IATSPayment__Contact_Match_Type__c == 'None'}">
+                                                    <br/>
+                                                        {!$Label.iatspayment__contactmatchtypewarning}
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="7%" style="display:{!if(settings.Contact_Match_Type__c == 'Advanced','','none')};vertical-align:top;">
+                                                <apex:outputlabel styleClass="slds-form-element__label" value="Advanced Logic" />
+                                            </td>
+                                            <td class="slds-cell-wrap" width="3%" style="display:{!if(settings.Contact_Match_Type__c == 'Advanced','','none')};vertical-align:top;">
+                                                 <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">{!$Label.AdvancedLogicHelp}</div>
+                                                    </div>
+                                                </div>
+                                                <!--<a href="#" class="tooltip">
+                                                    <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                    <span>
+                                                        To change the default AND relationship between each filter: 
+                                                        Click Add | Filter Logic.  
+                                                        Enter each filter line number, separated by an operator:         
+                                                        AND Finds records that match both values. 
+                                                        OR  Finds records that match either value.                
+                                                        An expression‚Äôs syntax can affect filtering results.     
+                                                        Example: (1 AND 2) OR 3 
+                                                        Description: Finds records that match both the first two filter lines or the third. Use this expression with the following filter conditions:
+                                                        Example: 1 AND (2 OR 3) 
+                                                        Description: Finds records that match both the first filter line and either of the last two.
+                                                        You can enter filter line numbers in any order. For example, 3 OR (1 AND 2) has the same meaning as (1 AND 2) OR 3.
+                                                    </span>
+                                                </a>-->
+                                            </td>
+                                            <td class="slds-cell-wrap" width="40%" style="display:{!if(settings.Contact_Match_Type__c == 'Advanced','','none')}">
+                                               <apex:outputPanel >
+                                                <table border="0" cellpadding="3" cellspacing="0">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>&nbsp;</th>
+                                                        <th>{!$Label.AuraField}</th>
+                                                        <th>&nbsp;</th>
+                                                        <th>{!$Label.ContactField}</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <apex:variable value="{!1}" var="i"/>
+                                                    <apex:repeat id="rptFilterLogic" value="{!logicList}" var="a">
+                                                        <tr>
+                                                            <td style="vertical-align:middle;">
+                                                                <apex:outputText value="{0, number, integer}" style="padding-right:3px;">
+                                                                    <apex:param value="{!i}"/>
+                                                                </apex:outputText>
+                                                            </td>
+                                                            <td>
+                                                                <div class="slds-select_container">
+                                                                <apex:selectList styleClass="slds-select" value="{!a.brickworkField}" size="1" multiselect="false" id="brickworkOptions">
+                                                                    <apex:selectOptions value="{!brickworkOptions}"/>
+                                                                </apex:selectList>
+                                                                </div>
+                                                            </td>
+                                                            <td style="vertical-align:middle;">
+                                                                equals
+                                                            </td>
+                                                            <td>
+                                                                <div class="slds-select_container">
+                                                                <apex:selectList styleClass="slds-select" value="{!a.sfField}" size="1" id="contactFieldOptions">
+                                                                    <apex:selectOptions value="{!ContactFields}"/>
+                                                                </apex:selectList>
+                                                                </div>
+                                                            </td>
+                                                            <apex:variable value="{!i+1}" var="i"/>
+                                                        </tr>
+                                                    </apex:repeat>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <table border="0" cellpadding="3" cellspacing="0" width="100%">
+                                                                <tr>
+                                                                    <td style="vertical-align:middle;" width="13%">
+                                                                        <apex:commandLink id="cmdlnkaddRow" status="addRowStatus" action="{!addAnotherRow}" value="Add Row" rendered="{!IF(logicList.size == 10,false,true)}" reRender="pbsContactMatching" oncomplete="SetFilterTextOnAdd();return false;" />
+                                                                        <apex:outputText value="Add Row" rendered="{!IF(logicList.size == 10,true,false)}" ></apex:outputText>
+                                                                    </td>
+                                                                    <td width="7%">
+                                                                        <apex:actionStatus id="addRowStatus">
+                                                                            <apex:facet name="start">
+                                                                                &nbsp;&nbsp;<img src="/img/loading.gif" height="16" width="16" />
+                                                                            </apex:facet>
+                                                                        </apex:actionStatus>
+                                                                    </td>
+                                                                    <td style="vertical-align:middle;" width="20%">
+                                                                        <apex:commandLink id="cmdlnkremoverow" status="removeRowStatus" action="{!removeLastRow}" value="Remove Row" rendered="{!IF(logicList.size > 3 ,true,false)}"  reRender="pbsContactMatching" oncomplete="SetFilterTextOnRemove();return false;" />
+                                                                        <apex:outputText value="Remove Row" rendered="{!IF(logicList.size > 3 ,false,true)}" ></apex:outputText>
+                                                                    </td>
+                                                                    <td width="60%">
+                                                                        <apex:actionStatus id="removeRowStatus">
+                                                                            <apex:facet name="start">
+                                                                                &nbsp;&nbsp;<img src="/img/loading.gif" height="16" width="16" />
+                                                                            </apex:facet>
+                                                                        </apex:actionStatus>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="4" width="100%">
+                                                                        <apex:commandLink id="cmdlnkfilterlogic" status="addFilterLogic" value="{!IF(blnShowFilterFlag == true,'Clear Filter Logic','Add Filter Logic')}" reRender="pbsContactMatching" action="{!showHideAddFilterLogic}" oncomplete="showFilterText('{!$Component.cmdlnkfilterlogic}');return false;" />
+                                                                        <apex:actionStatus id="addFilterLogic">
+                                                                            <apex:facet name="start">
+                                                                                &nbsp;&nbsp;<img src="/img/loading.gif" height="16" width="16" />
+                                                                            </apex:facet>
+                                                                        </apex:actionStatus>                                             
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="4">
+                                                                        <apex:outputText id="lblFilterLogic" value="Filter Logic:" style="display:{!if(blnShowFilterFlag == true,'','none')};width:100%;"></apex:outputText>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="4">
+                                                                        <apex:inputText styleClass="slds-input" value="{!settings.IATSPayment__Contact_Match_Logic__c}" id="txtFilterLogic" style="display:{!if(blnShowFilterFlag == true,'','none')};width:100%;" />
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </apex:outputPanel>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                        
+                        <!--Aura Field Mapping Section -->
+                        
+                        <div class="slds-section">
+                            <h3 class="slds-section__title">
+                                <a class="slds-button slds-section__title-action">
+                                    <svg aria-hidden="true" class="slds-section__title-action-icon slds-button__icon slds-button__icon--left">
+                                        <use xlink:href="{!$Resource.lightiningCSS}/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+                                    </svg>{!$Label.AuraFieldMapping}
+                                </a>
+                            </h3>
+                            <div class="slds-section__content">
+                                <apex:outputPanel id="auraFieldMapping">
+                                    <table class="slds-table slds-max-medium-table--stacked-horizontal">
+                                        <tr class="slds-hint-parent" width="100%">
+                                            <td class="slds-cell-wrap" width="24%">
+                                                <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__accountname}" for="accountNameList"/>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="26%">
+                                                <apex:outputPanel >
+                                                    <div class="slds-select_container">
+                                                        <apex:selectList styleClass="slds-select" value="{!IATSAccountId}" size="1" id="accountNameList" onchange="callAuraEvent();">
+                                                            <apex:selectOptions value="{!ClientCodeOptions}"/>
+                                                        </apex:selectList>
+                                                    </div>
+                                                    <apex:actionStatus id="changeStatus">
+                                                        <apex:facet name="start">
+                                                            &nbsp;&nbsp;<img src="/img/loading.gif" height="16" width="16" />
+                                                        </apex:facet>
+                                                     </apex:actionStatus>
+                                                </apex:outputPanel>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="24%">
+                                                <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__auraevent}" for="eventList"/>
+                                            </td>
+                                            <td class="slds-cell-wrap" width="26%">
+                                                <apex:outputPanel id="opEventList" >
+                                                    <div class="slds-select_container">
+                                                        <apex:selectList styleClass="slds-select" value="{!strAuraSetup}" size="1" id="eventList" onchange="callBrickWorkField();" style="width: 100%;">
+                                                            <apex:selectOptions value="{!lstSeloptAurasetup}" />
+                                                            <!--<apex:actionSupport event="onchange" status="changeStatusAura" reRender="BrickworkFieldList"/>-->
+                                                        </apex:selectList>
+                                                    </div>
+                                                    <apex:actionStatus id="changeStatusAura">
+                                                        <apex:facet name="start">
+                                                            &nbsp;&nbsp;<img src="/img/loading.gif" height="16" width="16" />
+                                                        </apex:facet>
+                                                     </apex:actionStatus>                       
+                                                </apex:outputPanel>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr class="slds-hint-parent">
+                                            <td class="slds-cell-wrap slds-cell-shrink" width="100%" colspan="4">
+                                                <apex:outputPanel id="opWrpHeader">
+                                                <apex:outputPanel id="opHeader" rendered="{!IsShowAuraMapping}">
+                                                <table width="100%" class="slds-table slds-max-medium-table--stacked-horizontal">
+                                                    <tr class="slds-hint-parent">
+                                                        <th class="slds-cell-wrap" width="5%" style="vertical-align:middle;">&nbsp;</th>
+                                                        <th class="slds-cell-wrap" width="25%" style="vertical-align:middle;text-align:center;">{!$Label.AuraField}</th>
+                                                        <th class="slds-cell-wrap" width="25%" style="vertical-align:middle;text-align:center;">{!$Label.Object}</th>
+                                                        <th class="slds-cell-wrap" width="25%" style="vertical-align:middle;text-align:center;">{!$Label.mapField}</th> 
+                                                        <th class="slds-cell-wrap" width="20%" style="vertical-align:middle;text-align:left;padding-left: 3%;">{!$Label.DoNotUpdateIfBlank}</th>
+                                                        <!--<th class="slds-cell-wrap" width="10%" style="vertical-align:middle;">&nbsp;</th>
+                                                        <th class="slds-cell-wrap" width="5%" style="vertical-align:middle;">&nbsp;</th>-->
+                                                    </tr>
+                                                </table>
+                                                </apex:outputPanel>
+                                                </apex:outputPanel>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr class="slds-hint-parent">
+                                            <td class="slds-cell-wrap" colspan="4">
+                                                <apex:outputPanel id="opWrpAuraFields">
+                                                <apex:outputPanel id="OpnlAuraFields" rendered="{!IsShowAuraMapping}">
+                                                    <table width="100%" class="slds-table slds-max-medium-table--stacked-horizontal">                           
+                                                    <apex:variable value="{!0}" var="varCount"/>
+                                                    <apex:repeat id="reptAuraFields" value="{!lstAuraSetup}" var="arSetup">
+                                                        <tr class="slds-hint-parent">
+                                                            <td width="5%" class="slds-cell-wrap">
+                                                                <apex:image id="imgLoadingChange" url="/img/loading.gif" value="/img/loading.gif" width="16" height="16" style="display:none;"/>
+                                                            </td>
+                                                            <td width="25%" class="slds-cell-wrap">
+                                                                <div class="slds-select_container">
+                                                                 <apex:selectList styleClass="slds-select" value="{!arSetup.BrickworkFields}" size="1" id="BrickworkFieldList">
+                                                                    <apex:selectOptions value="{!lstSeloptBrickWorkField}"/>                                                                                                
+                                                                </apex:selectList>
+                                                                </div>
+                                                            </td>
+                                                            <td width="25%" class="slds-cell-wrap">
+                                                                <apex:actionRegion >
+                                                                    <div class="slds-select_container">
+                                                                    <apex:selectList styleClass="slds-select" id="objectNameList" value="{!arSetup.ObjectName}" onchange="getFieldList(this.value,{!varCount});" size="1">
+                                                                        <apex:selectOptions value="{!Objectoptions}"/>
+                                                                    </apex:selectList>
+                                                                    </div>
+                                                               </apex:actionRegion>
+                                                            </td>
+                                                          
+                                                            <td width="25%" class="slds-cell-wrap">
+                                                                <apex:outputpanel id="opFieldList">
+                                                                    <div class="slds-select_container">
+                                                                    <apex:selectList styleClass="slds-select" value="{!arSetup.ObjectFieldName}" size="1" id="objectFieldList">
+                                                                        <apex:selectOptions value="{!arSetup.lstObjFieldOption}"/>  
+                                                                    </apex:selectList>
+                                                                    </div>
+                                                                </apex:outputpanel>
+                                                            </td>
+                                                            <td width="10%" class="slds-cell-wrap alignMiddle" style="text-align:center;">
+                                                                <label class="slds-checkbox">
+                                                                    <apex:inputCheckbox id="ipcUpdateBlank" value="{!arSetup.blnIsUpdateBlank}" styleClass="slds-input"/>
+                                                                    <span class="slds-checkbox--faux"></span>
+                                                                </label>
+                                                            </td>
+                                                            <td width="5%" class="slds-cell-wrap" style="vertical-align: middle;" align="center">
+                                                                <apex:commandLink id="cmdlnkDeleteRow" value="{!$Label.iatspayment__delete}" style="font-weight:bold;" onclick="getRowCount({!varCount});return false;"/>
+                                                            </td>
+                                                            <td width="5%" class="slds-cell-wrap">
+                                                                <apex:image id="imgLoadingDelete" url="/img/loading.gif" value="/img/loading.gif" width="16" height="16" style="display:none;"/>                                    
+                                                            </td>
+                                                            <apex:variable value="{!varCount+1}" var="varCount"/> 
+                                                        </tr>
+                                                        </apex:repeat>
+                                                    </table>
+                                                    <table width="100%" class="slds-table slds-max-medium-table--stacked-horizontal">
+                                                        <tr class="slds-hint-parent">
+                                                            <td class="slds-cell-wrap" height="20px" align="center" width="15%" style="vertical-align: middle;">
+                                                                <apex:commandLink id="cmdlnkaddFieldRow" status="AddStatus" action="{!addFieldsRow}" value="{!$Label.iatspayment__add}" style="font-weight:bold;" reRender="auraFieldMapping" rendered="{!IF(lstAuraSetup.size == 25,false,true)}"/>
+                                                            </td>
+                                                            <td class="slds-cell-wrap" height="20px" style="vertical-align: middle;">
+                                                                <apex:actionStatus id="AddStatus">
+                                                                    <apex:facet name="start">
+                                                                        &nbsp;&nbsp;<img src="/img/loading.gif" height="16" width="16" />
+                                                                    </apex:facet>
+                                                                </apex:actionStatus>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </apex:outputPanel>
+                                            </apex:outputPanel>
+                                            </td>
+                                        </tr>
+                                     </table>   
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                        
+                        <!--Virtual Terminal Settings-->
+                        <div class="slds-section">
+                            <h3 class="slds-section__title">
+                                <a class="slds-button slds-section__title-action">
+                                    <svg aria-hidden="true" class="slds-section__title-action-icon slds-button__icon slds-button__icon--left">
+                                        <use xlink:href="{!$Resource.lightiningCSS}/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+                                    </svg>{!$Label.VirtualTerminalSettings}
+                                </a>
+                            </h3>
+                            <div class="slds-section__content">
+                                <table class="slds-table slds-max-medium-table--stacked-horizontal">
+                                    <tr class="slds-hint-parent" width="100%">
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__defaultcreditcardentrymode}" for="defaultCCentryMode"/>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="3%">
+                                            <div>
+                                                <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                  <div class="slds-popover__body">{!$Label.DefaultCreditCardEntryModeHelp}</div>
+                                                </div>
+                                            </div>
+                                            <!--<a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    The default value of the 'Credit Card Entry Mode' field on the virtual terminal.
+                                                </span>
+                                            </a>-->
+                                        </td>
+                                        <td class="slds-cell-wrap" width="23%">
+                                            <div class="slds-select_container">
+                                                <apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Default_Payment_Entry_Mode__c}" size="1" id="defaultCCentryMode">
+                                                <apex:selectOptions value="{!DefaultCardSwipeOptions}"/>
+                                                </apex:selectList>
+                                            </div>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__selectcreatenewdonationbydefault}" for="defaultCreateNewDonation"></apex:outputLabel>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="3%">
+                                            <div>
+                                                <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                  <div class="slds-popover__body">{!$Label.SelectCreatenewDonationbyDefaultHelp}</div>
+                                                </div>
+                                            </div>
+                                            <!--<a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    The default value of the 'Create New Donation' field on the virtual terminal.
+                                                </span>
+                                            </a>-->
+                                        </td>
+                                        <td class="slds-cell-wrap" style="text-align:left;padding-top: 11px;" width="23%">
+                                            <label class="slds-checkbox">
+                                                <apex:inputCheckbox value="{!settings.IATSPayment__Default_Create_New_Donation__c}" styleClass="slds-input"/>
+                                                <span class="slds-checkbox--faux"></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!--Additional Settings-->
+                        <div class="slds-section">
+                            <h3 class="slds-section__title">
+                                <a class="slds-button slds-section__title-action">
+                                    <svg aria-hidden="true" class="slds-section__title-action-icon slds-button__icon slds-button__icon--left">
+                                        <use xlink:href="{!$Resource.lightiningCSS}/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+                                    </svg>{!$Label.iatspayment__additionalsettings}
+                                </a>
+                            </h3>
+                            <div class="slds-section__content">
+                                <table class="slds-table slds-max-medium-table--stacked-horizontal">
+                                    <tr class="slds-hint-parent" width="100%">
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label" >{!$Label.iatspayment__notificationemail}</apex:outputLabel>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="3%">
+                                            <div>
+                                                <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                  <div class="slds-popover__body">{!$Label.NotificationEmailHelp}</div>
+                                                </div>
+                                            </div>
+                                            <!--<a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    Email address to receive Brickwork notifications.
+                                                </span>
+                                            </a>-->
+                                        </td>
+                                        <td class="slds-cell-wrap" width="23%">
+                                            <apex:inputField styleClass="slds-input" value="{!settings.IATSPayment__Notification_Email__c}"/>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="24%">
+                                            <apex:outputlabel styleClass="slds-form-element__label">{!$Label.iatspayment__nightlybatchdownloadnotification}</apex:outputLabel>
+                                        </td>
+                                        <td class="slds-cell-wrap" width="3%">
+                                            <div>
+                                                <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                  <div class="slds-popover__body">{!$Label.NightlyBatchDownloadNotificationHelp}</div>
+                                                </div>
+                                            </div>
+                                            <!--<a href="#" class="tooltip">
+                                                <img src="{!URLFOR($Resource.Help_Light_Orange)}" onmouseover="this.src='{!URLFOR($Resource.Help_Orange)}'" onmouseout="this.src='{!URLFOR($Resource.Help_Light_Orange)}'" style="height:13px"/>
+                                                <span>
+                                                    Receive status notifications via email for scheduled nightly batch transaction downloads. Please note that notifications will always be sent if errors occur during the downloads.
+                                                </span>
+                                            </a>-->
+                                            <!--<img src="/s.gif" Class="imgclass" title="Receive status notifications via email for scheduled nightly batch transaction downloads. Please note that notifications will always be sent if errors occur during the downloads." />-->
+                                        </td>
+                                        <td class="slds-cell-wrap" style="text-align:left;padding-top: 11px;" width="23%">
+                                            <label class="slds-checkbox">
+                                                <apex:inputCheckbox value="{!settings.IATSPayment__Nightly_Batch_Download_Notification__c}" styleClass="slds-input"/>
+                                                <span class="slds-checkbox--faux"></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="columns large-12">
+                                <table class="slds-table slds-max-medium-table--stacked-horizontal">
+                                    <tr class="slds-hint-parent">
+                                        <td class="slds-cell-wrap slds-cell-shrink" style="text-align:center;">
+                                            <input type="button" class="slds-button slds-button--brand slds-button--small" onclick="updateSetting();" value="{!$Label.UpdatetheSettings}"/>
+                                            <!--<apex:commandButton id="updatesettingsbutton" action="{!updateSettings}" value="Update the Settings" styleClass="button"/>-->
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                </fieldset>
+        
+        
+        <!--Batch Download Transactions-->
+        
+        <fieldset class="slds-box slds-theme--default slds-container" style="margin-top: 1%;">
+            <legend class="slds-text-heading--medium slds-p-vertical--medium">{!$Label.BatchDownloadTransactions}</legend>
+            <div class="slds-section">
+                <!--<h3 class="slds-section__title">
+                    <a class="slds-button slds-section__title-action">
+                        <svg aria-hidden="true" class="slds-section__title-action-icon slds-button__icon slds-button__icon--left">
+                            <use xlink:href="{!$Resource.lightiningCSS}/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+                        </svg>Transactions
+                    </a>
+                </h3>-->
+                <div class="slds-section__content" id="dvbatch">
+                    <table class="slds-table slds-max-medium-table--stacked-horizontal">
+                        <tr class="slds-hint-parent">
+                            <td colspan="4" class="slds-cell-wrap slds-cell-shrink">
+                                <p>
+                                    {!$Label.BatchDownloadTransactionsText}
+                                </p>
+                            </td>
+                        </tr>
+                        <tr class="slds-hint-parent">
+                            <td class="slds-cell-wrap slds-cell-shrink">
+                                <abbr style="color:red;">*</abbr>&nbsp;
+                                <apex:outputLabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__begindate}" for="processBeginDate"/>
+                            </td>
+                            <td class="slds-cell-wrap slds-cell-shrink">
+                                <apex:outputPanel layout="block" styleClass="requiredInput">
+                                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control" style="width:200px;">
+                                            <div class="slds-input-has-icon slds-input-has-icon--right">
+                                                <svg aria-hidden="true" class="slds-input__icon slds-icon-text-default">
+                                                    <use xlink:href="{!URLFOR($Resource.lightiningCSS, '/assets/icons/utility-sprite/svg/symbols.svg#event')}"></use>
+                                                </svg> 
+                                                <apex:inputField styleClass="slds-input clsDateApply" value="{!processBeginDateOppHolder.closeDate}" id="processBeginDate" required="false"/>
+                                                
+                                            </div>
+                                        </div>
+                                        <!--<span id="SelectedDate"></span>-->
+                                    </div>
+                                    <!--<input type="date" value="{!processBeginDateOppHolder.closeDate}" id="processBeginDate"/>-->
+                                </apex:outputPanel>
+                            </td>
+                            <td class="slds-cell-wrap slds-cell-shrink">
+                                <abbr style="color:red;">*</abbr>&nbsp;
+                                <apex:outputlabel styleClass="slds-form-element__label" value="{!$Label.iatspayment__enddate}" for="processEndDate"/>
+                            </td>
+                            <td class="slds-cell-wrap slds-cell-shrink">
+                                <apex:outputPanel layout="block" styleClass="requiredInput">
+                                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control" style="width:200px;">
+                                            <div class="slds-input-has-icon slds-input-has-icon--right">
+                                                <svg aria-hidden="true" class="slds-input__icon slds-icon-text-default">
+                                                    <use xlink:href="{!URLFOR($Resource.lightiningCSS, '/assets/icons/utility-sprite/svg/symbols.svg#event')}"></use>
+                                                </svg>
+                                                <apex:inputField styleClass="slds-input clsDateApply" value="{!processEndDateOppHolder.closeDate}" id="processEndDate" required="false"/>
+                                            </div>
+                                        </div>
+                                        <!--<span id="SelectedDate"></span>-->
+                                    </div>
+                                    <!--<input type="date" value="{!processEndDateOppHolder.closeDate}" id="processEndDate"/>-->
+                                </apex:outputPanel>
+                            </td>
+                        </tr>
+                        <tr class="slds-hint-parent">
+                             <td class="slds-cell-wrap slds-cell-shrink" colspan="2" style="text-align:right;">
+                                        <!--<apex:commandButton action="{!process}" value="Continue" styleClass="button"/>-->
+                                        <input type="button" class="slds-button slds-button--brand slds-button--small" onclick="processSetting();" value="{!$Label.Continue}"/>
+                             </td>
+                             <td class="slds-cell-wrap slds-cell-shrink" colspan="2">       
+                                        <!--<apex:commandButton action="{!cancel}" value="Cancel" styleClass="button"/>-->
+                                        <input type="button" class="slds-button slds-button--brand slds-button--small" onclick="cancelSetting();" value="{!$Label.Cancel}"/>
+                             </td>       
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="slds-box slds-theme--default slds-container" style="margin-top: 1%;">
+            <legend class="slds-text-heading--medium slds-p-vertical--medium">Batch Entry and Update Processing</legend>
+            <div class="slds-section">
+                <!--<h3 class="slds-section__title">
+                    <a class="slds-button slds-section__title-action">
+                        <svg aria-hidden="true" class="slds-section__title-action-icon slds-button__icon slds-button__icon--left">
+                            <use xlink:href="{!$Resource.lightiningCSS}/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+                        </svg>Transactions
+                    </a>
+                </h3>-->
+                <p styleClass="slds-form-element__label">
+                  Our Batch Entry Processing feature allows you to mass create and update records in Salesforce with a direct connection to the iATS Payments processing systems! <br/><br/>
+                    Using the new iATS Batch Entry record, you can charge single iATS Transactions, create recurring iATS Customer Code schedules, including the related Salesforce and NPSP records like Contacts, Recurring Donation's, and Payments. It can also be used to mass update iATS Customer Code records within Salesforce and iATS Payments systems. <br/><br/>
+                    For full instructions and details, please refer to the Brickwork User Guide or contact our Customer Care team via the Getting Started page.
+                </p>
+                        <br/>
+                <!--Additional Settings-->
+                        <div class="slds-section">
+                            <h3 class="slds-section__title">
+                                <a class="slds-button slds-section__title-action">
+                                    <svg aria-hidden="true" class="slds-section__title-action-icon slds-button__icon slds-button__icon--left">
+                                        <use xlink:href="{!$Resource.lightiningCSS}/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+                                    </svg>Default Batch Process Settings
+                                </a>
+                            </h3>
+                            <div class="slds-section__content">
+                            These field selections will be used as the default values when processing iATS Batch Entry records where the  values aren't defined on record, such as the iATS Merchant Account used to process the transactions, or the record type. <!-- ' -->
+                            
+                            <br/>
+                            <br/>
+                          
+                                <table class="slds-table slds-max-medium-table--stacked-horizontal">
+                                        <tr class="slds-hint-parent" width="100%">
+                                            <td class="slds-cell-wrap padTop" width="24%">
+                                                <label class="slds-form-element__label">iATS Merchant Account</label>
+                                            </td>
+                                            <td class="slds-cell-wrap padTop" width="3%">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">The iATS Merchant Account that will be used as the processor.</div>
+                                                    </div>
+                                                </div>                                   
+                                            </td>
+                                            <td class="slds-cell-wrap" width="23%">  
+                                                <div class="slds-select_container"><apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Batch_iATS_Merchant_Account_ID__c}"   multiselect="false" size="1">
+                                                        <apex:selectOptions value="{!MerchantAccountOptions}"/>
+                                                    </apex:selectList>
+                                                </div>
+                                            </td>
+                                            <td class="slds-cell-wrap padTop" width="24%">
+                                                <label class="slds-form-element__label">Contact Record Type</label>
+                                            </td>
+                                            <td class="slds-cell-wrap padTop" width="3%">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">The record type that will be set for newly created contact records.</div>
+                                                    </div>
+                                                </div>                                   
+                                            </td>
+                                            <td class="slds-cell-wrap" width="23%">  
+                                                <div class="slds-select_container"><apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Batch_Contact_Record_Type_ID__c}"   multiselect="false" size="1">
+                                                        <apex:selectOptions value="{!ContactRecordTypeOptions}"/>
+                                                    </apex:selectList>
+                                                </div>
+                                            </td>
+                                        </tr>  
+
+                                        <tr class="slds-hint-parent" width="100%">
+                                            <td class="slds-cell-wrap padTop" width="24%">
+                                                <label class="slds-form-element__label">Campaign</label>
+                                            </td>
+                                            <td class="slds-cell-wrap padTop" width="3%">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">The value that the opportunity 'primary campaign source' will be set to.</div>
+                                                    </div>
+                                                </div>                                   
+                                            </td>
+                                            <td class="slds-cell-wrap" width="23%">  
+                                                <!--<div class="slds-select_container"><apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Batch_Primary_Campaign_Source_ID__c}"   multiselect="false" size="1">
+                                                        <apex:selectOptions value="{!CampaignOptions}"/>
+                                                    </apex:selectList>
+                                                </div>-->
+                                                <apex:inputText styleClass="slds-input" id="campaignList" value="{!campaignName}" html-placeholder="Search Campaigns"/>
+                                                <apex:inputhidden id="campaignListId" value="{!settings.IATSPayment__Batch_Primary_Campaign_Source_ID__c}" />
+                                            </td>
+                                            <td class="slds-cell-wrap padTop" width="24%">
+                                                <label class="slds-form-element__label">Opportunity Record Type</label>
+                                            </td>
+                                            <td class="slds-cell-wrap padTop" width="3%">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">The record type that will be set for newly created opportunity records.</div>
+                                                    </div>
+                                                </div>                                   
+                                            </td>
+                                            <td class="slds-cell-wrap" width="23%">  
+                                                <div class="slds-select_container"><apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Batch_Opportunity_Record_Type_ID__c}"   multiselect="false" size="1">
+                                                        <apex:selectOptions value="{!OpportunityRecordTypeOptions}"/>
+                                                    </apex:selectList>
+                                                </div>
+                                            </td>
+                                        </tr>  
+
+                                        <tr class="slds-hint-parent" width="100%">
+                                            <td width="24%">
+                                                <label></label>
+                                            </td>
+                                            <td width="3%">
+                                                <div>
+                                                    
+                                              
+                                                </div>                                   
+                                            </td>
+                                            <td width="23%">  
+                                                <div>
+                                                </div>
+                                            </td>
+                                            <td class="slds-cell-wrap padTop" width="24%">
+                                                <label class="slds-form-element__label">Recurring Donation Record Type</label>
+                                            </td>
+                                            <td class="slds-cell-wrap padTop" width="3%">
+                                                <div>
+                                                    <img class="customsldstooltip" src="{!$Resource.lightiningCSS}/assets/icons/utility/info_60.png" width="16"   />
+                                                    <div class="slds-popover slds-popover--tooltip  slds-hide" role="tooltip" id="help" style="position:absolute;top:25px;left:25px;">
+                                                      <div class="slds-popover__body">The record type that will be set for newly created recurring donation records.</div>
+                                                    </div>
+                                                </div>                                   
+                                            </td>
+                                            <td class="slds-cell-wrap" width="23%">  
+                                                <div class="slds-select_container"><apex:selectList styleClass="slds-select" value="{!settings.IATSPayment__Batch_Rec_Donation_Record_Type_ID__c}" multiselect="false" size="1">
+                                                        <apex:selectOptions value="{!RecurringDonationRecordOptions}"/>
+                                                    </apex:selectList>
+                                                </div>
+                                            </td>
+                                        </tr> 
+
+                                </table>
+                            </div>
+                        </div>
+                       
+                        <table class="slds-table slds-max-medium-table--stacked-">
+                        <tr class="slds-hint-parent">
+                            <td colspan="4" class="slds-cell-wrap slds-cell-shrink">
+
+                                    <p>
+                                    <b>-There are {!numberBatchEntriesToProcess} iATS Batch Entry Records waiting to be processed</b>
+                                    </p>
+                                    <p>
+                                    <b>-There are {!numberCCUpdatesToProcess} iATS Customer Code updates waiting to be processed</b>
+                                    </p>
+
+                                    <p>
+                                    <br/>
+                                    <b>Last Run Details:</b>
+                                    {!logDetails}
+                                    
+                                    Please review the <a href="/{!logLink}">iATS Log</a> for aditional details. </p>
+                            </td>
+                        </tr>
+                        <apex:outputPanel id="buttonsBatch">
+                        <tr class="slds-hint-parent">
+                          <td class="slds-cell-wrap slds-cell-shrink" colspan="2" style="text-align:right;">
+                                        <!--<apex:commandButton action="{!process}" value="Continue" styleClass="button"/>-->
+                                        <input type="button" class="slds-button slds-button--brand slds-button--small toDisable" onclick="processBatchCreate();" value="Process iATS Batch Entry Records"
+                                            id="batchCreate"/>
+
+
+                             </td>
+                             <td class="slds-cell-wrap slds-cell-shrink" colspan="2">       
+                                        <!--<apex:commandButton action="{!cancel}" value="Cancel" styleClass="button"/>-->
+                                        <input type="button" class="slds-button slds-button--brand slds-button--small toDisable" onclick="processBatchUpdate();" value="Process iATS Customer Code Updates"
+                                            id="customerCodeUpdate"/>
+                             </td>     
+                        </tr>
+                        </apex:outputPanel>
+                    </table>
+                </div>
+        </fieldset>
+    </div>
+    </apex:form>
+    </html>
+</apex:page>

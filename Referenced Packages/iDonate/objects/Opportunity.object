@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Organization_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Name of Sub Organization</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of Sub Organization</inlineHelpText>
+        <label>Organization Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>campaign_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Campaign Name</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Campaign Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>campaign__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Campaign identification number</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>iDonate campaign identification number</inlineHelpText>
+        <label>Campaign ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>designation_Note__c</fullName>
+        <deprecated>false</deprecated>
+        <description>iDonate Designation Note</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>iDonate Designation Note  - this is where a donor makes special requests</inlineHelpText>
+        <label>Designation Note</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>designation__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Designation</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>iDonate Designation name</inlineHelpText>
+        <label>Designated Fund Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>designation_fund_id__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Designated Fund Name</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>Donor selected Designated Fund Name</inlineHelpText>
+        <label>Designated Fund Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>frequency__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Donation Frequency</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>iDonate Donation Frequency</inlineHelpText>
+        <label>Frequency</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>id__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Donation Tracking Number</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>iDonate donation tracking number</inlineHelpText>
+        <label>Tracking Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>organization__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Organization ID</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>iDonate organization id</inlineHelpText>
+        <label>Organization ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>status__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Donation Status</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>iDonate donation Status</inlineHelpText>
+        <label>Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Asset Class of donation</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>iDonate type of gift received from online</inlineHelpText>
+        <label>Gift Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>utm_campaign__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Campaign Tracking</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <label>Campaign Tracking - utm campaign</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>utm_content__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Campaign Tracking - utm content</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>iDonate campaign tracking - utm content</inlineHelpText>
+        <label>Campaign Tracking - utm  content</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>utm_medium__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Campaign Tracking - utm medium</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>iDonate campaign tracking - utm medium</inlineHelpText>
+        <label>Campaign Tracking - utm medium</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>utm_source__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Campaign Tracking - utm source</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>iDonate campaign Tracking - utm source</inlineHelpText>
+        <label>Campaign Tracking - utm source</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>utm_term__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Campaign Tracking code - term</description>
+        <encrypted>false</encrypted>
+        <externalId>false</externalId>
+        <inlineHelpText>iDonate campaign tracking code - term</inlineHelpText>
+        <label>Campaign Tracking - utm term</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+</CustomObject>

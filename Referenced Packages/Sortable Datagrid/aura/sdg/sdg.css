@@ -1,0 +1,286 @@
+.THIS .hidden{
+    display:none;
+}
+.THIS .working tbody, .THIS .working tbody a, .THIS .working td:before
+{
+    background-color:rgb(244, 246, 249);
+    color:transparent !important;
+    text-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+.THIS .DisplayString, .THIS .DisplayDate, .THIS .DisplayDateTime, .THIS .DisplayHyperlink, .THIS .DisplayEmail, .THIS .DisplayPhone, .THIS .DisplayNumber, .THIS .DisplayCurrency, .THIS .DisplayURL, .THIS .DisplayPicklist, .THIS .DisplayDouble, .THIS .DisplayRaw
+{
+    display:none;
+}
+.THIS .DisplayString.FieldFormatSTRING, .THIS .DisplayDate.FieldFormatDATE,  .THIS .DisplayDateTime.FieldFormatDATETIME, .THIS .DisplayHyperlink.FieldFormatHYPERLINK, .THIS .DisplayURL.FieldFormatURL, .THIS .DisplayEmail.FieldFormatEMAIL, .THIS .DisplayPhone.FieldFormatPHONE, .THIS .DisplayNumber.FieldFormatNUMBER, .THIS .DisplayCurrency.FieldFormatCURRENCY, .THIS .DisplayPicklist.FieldFormatPICKLIST, .THIS .DisplayDouble.FieldFormatDOUBLE
+{
+    display:inline;
+}
+.THIS .DisplayRaw.FieldFormatRawHTML
+{
+    display:inline;
+}
+.THIS a:visited.no-visited 
+{
+    color: red;
+}
+.THIS .ActionCount0
+{
+    display:none;
+}
+
+.THIS .no-visited span.header-label
+{
+    color:rgb(22, 50, 92);
+}
+.THIS .slds-table
+{
+    border-collapse: collapse;
+}
+.THIS .centeredwrapper
+{
+    position:relative;
+}
+.THIS .slds-grid.smallcolheader
+{
+    display:none;
+}
+.THIS
+{
+    
+    width:100%;
+}
+
+.THIS .cardview .slds-max-medium-table--stacked-horizontal {
+    border: 0; }
+.THIS .cardview .slds-max-medium-table--stacked-horizontal thead,
+.THIS .cardview .slds-max-medium-table--stacked-horizontal .slds-row-select,
+.THIS .cardview .slds-max-medium-table--stacked-horizontal .slds-row-action {
+    position: absolute;
+    top: 0;
+    left: -9999em; }
+.THIS .cardview .slds-max-medium-table--stacked-horizontal th {
+    border-top: none; }
+.THIS .cardview .slds-max-medium-table--stacked-horizontal tr {
+    display: block;
+    border-top: 2px solid #d8dde6; }
+
+
+.THIS .cardview .slds-max-medium-table--stacked-horizontal tr > td:first-child,
+.THIS .cardview .slds-max-medium-table--stacked-horizontal tr > td:last-child {
+    padding: 0.75rem; }
+.THIS .cardview .slds-max-medium-table--stacked-horizontal:not(.slds-no-row-hover) tbody tr:hover td,
+.THIS .cardview .slds-max-medium-table--stacked-horizontal:not(.slds-no-row-hover) tbody tr:hover th {
+    background-color: inherit;
+    box-shadow: none; }
+.THIS .cardview .slds-max-medium-table--stacked-horizontal .slds-is-interactive .slds-button {
+    visibility: visible; }
+
+
+.THIS .cardview .slds-grid.smallcolheader
+{
+    display:flex;
+    
+}
+.THIS .cardview .slds-table tbody tr
+{
+    margin:0px;
+    padding:0px;
+    border:0px solid #d8dde6;
+    background:#f4f6f9;
+    
+}
+.THIS .cardview .slds-max-medium-table--stacked-horizontal td {
+    display: block;
+    padding: 0.75rem;
+    width: 100%;
+    clear: both;
+    white-space: normal;
+    overflow: hidden;
+    text-align: left; 
+}
+
+.THIS .cardview .slds-max-medium-table--stacked-horizontal tr th
+{
+    padding-bottom: 0px;
+}
+.THIS .cardview .slds-table tr > td:last-child, .THIS .cardview .slds-max-medium-table--stacked-horizontal tr > td:last-child
+{
+    padding-bottom:1rem;
+}
+
+
+.THIS .cardview .slds-table tbody td, .THIS .cardview .slds-table tr > td:last-child, .THIS .cardview .slds-max-medium-table--stacked-horizontal tr > td:last-child
+{
+    margin-top:0px;
+    margin-bottom:0px;
+    font-size:0.9em;
+    padding:0px;
+    padding-left:3px;
+    border-top-style:none;
+    
+}
+
+.THIS .cardview .slds-table tbody tr > th:first-child
+{
+    
+    padding-left: 5px;
+}
+.THIS .cardview .slds-col 
+{
+    padding-bottom: 5px;
+    
+}
+.THIS .cardview .slds-table .slds-table--bordered
+{
+    border:none;
+}
+.THIS .cardview .slds-col span
+{
+    font-weight:normal;
+}
+.THIS .borderit
+{
+    border: 1px solid red;
+}
+
+.THIS .colheader
+{
+    font-size: 0.75rem;
+    line-height: 1.25;
+    text-transform: uppercase;
+    letter-spacing: .0625em;
+    color: #54698d;
+    background-color:white;
+    border-top:1px solid #d8dde6;
+}
+.THIS .centered
+{
+    margin: 0 auto;
+    position: absolute;
+    left: 45%;
+    top: 100px;
+    
+}
+.THIS .placeholder
+{
+    width:100%;
+    
+    padding:1em;
+}
+.THIS .placeholder .inner
+{
+    width:90%;
+    
+}
+
+.THIS .placeholder .text
+{
+    border-radius: 15rem;
+    display: block;
+    margin-bottom: .75rem;
+    background-color: rgb(224, 229, 238);
+    height: .5rem;
+    
+}
+.THIS .placeholder .text-body:last-child {
+    margin-bottom:0px;
+}
+.THIS .text-long
+{
+    width:100%;
+}
+.THIS .text-medium
+{
+    width:60%;
+}
+.THIS .uiInput--input .input, .THIS .uiInput--input.input {
+    background-color: rgb(255, 255, 255);
+    font-family: 'Salesforce Sans',Arial,sans-serif;
+    color: rgb(22, 50, 92);
+    border: 1px solid rgb(216, 221, 230);
+    border-radius: .25rem;
+    width: 100%;
+    -webkit-transition: border .1s linear,background-color .1s linear;
+    transition: border .1s linear,background-color .1s linear;
+    display: inline-block;
+    padding: 0 1rem 0 .75rem;
+    line-height: 2.125rem;
+    min-height: calc(2.125rem + 2px);
+}
+
+.THIS .uiInput--select.select:not([multiple]), .THIS .uiInput--select .select:not([multiple]) {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 0 14px;
+    height: 2.125rem;
+    font-family: 'Salesforce Sans',Arial,sans-serif;
+    background-color: rgb(255, 255, 255);
+    color: rgb(22, 50, 92);
+    border: 1px solid rgb(216, 221, 230);
+    border-radius: .25rem;
+    width: 100%;
+    
+    -webkit-transition: border .1s linear,background-color .1s linear;
+    transition: border .1s linear,background-color .1s linear;
+}
+
+
+.THIS .uiInput--select.select:not([multiple]), .THIS .uiInput--select .select:not([multiple]) {
+    -webkit-appearance:none; 
+    -moz-appearance:none; 
+    appearance:none; 
+    padding:0 14px; 
+    background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDI3LjYgMjEiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI3LjYgMjEiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KICA8Zz4NCiAgICA8ZGVmcz4NCiAgICAgIDxwYXRoIGlkPSJTVkdJRF8xXyIgZD0iTTUuNiA1aDE2LjRjMC40IDAgMC44IDAuNiAwLjQgMWwtOCA5LjhjLTAuMyAwLjMtMC45IDAuMy0xLjIgMGwtOC05LjhDNC44IDUuNiA1LjEgNSA1LjYgNXoiLz4NCiAgICA8L2RlZnM+DQogICAgPGNsaXBQYXRoIGlkPSJTVkdJRF8yXyI+DQogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8xXyIgb3ZlcmZsb3c9InZpc2libGUiLz4NCiAgICA8L2NsaXBQYXRoPg0KICAgIDxyZWN0IHg9IjAiIHk9IjAiIGNsaXAtcGF0aD0idXJsKCNTVkdJRF8yXykiIGZpbGw9IiM1NTY5OEQiIHdpZHRoPSIyNy42IiBoZWlnaHQ9IjIxIi8+DQogIDwvZz4NCjwvc3ZnPg0K); 
+    background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDI3LjYgMjEiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI3LjYgMjEiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KICA8Zz4NCiAgICA8ZGVmcz4NCiAgICAgIDxwYXRoIGlkPSJTVkdJRF8xXyIgZD0iTTUuNiA1aDE2LjRjMC40IDAgMC44IDAuNiAwLjQgMWwtOCA5LjhjLTAuMyAwLjMtMC45IDAuMy0xLjIgMGwtOC05LjhDNC44IDUuNiA1LjEgNSA1LjYgNXoiLz4NCiAgICA8L2RlZnM+DQogICAgPGNsaXBQYXRoIGlkPSJTVkdJRF8yXyI+DQogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8xXyIgb3ZlcmZsb3c9InZpc2libGUiLz4NCiAgICA8L2NsaXBQYXRoPg0KICAgIDxyZWN0IHg9IjAiIHk9IjAiIGNsaXAtcGF0aD0idXJsKCNTVkdJRF8yXykiIGZpbGw9IiM1NTY5OEQiIHdpZHRoPSIyNy42IiBoZWlnaHQ9IjIxIi8+DQogIDwvZz4NCjwvc3ZnPg0K),rgb(255, 255, 255); 
+    background-repeat:no-repeat; 
+    background-position:97.5% 50%; 
+    background-size:.875rem .875rem,100% 100%;
+}
+
+@media screen and (max-width: 480px) {
+ 
+  
+    .THIS .sdgdatatablewrapper
+    {
+        overflow-x: scroll;
+        overflow-y: visible;
+    }
+    
+    
+
+	/* Force table to not be like tables anymore */
+	.THIS table, .THIS thead, .THIS tbody, .THIS th, .THIS td, .THIS tr { 
+		display: block; 
+	}
+	
+	.THIS tr { border:1px solid silver; margin-bottom:10px; }
+	
+	.THIS td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: none; 
+		position: relative;
+		padding-left: 3%; 
+        border:collapse;
+	}
+	.THIS .slds-table--bordered tbody td, .THIS .slds-table--bordered tbody th
+    {
+        border:none; 
+    }
+	.THIS td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	/*
+	Label the data
+	*/
+	
+}

@@ -1,0 +1,173 @@
+<apex:page controller="efaxapp.eFaxConfigurationController" title="eFax Configuration Field Settings" sidebar="true" showHeader="true" setup="{!IsSetupMode}">
+	<style>
+		.notes {
+			display:block;
+			padding:5px 5px 5px 0;
+		}
+		
+		input[type="text"] {
+			width: 200px;
+			height: 18px;
+		}
+		
+		select {
+			width: 204px;
+			height: 22px;
+		}
+		
+		.label {
+			color:#4a4a56;
+			font-size:91%;
+			font-weight:bold;
+		}
+		
+		.cross {
+			background-image:url('{!URLFOR($Resource.Common, '/img/cross12.png')}');
+			width:8px;
+			height:8px;
+			float:right;
+			vertical-align:middle;
+			cursor:pointer;
+			margin-top:4px;
+		}
+	</style>
+		
+    <script type="text/javascript" src="{!URLFOR($Resource.Common, '/js/jquery-1.9.1.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.Common, '/js/jquery-ui-1.10.3.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.Common, '/js/jquery.blockUI.js')}"></script>
+    
+    <script type="text/javascript">
+        var jq = jQuery.noConflict(true);	
+		
+		function blockUI() {
+			jq.blockUI({ 
+				message: '<div><span id="imgProgress"><img style="vertical-align:middle;" src="{!URLFOR($Resource.Common, '/img/loading.gif')}"/></span>&nbsp;Please wait...</div>',
+				css: {
+					border: '0 none',
+					backgroundColor: 'transparent'
+				},
+				overlayCSS: { 
+	        		backgroundColor: '#fff'
+	        	},
+	        	fadeIn:0,fadeOut:0 
+			});		
+		}
+		
+		function unblockUI() {
+			jq.unblockUI({fadeIn:0,fadeOut:0});
+		}
+		
+		function selectFaxFieldCriteria() {
+			if (jq('#rbFaxInName').is(':checked')) {
+				jq('[id$="siFaxNumberInFaxName"]').css('display','inline-block');
+				jq('[id$="siFaxNumberInFaxField"]').css('display','none');
+				jq('[id$="chkInName"]')[0].checked = true;
+			} else {
+				jq('[id$="siFaxNumberInFaxName"]').css('display','none');
+				jq('[id$="siFaxNumberInFaxField"]').css('display','inline-block');
+				jq('[id$="chkInName"]')[0].checked = false;
+			}
+		}
+	</script>
+	  
+  	<apex:sectionHeader title="RS Fax App" subtitle="Configuration"/>
+	
+	<apex:pageMessages escape="false" />
+	
+	<apex:form >
+		<apex:inputHidden id="hdnBarcodePositionTop" value="{!FieldBarcodePositionTop}" />
+		<apex:inputHidden id="hdnBarcodePositionLeft" value="{!FieldBarcodePositionLeft}" />
+		<apex:inputHidden id="hdnBarcodeSize" value="{!FieldBarcodeSizeWidth}" />
+		<apex:inputHidden value="{!EditFieldName}" />
+		<apex:outputPanel styleClass="notes">
+           	Here you can setup auto-send pattern and where the system will find fax number to be sent.
+           	Fax number can be an object field or part of fax name.
+           	Auto-send criteria is a pattern which should match fax name in order to send fax.
+        </apex:outputPanel>
+		<apex:pageBlock title="{!Mode} Field Setting" mode="edit">
+			<apex:pageBlockButtons location="top">
+				<apex:commandButton onclick="efaxapp.barcodeConfigurator.populateDataForSave();" action="{!SaveFieldSettings}" value="Save" />
+				<c:referenceButton href="{!URLFOR($Page.efaxapp__eFaxConfiguration)}{!TabNameUrlParam}" text="Cancel" />
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection columns="1" collapsible="false" showHeader="false">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="txtName" value="Setting Name"/>
+                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                    	<div class="requiredBlock"></div>
+                    	<apex:inputText id="txtName" value="{!FieldName}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="orgFaxNumber" value="Select Organization Fax Number"/>
+                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                    	<div class="requiredBlock"></div>
+						<apex:selectList id="orgFaxNumber" value="{!FieldOrgFaxNumber}" size="1">
+				        	<apex:selectOptions value="{!NumberList}"/>				        	
+				        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>		
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="slcObjects" value="Object"/>
+                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                    	<div class="requiredBlock"></div>
+						<apex:selectList id="slcObjects" value="{!FieldObject}" size="1">
+				        	<apex:selectOptions value="{!ObjectList}"/>
+				        	<apex:actionSupport event="onchange" rerender="slcFields,slcSentFaxRelationship,slcReceivedFaxRelationship" onsubmit="blockUI();" oncomplete="unblockUI();" />
+				        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="slcSentFaxRelationship" value="Sent Fax Relationship"/>
+					<apex:selectList id="slcSentFaxRelationship" value="{!FieldSentFaxRelationship}" size="1">
+			        	<apex:selectOptions value="{!SentFaxRelationshipFieldList}"/>
+			        </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="slcReceivedFaxRelationship" value="Received Fax Relationship"/>
+					<apex:selectList id="slcReceivedFaxRelationship" value="{!FieldReceivedFaxRelationship}" size="1">
+			        	<apex:selectOptions value="{!ReceivedFaxRelationshipFieldList}"/>
+			        </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="chkInName" value="Fax Number"/>
+                    <apex:outputPanel >
+                    	<apex:outputPanel layout="block" rendered="{!NOT(FieldIsFaxNumberWithinName)}"><input type="radio" name="rbFaxName" id="rbFaxInField" onclick="selectFaxFieldCriteria();" checked="checked" /><label for="rbFaxInField">In Object Field</label></apex:outputPanel>
+						<apex:outputPanel layout="block" rendered="{!FieldIsFaxNumberWithinName}"><input type="radio" name="rbFaxName" id="rbFaxInField" onclick="selectFaxFieldCriteria();"/><label for="rbFaxInField">In Object Field</label></apex:outputPanel>
+                    	<apex:outputPanel layout="block" rendered="{!NOT(FieldIsFaxNumberWithinName)}"><input type="radio" name="rbFaxName" id="rbFaxInName" onclick="selectFaxFieldCriteria();"/><label for="rbFaxInName">In Fax Attachment Filename</label></apex:outputPanel>
+                    	<apex:outputPanel layout="block" rendered="{!FieldIsFaxNumberWithinName}"><input type="radio" name="rbFaxName" id="rbFaxInName" onclick="selectFaxFieldCriteria();" checked="checked" /><label for="rbFaxInName">In Fax Attachment Filename</label></apex:outputPanel>
+                    	<div style="height:5px;"><apex:inputCheckbox id="chkInName" value="{!FieldIsFaxNumberWithinName}" style="display:none;"/></div>
+                    	<apex:outputPanel id="siFaxNumberInFaxField" style="display:{!IF(FieldIsFaxNumberWithinName,'none','block')};">
+							<apex:selectList id="slcFields" value="{!FieldFaxField}" size="1">
+					        	<apex:selectOptions value="{!FieldList}"/>
+					        </apex:selectList>
+		                </apex:outputPanel>   
+		                <apex:outputPanel id="siFaxNumberInFaxName" style="display:{!IF(FieldIsFaxNumberWithinName,'block','none')};">
+							<apex:selectList id="slcFaxNumberCriteria" value="{!FieldFaxNumberCriteraCode}" size="1" style="width:90px;">
+					        	<apex:selectOptions value="{!FaxNumberCriteriaList}"/>
+					        </apex:selectList>
+					        <apex:inputText id="txtFieldFaxNumberPattern" value="{!FieldFaxNumberPattern}" style="width:107px;"/>
+                    	</apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="Auto-Send when Fax Attachment Filename"/>
+					<apex:outputPanel >
+						<apex:selectList id="slcAutoSendCriteria" value="{!FieldAutoSendFaxCriteriaCode}" size="1" style="width:90px;">
+				        	<apex:selectOptions value="{!AutoSendCriteriaList}"/>
+				        </apex:selectList>
+				        <apex:inputText id="txtAutoSendFaxPattern" value="{!FieldAutoSendFaxPattern}" style="width:107px;"/>
+			        </apex:outputPanel>
+                </apex:pageBlockSectionItem>  
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1" collapsible="false" showHeader="false"></apex:pageBlockSection>		
+		</apex:pageBlock>
+		<apex:pageBlock title="Barcode Configurator" mode="edit">
+			<apex:pageBlockButtons location="top">
+				<input type="button" class="btn" value="Add Barcode" onclick="efaxapp.barcodeConfigurator.addBarcode()" />
+				<apex:commandButton onclick="efaxapp.barcodeConfigurator.populateDataForSave();" action="{!SaveFieldSettings}" value="Save" />
+				<c:referenceButton href="{!URLFOR($Page.efaxapp__eFaxConfiguration)}" text="Cancel" />
+			</apex:pageBlockButtons>
+			<c:barcodeConfigurator barcodes="{!BarcodeList}" documentId="{!FieldDocumentID}" documentPath="{!FieldDocumentPath}" />
+        </apex:pageBlock> 
+	</apex:form>
+</apex:page>

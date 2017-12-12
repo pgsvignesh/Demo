@@ -1,0 +1,9 @@
+<apex:page controller="ApexZipSampleController" showHeader="true" sidebar="true">
+  <apex:form >
+    <apex:pageBlock title="Apex zip sample page">
+      <apex:pageBlockButtons location="bottom">
+        <apex:commandButton action="{!downloadAttachments}" value="Download Attachments"/>
+      </apex:pageBlockButtons>
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>
