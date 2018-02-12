@@ -6,7 +6,8 @@ public class chooseColor {
         String [] value =s.split(',');
         System.debug(value);
         return value;
-    }      
+    }    
+/* test*/	
     public void setString(String s) {
         this.s = s;
     }
